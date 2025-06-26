@@ -16,7 +16,7 @@ const bagsData = [
     price: 899,
     gender: 'male',
     age: 'child',
-    tags: ['trending'],
+    tags: ['trending', 'classic'],
     sale: '[10%]'
   },
   {
@@ -36,7 +36,7 @@ const bagsData = [
     price: 1399,
     gender: 'female',
     age: 'teen',
-    tags: ['popular', 'new'],
+    tags: ['popular', 'premium'],
     sale: '[15%]'
   },
   {
