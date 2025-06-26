@@ -24,16 +24,16 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex gap-6 text-sm uppercase">
-          <Link href="#" className="hover:text-gray-300">
+          <Link href="shop" className="hover:text-gray-300">
             Shop
           </Link>
-          <Link href="#" className="hover:text-gray-300">
+          <Link href="/man" className="hover:text-gray-300">
             Men
           </Link>
-          <Link href="#" className="hover:text-gray-300">
+          <Link href="women" className="hover:text-gray-300">
             Women
           </Link>
-          <Link href="#" className="hover:text-gray-300">
+          <Link href="sale" className="hover:text-gray-300">
             Sale
           </Link>
         </div>
