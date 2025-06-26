@@ -36,6 +36,9 @@ export default function Header() {
           <Link href="sale" className="hover:text-gray-300">
             Sale
           </Link>
+          <Link href="explore" className="hover:text-gray-300">
+            Explore
+          </Link>
         </div>
 
         <div className="flex items-center gap-4 text-lg">
