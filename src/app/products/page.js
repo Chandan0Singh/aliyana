@@ -1,4 +1,4 @@
-import products from '@/data/products'
+import products from '@/data/bags'
 import ProductCard from '../Components/ProductCard'
 
 export default function ProductsPage() {

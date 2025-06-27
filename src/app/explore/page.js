@@ -41,7 +41,7 @@ const ExplorePage = () => {
         </div>
 
         {/* Bags */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 h-[90vh] overflow-auto pr-[2rem] custom-scrollbar w-full">
           {filteredBags.map((bag) => (
             <div key={bag.id} className="bg-gray-100 rounded-xl shadow p-4 hover:shadow-lg transition-all duration-300">
               <img src={bag.image} alt={bag.name} className="w-full h-60 object-cover rounded-md mb-4" />

@@ -18,17 +18,17 @@ export default function Footer() {
           <h3 className="uppercase text-sm font-semibold mb-4">Shop</h3>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
-              <Link href="#">Women</Link>
+              <Link href="/women">Women</Link>
             </li>
             <li>
-              <Link href="#">Men</Link>
+              <Link href="/men">Men</Link>
             </li>
             <li>
-              <Link href="#">New Arrivals</Link>
+              <Link href="newarrival">New Arrivals</Link>
             </li>
-            <li>
-              <Link href="#">Best Sellers</Link>
-            </li>
+            {/* <li>
+              <Link href="">Best Sellers</Link>
+            </li> */}
           </ul>
         </div>
 

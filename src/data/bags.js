@@ -7,7 +7,8 @@ const bagsData = [
     gender: 'female',
     age: 'child',
     tags: ['popular'],
-    sale: '[15%]'
+    sale: '[15%]',
+    arrivalDate: '2025-06-20' // <-- new field
   },
   {
     id: 'kids-blue',
@@ -27,7 +28,8 @@ const bagsData = [
     gender: 'male',
     age: 'teen',
     tags: ['trending', 'popular'],
-    sale: '[20%]'
+    sale: '[20%]',
+    arrivalDate: '2025-06-10' // older
   },
   {
     id: 'teen-girl-floral',

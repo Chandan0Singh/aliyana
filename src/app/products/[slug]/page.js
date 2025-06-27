@@ -1,4 +1,4 @@
-import products from '@/data/products'
+import products from '@/data/bags'
 
 export default function ProductDetail({ params }) {
   const product = products.find((item) => item.id === params.slug)
