@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import bagsData from "../../data/bags";
-import PriceFilter from '../Components/PriceFilter';
+import PriceFilter from "../Components/PriceFilter";
 
 const calculateDiscountedPrice = (price, sale) => {
   if (!sale) return price;
@@ -24,9 +24,7 @@ const ShopPage = () => {
   const [selectedRange, setSelectedRange] = useState(null);
 
   const handlePriceChange = (range) => {
-    setSelectedRange((prev) =>
-      prev?.label === range.label ? null : range
-    );
+    setSelectedRange((prev) => (prev?.label === range.label ? null : range));
   };
 
   // ✅ Apply price filter to bagsData
@@ -40,7 +38,7 @@ const ShopPage = () => {
     : bagsData;
 
   return (
-    <div className='flex w-[95vw] mx-auto justify-between'>
+    <div className="flex w-[95vw] mx-auto justify-between">
       <PriceFilter
         priceRanges={priceRanges}
         selectedRange={selectedRange}
@@ -52,9 +50,12 @@ const ShopPage = () => {
           🛍️ Shop All Bags
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 h-[90vh] overflow-auto pr-[2rem] custom-scrollbar">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 h-[65vh] overflow-auto pr-[2rem] custom-scrollbar">
           {filteredBags.map((bag) => {
-            const discountedPrice = calculateDiscountedPrice(bag.price, bag.sale);
+            const discountedPrice = calculateDiscountedPrice(
+              bag.price,
+              bag.sale
+            );
             return (
               <div
                 key={bag.id}
