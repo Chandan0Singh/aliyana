@@ -1,12 +1,9 @@
-import React from 'react'
-import GenderPreference from '../Components/GenderPreference'
+import GenderPreference from "../Components/GenderPreference";
 
-const page = () => {
+export default function FemalePage() {
   return (
-    <div>
-      <GenderPreference gender={"female"}/>
+    <div className="min-h-screen bg-[#FDF4FF] px-6 py-10">
+      <GenderPreference gender="female" />
     </div>
-  )
+  );
 }
-
-export default page

@@ -38,3 +38,15 @@ body {
 .custom-scrollbar::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+button{
+  background-color: #C084FC;
+  border: 1px solid transparent;
+  border-radius: 2rem;
+  color: white;
+}
+
+button:hover{
+  background-color: #4C1D95;
+  color: white;
+}

@@ -17,12 +17,12 @@ export default function Header() {
         <div className="absolute inset-0 bg-black/10" />
       </div> */}
 
-      <header className=" bg-black right-0 z-50 px-6 py-4 flex justify-between items-center text-white">
-        <div className="text-4xl font-serif tracking-widest font-bold">
+      <header className=" bg-[#FDF4FF]   right-0 z-50 px-6 py-4 flex justify-between items-center text-white">
+        <div className="text-4xl font-serif text-[#1E1B4B] tracking-widest font-bold">
           <Link href="/">Aliyana</Link>
         </div>
 
-        <div className="hidden md:flex gap-6 text-sm uppercase">
+        <div className="hidden text-[#1E1B4B] md:flex gap-6 text-sm uppercase">
           <Link href="shop" className="hover:text-gray-300">
             Shop
           </Link>

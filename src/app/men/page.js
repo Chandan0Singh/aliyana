@@ -1,12 +1,12 @@
 import React from 'react'
 import GenderPreference from '../Components/GenderPreference'
 
-const page = () => {
+const Page = () => {
   return (
-    <div>
-      <GenderPreference gender={"male"}/>
-    </div>
+    <main className="min-h-screen bg-white text-black">
+      <GenderPreference gender="male" />
+    </main>
   )
 }
 
-export default page
+export default Page
