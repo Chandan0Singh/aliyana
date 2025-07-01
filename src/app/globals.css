@@ -26,12 +26,13 @@ body {
 } */
 
 /* Tailwind Custom Scrollbar Style */
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #ffba00; /* your desired color */
+  background-color: #ffba00; /* Aliyana brand color */
   border-radius: 8px;
 }
 

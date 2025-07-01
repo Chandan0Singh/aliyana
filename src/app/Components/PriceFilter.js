@@ -2,7 +2,7 @@ import React from "react";
 
 const PriceFilter = ({ priceRanges, selectedRange, onChange }) => {
   return (
-    <aside className="w-[12rem] pt-6 px-4 bg-white rounded-xl shadow-md h-fit">
+    <aside className="w-[12rem] py-6 px-4 bg-white rounded-xl shadow-md h-fit">
       <h2 className="text-xl font-heading text-[#1E1B4B] mb-4">
         Filter by Price
       </h2>
