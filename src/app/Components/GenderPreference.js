@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import bagsData from "../../data/bags";
 import PriceFilter from "./PriceFilter";
-import SearchBar from "./searchbar";
+import SearchBar from "./Searchbar";
 
 const GenderPreference = ({ gender }) => {
   const priceRanges = [
@@ -38,7 +38,7 @@ const GenderPreference = ({ gender }) => {
   return (
     <div className="min-h-screen bg-[#FDF4FF] px-6 pt-10 pb-12">
       <h1 className="text-4xl font-serif font-bold text-center mb-12">
-        {gender == 'male' ? "Men's Bags": "Women's Bags"}
+        {gender == "male" ? "Men's Bags" : "Women's Bags"}
       </h1>
       <div className="mb-[3.75rem]">
         <SearchBar />
