@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import bagsData from "../../data/bags";
-import SearchBar from "../Components/searchbar";
+import SearchBar from "../Components/Searchbar";
 
 // 🧠 Utility to calculate discount
 const calculateDiscountedPrice = (price, sale) => {

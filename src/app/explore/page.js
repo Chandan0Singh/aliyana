@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import bagsData from "../../data/bags";
-import SearchBar from "../Components/searchbar";
+import SearchBar from "../Components/Searchbar";
 
 const availableTags = ["classic", "premium", "trending", "popular", "all"];
 
