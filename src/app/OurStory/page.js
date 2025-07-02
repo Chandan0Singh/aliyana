@@ -18,7 +18,7 @@ const OurStory = () => {
 
         <p className="text-lg leading-relaxed mb-6">
           Born in the heart of India, <span className="font-semibold">Aliyana</span> is
-          more than just a brand — it's a movement. Every stitch, every fabric,
+          more than just a brand — It&apos;s a movement. Every stitch, every fabric,
           and every zipper reflects our love for design, detail, and durability.
         </p>
 
@@ -31,7 +31,7 @@ const OurStory = () => {
 
         <p className="text-lg leading-relaxed mb-6">
           We proudly support local craftsmanship, and every product is a tribute
-          to the skilled hands that make them. When you shop with us, you don't
+          to the skilled hands that make them. When you shop with us, you don&apos;t
           just buy a bag — you carry a legacy.
         </p>
 
