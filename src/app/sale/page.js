@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import bagsData from "../../data/bags";
+import SearchBar from "../Components/searchbar";
 
 // 🧠 Utility to calculate discount
 const calculateDiscountedPrice = (price, sale) => {
@@ -16,6 +17,10 @@ const ShopPage = () => {
       <h1 className="text-4xl font-serif font-bold text-center mb-12">
         🛍️ Shop All Bags
       </h1>
+
+      <div className="mb-[3.75rem]">
+        <SearchBar />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 custom-scrollbar">
         {bagsData.map((bag) => {

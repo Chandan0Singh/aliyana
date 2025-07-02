@@ -1,12 +1,15 @@
-import React from 'react'
-import GenderPreference from '../Components/GenderPreference'
+'use client'
+import React from "react";
+import GenderPreference from "../Components/GenderPreference";
+import SearchBar from "../Components/searchbar";
 
 const Page = () => {
-  return (
-    <main className="min-h-screen bg-white text-black">
-      <GenderPreference gender="male" />
-    </main>
-  )
-}
 
-export default Page
+  return (
+    <>
+      <GenderPreference gender="male" />
+    </>
+  );
+};
+
+export default Page;

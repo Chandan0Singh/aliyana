@@ -1,5 +1,6 @@
 import bagsData from "../../data/bags";
 import { isNewArrival } from "../../utils/isNewArrival";
+import SearchBar from "../Components/searchbar";
 
 const NewArrivalPage = () => {
   const newArrivals = bagsData.filter(
@@ -11,6 +12,8 @@ const NewArrivalPage = () => {
       <h1 className="text-3xl font-serif font-bold text-[#1E1B4B] mb-8 text-center">
         🆕 New Arrivals
       </h1>
+
+      <SearchBar/>
 
       {newArrivals.length === 0 ? (
         <p className="text-center text-gray-500">No new arrivals at the moment.</p>

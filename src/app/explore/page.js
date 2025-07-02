@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import bagsData from "../../data/bags";
+import SearchBar from "../Components/searchbar";
 
 const availableTags = ["classic", "premium", "trending", "popular", "all"];
 
@@ -23,6 +24,10 @@ const ExplorePage = () => {
       <h1 className="text-4xl font-heading text-[#1E1B4B] mb-10 text-center">
         🧭 Explore Bags
       </h1>
+
+      <div className="mb-[3.75rem]">
+        <SearchBar />
+      </div>
 
       <div className="flex flex-col md:flex-row gap-10">
         {/* Filter Sidebar */}
@@ -67,9 +72,7 @@ const ExplorePage = () => {
               <h2 className="text-lg font-semibold text-[#1E1B4B]">
                 {bag.name}
               </h2>
-              <p className="text-[#C084FC] font-medium mt-1">
-                ₹{bag.price}
-              </p>
+              <p className="text-[#C084FC] font-medium mt-1">₹{bag.price}</p>
               {bag.sale && (
                 <p className="text-red-500 mt-1 text-sm">Sale: {bag.sale}</p>
               )}
