@@ -18,63 +18,65 @@ const GenderPreference = ({ gender }) => {
 
   const handlePriceChange = (range) => {
     setSelectedRange((prev) => (prev?.label === range.label ? null : range));
-    console.log(selectedRange);
   };
 
-  const GenderPreference = bagsData.filter((bag) => bag.gender === `${gender}`);
-  const filteredProducts = GenderPreference.filter((products) => {
+  const genderFiltered = bagsData.filter((bag) => bag.gender === gender);
+
+  const filteredProducts = genderFiltered.filter((bag) => {
     if (!selectedRange) return true;
-    return (
-      products.price >= selectedRange.min && products.price <= selectedRange.max
-    );
+    return bag.price >= selectedRange.min && bag.price <= selectedRange.max;
   });
 
-  const handleSearch = () => {
-    console.log("Search clicked");
-  };
-
-  // console.log(filteredProducts);
-
   return (
-    <div className="min-h-screen bg-[#FDF4FF] px-6 pt-10 pb-12">
-      <h1 className="text-4xl font-serif font-bold text-center mb-12">
-        {gender == "male" ? "Men's Bags" : "Women's Bags"}
+    <div className="min-h-screen bg-[#FDF4FF] px-4 pt-10 pb-12">
+      <h1 className="text-3xl sm:text-4xl font-serif font-bold text-center mb-10">
+        {gender === "male" ? "Men's Bags" : "Women's Bags"}
       </h1>
-      <div className="mb-[3.75rem]">
+
+      <div className="mb-14">
         <SearchBar />
       </div>
-      <div className="flex w-[95vw] mx-auto justify-between">
-        <PriceFilter
-          priceRanges={priceRanges}
-          selectedRange={selectedRange}
-          onChange={handlePriceChange}
-        />
 
-        <div className="min-h-screen px-6 pb-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 h-[65vh] overflow-auto pr-[2rem] custom-scrollbar">
-            {filteredProducts.map((bag) => (
-              <div
-                key={bag.id}
-                className="bg-gray-100 rounded-xl shadow p-4 hover:shadow-lg transition-all duration-300"
-              >
-                <img
-                  src={bag.image}
-                  alt={bag.name}
-                  className="w-full h-60 object-cover rounded-md mb-4"
-                />
-                <h2 className="text-xl font-semibold text-gray-700">
-                  {bag.name}
-                </h2>
-                <p className="text-gray-600 mt-1">Price: ₹{bag.price}</p>
-                <p className="text-green-600 font-semibold mt-1">
-                  Sale: {bag.sale}
-                </p>
-                <button className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800">
-                  Add to Cart
-                </button>
-              </div>
-            ))}
-          </div>
+      <div className="flex flex-col md:flex-row gap-10">
+        {/* Sidebar */}
+        <div className="w-full md:w-1/4">
+          <PriceFilter
+            priceRanges={priceRanges}
+            selectedRange={selectedRange}
+            onChange={handlePriceChange}
+          />
+        </div>
+
+        {/* Product Grid */}
+        <div className="w-full">
+          {filteredProducts.length === 0 ? (
+            <p className="text-center text-gray-500">No bags in this range.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProducts.map((bag) => (
+                <div
+                  key={bag.id}
+                  className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4"
+                >
+                  <img
+                    src={bag.image}
+                    alt={bag.name}
+                    className="w-full h-60 object-cover rounded-lg mb-4"
+                  />
+                  <h2 className="text-xl font-semibold text-[#1E1B4B]">
+                    {bag.name}
+                  </h2>
+                  <p className="text-gray-700 mt-1">₹{bag.price}</p>
+                  {bag.sale && (
+                    <p className="text-green-600 text-sm mt-1">{bag.sale}</p>
+                  )}
+                  <button className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800">
+                    Add to Cart
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

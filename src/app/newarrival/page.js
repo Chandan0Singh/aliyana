@@ -8,19 +8,21 @@ const NewArrivalPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white px-6 py-10">
-      <h1 className="text-3xl font-serif font-bold text-[#1E1B4B] mb-8 text-center">
+    <div className="min-h-screen bg-white px-4 sm:px-6 py-10 sm:py-12">
+      <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#1E1B4B] mb-8 text-center">
         🆕 New Arrivals
       </h1>
 
-      <SearchBar />
+      <div className="mb-12">
+        <SearchBar />
+      </div>
 
       {newArrivals.length === 0 ? (
-        <p className="text-center text-gray-500">
+        <p className="text-center text-gray-500 text-sm sm:text-base">
           No new arrivals at the moment.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {newArrivals.map((bag) => (
             <div
               key={bag.id}
@@ -29,14 +31,16 @@ const NewArrivalPage = () => {
               <img
                 src={bag.image}
                 alt={bag.name}
-                className="h-60 object-cover w-full rounded-md mb-4"
+                className="h-60 w-full object-cover rounded-md mb-4"
               />
-              <h2 className="text-xl font-semibold text-[#1E1B4B]">
+              <h2 className="text-md sm:text-lg font-semibold text-[#1E1B4B]">
                 {bag.name}
               </h2>
-              <p className="text-gray-700 mt-1">₹{bag.price}</p>
+              <p className="text-gray-700 text-sm sm:text-base mt-1">
+                ₹{bag.price}
+              </p>
               {bag.sale && (
-                <span className="text-green-600 text-sm font-medium mt-1 block">
+                <span className="text-green-600 text-xs sm:text-sm font-medium mt-1 block">
                   {bag.sale} off
                 </span>
               )}
