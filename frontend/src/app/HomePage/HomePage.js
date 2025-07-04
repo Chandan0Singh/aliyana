@@ -74,7 +74,7 @@ export default function HomeBody() {
       </div>
 
       {/* Newsletter Section */}
-      <div className="bg-[#F3E8FF] mt-20 px-4 sm:px-6 py-16 text-center rounded-xl shadow-inner mx-4 sm:mx-auto max-w-4xl">
+      <div className="bg-[#F3E8FF] mt-20 px-4 sm:px-6 py-16 text-center rounded-xl shadow-inner mx-4 sm:mx-auto ">
         <h3 className="text-2xl sm:text-3xl font-serif text-[#1E1B4B] mb-4">
           Get Exclusive Updates
         </h3>
