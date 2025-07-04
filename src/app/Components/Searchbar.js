@@ -48,8 +48,9 @@ export default function SearchBar({
           type="submit"
           className="flex items-center bg-[#C084FC] hover:bg-[#4C1D95] text-white px-4 py-2 rounded-full transition"
         >
-          <FaSearch className="mr-2" />
-          Search
+          <FaSearch/>
+          <span className="hidden ms-2 sm:block">Search</span>
+          
         </button>
       </div>
     </form>

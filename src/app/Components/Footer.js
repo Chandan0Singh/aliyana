@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -7,7 +8,7 @@ export default function Footer() {
   const [openSection, setOpenSection] = useState(null);
 
   const toggleSection = (section) =>
-    setOpenSection(openSection === section ? null : section);
+    setOpenSection((prev) => (prev === section ? null : section));
 
   return (
     <footer className="bg-[#FDF4FF] text-[#1E1B4B] py-10 px-6">
@@ -23,10 +24,16 @@ export default function Footer() {
 
         {/* Collapsible Sections */}
         <div className="space-y-4 md:flex md:space-y-0 md:justify-between">
+
           {/* Shop */}
           <div className="md:w-1/3">
             <div
+              role="button"
+              tabIndex="0"
               onClick={() => toggleSection('shop')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') toggleSection('shop');
+              }}
               className="flex justify-between items-center cursor-pointer md:cursor-default"
             >
               <h3 className="uppercase text-sm font-semibold">Shop</h3>
@@ -36,8 +43,8 @@ export default function Footer() {
             </div>
             <ul
               className={`mt-2 space-y-2 text-sm ${
-                openSection === 'shop' || typeof window === 'undefined' ? '' : 'hidden md:block'
-              }`}
+                openSection === 'shop' ? 'block' : 'hidden'
+              } md:block`}
             >
               <li>
                 <Link href="/women" className="hover:text-[#C084FC] transition">
@@ -50,10 +57,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/newarrival"
-                  className="hover:text-[#C084FC] transition"
-                >
+                <Link href="/newarrival" className="hover:text-[#C084FC] transition">
                   New Arrivals
                 </Link>
               </li>
@@ -63,7 +67,12 @@ export default function Footer() {
           {/* About */}
           <div className="md:w-1/3">
             <div
+              role="button"
+              tabIndex="0"
               onClick={() => toggleSection('about')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') toggleSection('about');
+              }}
               className="flex justify-between items-center cursor-pointer md:cursor-default"
             >
               <h3 className="uppercase text-sm font-semibold">About</h3>
@@ -73,8 +82,8 @@ export default function Footer() {
             </div>
             <ul
               className={`mt-2 space-y-2 text-sm ${
-                openSection === 'about' || typeof window === 'undefined' ? '' : 'hidden md:block'
-              }`}
+                openSection === 'about' ? 'block' : 'hidden'
+              } md:block`}
             >
               <li>
                 <Link href="/OurStory" className="hover:text-[#C084FC] transition">
@@ -102,7 +111,12 @@ export default function Footer() {
           {/* Newsletter */}
           <div className="md:w-1/3">
             <div
+              role="button"
+              tabIndex="0"
               onClick={() => toggleSection('newsletter')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') toggleSection('newsletter');
+              }}
               className="flex justify-between items-center cursor-pointer md:cursor-default"
             >
               <h3 className="uppercase text-sm font-semibold">Stay Connected</h3>
@@ -110,11 +124,10 @@ export default function Footer() {
                 {openSection === 'newsletter' ? <FaChevronUp /> : <FaChevronDown />}
               </span>
             </div>
-
             <div
               className={`mt-3 ${
-                openSection === 'newsletter' || typeof window === 'undefined' ? '' : 'hidden md:block'
-              }`}
+                openSection === 'newsletter' ? 'block' : 'hidden'
+              } md:block`}
             >
               <form className="flex flex-col gap-3 max-w-xs">
                 <input

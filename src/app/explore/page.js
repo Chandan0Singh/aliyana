@@ -31,7 +31,7 @@ const ExplorePage = () => {
 
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Filter Sidebar */}
-        <aside className="w-full lg:w-1/4 bg-white rounded-2xl shadow-md p-5 sm:p-6">
+        <aside className="w-full lg:w-1/4 bg-white rounded-2xl shadow-md p-5 sm:p-6 h-fit">
           <h2 className="text-lg sm:text-xl font-semibold text-[#1E1B4B] mb-4">
             Filter by Tag
           </h2>
