@@ -29,7 +29,7 @@ const GenderPreference = ({ gender }) => {
   });
 
   return (
-    <div className="min-h-screen bg-[#FDF4FF] px-4 pt-10 pb-12">
+    <div className="min-h-screen bg-[#FDF4FF] px-4 pt-12 pb-12">
       <h1 className="text-3xl sm:text-4xl font-serif font-bold text-center mb-10">
         {gender === "male" ? "Men's Bags" : "Women's Bags"}
       </h1>
