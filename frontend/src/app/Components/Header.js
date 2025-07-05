@@ -3,11 +3,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useAuth } from "@/context/AuthContext";
+import SearchBar from "./Searchbar";
+import { usePathname } from "next/navigation";
 
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
+  const [showSearch, setShowSearch] = useState(false);
+
+    const pathname = usePathname();
+  const isHome = pathname === "/";
+
 
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -31,13 +38,21 @@ export default function Header() {
         </nav>
 
         {/* Icons */}
+        
         <div className="flex items-center gap-4 text-xl text-[#1E1B4B]">
+          
+          {isHome && <>{showSearch && (
+            <div className="absolute w-[100vw] left-0 top-[15vh]">
+              <SearchBar/>
+            </div>
+          )}
+          <span className="bg-[#FDF4FF]" onClick={() => setShowSearch(!showSearch)} aria-label="Search Toggle">🔍</span></>}
+
           {user ? (
             <>
-            <div className="me-4 flex items-center gap-4 text-xl text-[#1E1B4B]">
-              <Link href="/cart" aria-label="Cart">🛒</Link>
-              <Link href="/account" aria-label="Account">👤</Link>
-              <Link href="/search" aria-label="Search">🔍</Link>
+              <div className="me-4 flex items-center gap-4 text-xl text-[#423f69]">
+                <Link href="/cart" aria-label="Cart">🛒</Link>
+                <Link href="/account" aria-label="Account">👤</Link>
               </div>
               <span onClick={logout} className="">Logout</span>
             </>
