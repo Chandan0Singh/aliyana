@@ -4,31 +4,44 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaLock, FaEnvelope } from "react-icons/fa";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
+
     e.preventDefault();
-
+    setError(null);
     try {
-      setError(null);
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // Dummy validation (replace with actual backend call)
-      if (email === "user@example.com" && password === "123456") {
-        // Simulate login success
-        localStorage.setItem("token", "fake-token");
-        router.push("/");
-      } else {
-        setError("Invalid email or password");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Invalid login");
+        return;
       }
+
+      // Save token, redirect to home
+      localStorage.setItem("token", data.token);
+      login(data);
+      router.push("/");
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FDF4FF] px-4 py-12">

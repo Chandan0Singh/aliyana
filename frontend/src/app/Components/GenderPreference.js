@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import bagsData from "../../data/bags";
 import PriceFilter from "./PriceFilter";
 import SearchBar from "./Searchbar";
-import ProductCardHover from "./ProductCardHover";
 
 const GenderPreference = ({ gender }) => {
   const priceRanges = [
