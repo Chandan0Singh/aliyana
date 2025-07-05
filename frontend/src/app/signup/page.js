@@ -4,27 +4,45 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
-  const { login } = useAuth(); // simulates login
+  const { login } = useAuth();
   const router = useRouter();
 
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple frontend validation
-    if (!form.name || !form.email || !form.password) {
-      alert("Please fill all fields");
-      return;
-    }
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-    // Simulated signup
-    login({ name: form.name, email: form.email });
-    router.push("/"); // Redirect to home
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage("✅ User Registered Successfully!");
+        login(data);
+
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
+      } else {
+        setMessage(`❌ Error: ${data.message || "Registration failed"}`);
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      setMessage("❌ Server error");
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FDF4FF] px-4 py-12">
