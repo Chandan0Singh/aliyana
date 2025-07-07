@@ -1,17 +1,18 @@
+// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/productRoutes'); // ✅ ADD this line
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 👇 Ye line ADD karo
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes); // ✅ ADD this line
 
-// Default route
 app.get('/', (req, res) => {
   res.send('API running...');
 });
@@ -22,7 +23,3 @@ mongoose.connect(process.env.MONGO_URI)
     app.listen(PORT, () => console.log(`✅ Server started on port ${PORT}`));
   })
   .catch(err => console.log('❌ DB error:', err));
-
-
-
-
