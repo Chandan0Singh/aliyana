@@ -1,10 +1,42 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import bagsData from "../../data/bags";
 import PriceFilter from "./PriceFilter";
 import SearchBar from "./Searchbar";
 
 const GenderPreference = ({ gender }) => {
+  const [products, setProducts] = useState([]); // all products
+  const [filteredProducts, setFilteredProducts] = useState([]); // after search
+    const [selectedRange, setSelectedRange] = useState(null);
+
+  useEffect(() => {
+     const fetchProducts = async () => {
+    try {
+      const res = await axios.get(`/api/products/gender/${gender}`)
+      setProducts(res.data)
+      setFilteredProducts(res.data);
+    } catch {
+      console.error("Error fetching gender-based products:", err);
+    }
+
+  }
+    fetchProducts()
+  }, [])
+  
+const handleSearch = (query) => {
+    if (!query) {
+      setFilteredProducts(products);
+    } else {
+      const search = query.toLowerCase();
+      const filtered = products.filter((item) =>
+        item.name.toLowerCase().includes(search)
+      );
+      setFilteredProducts(filtered);
+    }
+  };
+ 
+
   const priceRanges = [
     { label: "Under ₹500", min: 0, max: 499 },
     { label: "₹500 - ₹1000", min: 500, max: 1000 },
@@ -14,18 +46,23 @@ const GenderPreference = ({ gender }) => {
     { label: "Above ₹5000", min: 5001, max: Infinity },
   ];
 
-  const [selectedRange, setSelectedRange] = useState(null);
 
-  const handlePriceChange = (range) => {
-    setSelectedRange((prev) => (prev?.label === range.label ? null : range));
+   const handlePriceChange = (range) => {
+    const newRange =
+      selectedRange?.label === range.label ? null : range;
+    setSelectedRange(newRange);
+
+    // 🧠 Re-apply filters on search + price
+    let updated = [...products];
+
+    if (newRange) {
+      updated = updated.filter(
+        (item) => item.price >= newRange.min && item.price <= newRange.max
+      );
+    }
+
+    setFilteredProducts(updated);
   };
-
-  const genderFiltered = bagsData.filter((bag) => bag.gender === gender);
-
-  const filteredProducts = genderFiltered.filter((bag) => {
-    if (!selectedRange) return true;
-    return bag.price >= selectedRange.min && bag.price <= selectedRange.max;
-  });
 
   return (
     <div className="min-h-screen bg-[#FDF4FF] px-4 pt-12 pb-12">
@@ -34,7 +71,7 @@ const GenderPreference = ({ gender }) => {
       </h1>
 
       <div className="mb-14">
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} />
       </div>
 
       <div className="flex flex-col md:flex-row gap-10">

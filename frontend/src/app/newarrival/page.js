@@ -1,11 +1,37 @@
-import bagsData from "../../data/bags";
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { isNewArrival } from "../../utils/isNewArrival";
 import SearchBar from "../Components/Searchbar";
 
 const NewArrivalPage = () => {
-  const newArrivals = bagsData.filter(
-    (bag) => bag.arrivalDate && isNewArrival(bag.arrivalDate)
-  );
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get('/api/products/new');
+        setProducts(res.data);
+        setFilteredProducts(res.data);
+      } catch (err) {
+        console.error("Error loading sale products:", err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleSearch = (query) => {
+    if (!query) {
+      setFilteredProducts(products)
+    } else {
+      const search = query.toLowerCase();
+      const filtered = products.filter((item) => item.name.toLowerCase().includes(search));
+      setFilteredProducts(filtered);
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 py-10 sm:py-12">
@@ -14,18 +40,18 @@ const NewArrivalPage = () => {
       </h1>
 
       <div className="mb-12">
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} />
       </div>
 
-      {newArrivals.length === 0 ? (
+      {filteredProducts.length === 0 ? (
         <p className="text-center text-gray-500 text-sm sm:text-base">
           No new arrivals at the moment.
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {newArrivals.map((bag) => (
+          {filteredProducts.map((bag) => (
             <div
-              key={bag.id}
+              key={bag._id}
               className="bg-[#FDF4FF] rounded-xl shadow p-4 hover:shadow-lg transition-all duration-300"
             >
               <img
