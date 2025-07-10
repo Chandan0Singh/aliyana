@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import bagsData from "../../data/bags";
 import PriceFilter from "./PriceFilter";
 import SearchBar from "./Searchbar";
 

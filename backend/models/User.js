@@ -4,19 +4,21 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
-      minlength: 3,
+      required: [true, "Name is required"],
+      minlength: [2, "Name must be at least 2 characters long"],
+      match: [/^[A-Za-z\s]+$/, "Name can only contain letters and spaces"], // 👈 custom validation
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       unique: true,
       lowercase: true,
+      match: [/\S+@\S+\.\S+/, "Invalid email address"], // 👈 validate format
     },
     password: {
       type: String,
-      required: true,
-      minlength: 6,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters long"],
     },
   },
   { timestamps: true }

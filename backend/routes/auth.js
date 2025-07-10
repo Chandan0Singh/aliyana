@@ -7,9 +7,24 @@ const User = require("../models/User");
 // Signup Route
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
+
+  // 👉 Manual checks before hashing
+  if (!name || name.length < 2) {
+    return res.status(400).json({ message: "Name must be at least 2 characters long" });
+  }
+  if (!/^[A-Za-z\s]+$/.test(name)) {
+    return res.status(400).json({ message: "Name can only contain letters and spaces" });
+  }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    return res.status(400).json({ message: "Invalid email address" });
+  }
+  if (!password || password.length < 6) {
+    return res.status(400).json({ message: "Password must be at least 6 characters long" });
+  }
+
   try {
     const exist = await User.findOne({ email });
-    if (exist) return res.status(400).json({ message: "User already exists" });
+    if (exist) return res.status(400).json({ message: "Email already exists" });
 
     const hashed = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashed });
@@ -17,6 +32,17 @@ router.post("/signup", async (req, res) => {
 
     res.status(201).json({ message: "User created" });
   } catch (err) {
+    console.log("SIGNUP ERROR:", err);
+
+    if (err.name === "ValidationError") {
+      const errors = Object.values(err.errors).map((e) => e.message);
+      return res.status(400).json({ message: errors.join(", ") });
+    }
+
+    if (err.code === 11000) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     res.status(500).json({ message: "Signup failed", error: err.message });
   }
 });

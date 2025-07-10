@@ -39,7 +39,7 @@ export default function HomeBody() {
               everyday.
             </p>
             <Link
-              href="/collection"
+              href="/explore"
               className="text-[#C084FC] font-medium hover:underline"
             >
               Explore Collection
