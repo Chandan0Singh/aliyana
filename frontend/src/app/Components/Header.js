@@ -52,7 +52,7 @@ export default function Header() {
             <>
               <div className="me-4 flex items-center gap-4 text-xl text-[#423f69]">
                 <Link href="/cart" aria-label="Cart">🛒</Link>
-                <Link href="/account" aria-label="Account">👤</Link>
+                <Link href="/profile" aria-label="Account">👤</Link>
               </div>
               <span onClick={logout} className="">Logout</span>
             </>
