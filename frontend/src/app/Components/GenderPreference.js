@@ -16,7 +16,7 @@ const GenderPreference = ({ gender }) => {
       setProducts(res.data)
       setFilteredProducts(res.data);
     } catch {
-      console.error("Error fetching gender-based products:", err);
+      console.error("Error fetching gender-based products:");
     }
 
   }

@@ -1,7 +1,11 @@
 // components/ProfileSidebarLayout.js
+'use client'
 import { FaHistory, FaUndo, FaHeadset, FaCog } from "react-icons/fa";
+import { useAuth } from "@/context/AuthContext";
 
 const ProfileSidebarLayout = () => {
+  const { user, logout } = useAuth();
+  console.log(user)
   return (
     <div className="min-h-screen flex bg-gray-100">
       {/* Sidebar */}
@@ -12,8 +16,8 @@ const ProfileSidebarLayout = () => {
             alt="Profile"
             className="w-full h-24 rounded-full object-cover mb-3"
           />
-          <h2 className="text-lg font-semibold">Chandan Singh</h2>
-          <p className="text-sm text-gray-500 mb-4">chandan@example.com</p>
+          <h2 className="text-lg font-semibold">{user?.user.name || "Guest User"}</h2>
+          <p className="text-sm text-gray-500 mb-4">{user?.user.email || "Guest User"}</p>
         </div>
 
         {/* Sidebar Menu */}

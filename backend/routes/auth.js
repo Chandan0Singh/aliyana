@@ -10,16 +10,22 @@ router.post("/signup", async (req, res) => {
 
   // 👉 Manual checks before hashing
   if (!name || name.length < 2) {
-    return res.status(400).json({ message: "Name must be at least 2 characters long" });
+    return res
+      .status(400)
+      .json({ message: "Name must be at least 2 characters long" });
   }
   if (!/^[A-Za-z\s]+$/.test(name)) {
-    return res.status(400).json({ message: "Name can only contain letters and spaces" });
+    return res
+      .status(400)
+      .json({ message: "Name can only contain letters and spaces" });
   }
   if (!email || !/\S+@\S+\.\S+/.test(email)) {
     return res.status(400).json({ message: "Invalid email address" });
   }
   if (!password || password.length < 6) {
-    return res.status(400).json({ message: "Password must be at least 6 characters long" });
+    return res
+      .status(400)
+      .json({ message: "Password must be at least 6 characters long" });
   }
 
   try {
@@ -30,7 +36,14 @@ router.post("/signup", async (req, res) => {
     const newUser = new User({ name, email, password: hashed });
     await newUser.save();
 
-    res.status(201).json({ message: "User created" });
+    res.status(201).json({
+      message: "User created",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+      },
+    });
   } catch (err) {
     console.log("SIGNUP ERROR:", err);
 
