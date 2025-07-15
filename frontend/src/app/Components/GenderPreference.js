@@ -3,27 +3,28 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PriceFilter from "./PriceFilter";
 import SearchBar from "./Searchbar";
+import ProductCard from "./ProductCard";
 
 const GenderPreference = ({ gender }) => {
   const [products, setProducts] = useState([]); // all products
   const [filteredProducts, setFilteredProducts] = useState([]); // after search
-    const [selectedRange, setSelectedRange] = useState(null);
+  const [selectedRange, setSelectedRange] = useState(null);
 
   useEffect(() => {
-     const fetchProducts = async () => {
-    try {
-      const res = await axios.get(`/api/products/gender/${gender}`)
-      setProducts(res.data)
-      setFilteredProducts(res.data);
-    } catch {
-      console.error("Error fetching gender-based products:");
-    }
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(`/api/products/gender/${gender}`)
+        setProducts(res.data)
+        setFilteredProducts(res.data);
+      } catch {
+        console.error("Error fetching gender-based products:");
+      }
 
-  }
+    }
     fetchProducts()
   }, [])
-  
-const handleSearch = (query) => {
+
+  const handleSearch = (query) => {
     if (!query) {
       setFilteredProducts(products);
     } else {
@@ -34,7 +35,7 @@ const handleSearch = (query) => {
       setFilteredProducts(filtered);
     }
   };
- 
+
 
   const priceRanges = [
     { label: "Under ₹500", min: 0, max: 499 },
@@ -46,7 +47,7 @@ const handleSearch = (query) => {
   ];
 
 
-   const handlePriceChange = (range) => {
+  const handlePriceChange = (range) => {
     const newRange =
       selectedRange?.label === range.label ? null : range;
     setSelectedRange(newRange);
@@ -62,6 +63,18 @@ const handleSearch = (query) => {
 
     setFilteredProducts(updated);
   };
+
+  const handleAddToCart = (bag) => {
+  console.log("Adding to cart:", bag);
+  // TODO: Implement actual add-to-cart logic here
+};
+
+const handleBuyNow = (bag) => {
+  console.log("Buying now:", bag);
+  // TODO: Redirect to checkout or open modal
+};
+
+
 
   return (
     <div className="min-h-screen bg-[#FDF4FF] px-4 pt-12 pb-12">
@@ -90,26 +103,14 @@ const handleSearch = (query) => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((bag) => (
-                <div
+
+
+                <ProductCard
                   key={bag.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4"
-                >
-                  <img
-                    src={bag.image}
-                    alt={bag.name}
-                    className="w-full h-60 object-cover rounded-lg mb-4"
-                  />
-                  <h2 className="text-xl font-semibold text-[#1E1B4B]">
-                    {bag.name}
-                  </h2>
-                  <p className="text-gray-700 mt-1">₹{bag.price}</p>
-                  {bag.sale && (
-                    <p className="text-green-600 text-sm mt-1">{bag.sale}</p>
-                  )}
-                  <button className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800">
-                    Add to Cart
-                  </button>
-                </div>
+                  bag={bag}
+                  onAddToCart={handleAddToCart}
+                  onBuyNow={handleBuyNow}
+                />
               ))}
             </div>
           )}

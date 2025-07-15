@@ -29,10 +29,11 @@ const ProductCard = ({ bag, onAddToCart, onBuyNow }) => {
           Add to Cart
         </button>
         <button
-          onClick={() => onBuyNow?.(bag)}
+          // onClick={() => onBuyNow?.(bag)}
+          onClick={() => onBuyNow}
           className="w-1/2 bg-indigo-600 text-white py-2 text-sm rounded-xl hover:bg-indigo-500 transition"
         >
-          Buy Now
+          View Know
         </button>
       </div>
     </div>
@@ -40,35 +41,3 @@ const ProductCard = ({ bag, onAddToCart, onBuyNow }) => {
 };
 
 export default ProductCard;
-
-
-
-// // ExamplePage.js or any page
-// import ProductCard from "@/components/ProductCard";
-
-// const ExamplePage = ({ filteredProducts }) => {
-//   const handleAddToCart = (product) => {
-//     console.log("Added to cart:", product);
-//     // Add your cart logic here
-//   };
-
-//   const handleBuyNow = (product) => {
-//     console.log("Buying now:", product);
-//     // Navigate to checkout or quick buy
-//   };
-
-//   return (
-//     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-//       {filteredProducts.map((bag) => (
-//         <ProductCard
-//           key={bag.id}
-//           bag={bag}
-//           onAddToCart={handleAddToCart}
-//           onBuyNow={handleBuyNow}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default ExamplePage;

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SearchBar from "../Components/Searchbar";
+import ProductCard from "../Components/ProductCard";
 
 const availableTags = ["classic", "premium", "trending", "popular", "all"];
 
@@ -51,6 +52,16 @@ const ExplorePage = () => {
     setSearchQuery(query);
   };
 
+   const handleAddToCart = (bag) => {
+    console.log("Adding to cart:", bag);
+    // TODO: Implement actual add-to-cart logic here
+  };
+
+  const handleBuyNow = (bag) => {
+    console.log("Buying now:", bag);
+    // TODO: Redirect to checkout or open modal
+  };
+
   return (
     <div className="min-h-screen bg-[#FDF4FF] px-4 sm:px-6 py-10 sm:py-12">
       <h1 className="text-3xl sm:text-4xl font-heading text-[#1E1B4B] mb-8 sm:mb-10 text-center">
@@ -95,38 +106,12 @@ const ExplorePage = () => {
             <p>Loading bags...</p>
           ) : filteredBags.length > 0 ? (
             filteredBags.map((bag) => (
-              <div
-                key={bag._id}
-                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-4"
-              >
-                <img
-                  src={bag.image}
-                  alt={bag.name}
-                  className="w-full h-60 object-cover rounded-xl mb-4"
-                />
-                <h2 className="text-md sm:text-lg font-semibold text-[#1E1B4B]">
-                  {bag.name}
-                </h2>
-                <p className="text-[#C084FC] font-medium mt-1 text-sm sm:text-base">
-                  ₹{bag.price}
-                </p>
-                {bag.sale && (
-                  <p className="text-red-500 mt-1 text-sm">Sale: {bag.sale}</p>
-                )}
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {bag.tags?.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="bg-[#F3E8FF] text-[#4C1D95] px-2 py-1 rounded-full text-xs font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <button className="mt-4 w-full bg-[#C084FC] hover:bg-[#4C1D95] text-white py-2 rounded-full text-sm sm:text-base transition">
-                  Add to Cart
-                </button>
-              </div>
+              <ProductCard
+              key={bag.id}
+              bag={bag}
+              onAddToCart={handleAddToCart}
+              onBuyNow={handleBuyNow}
+            />
             ))
           ) : (
             <p>No bags found.</p>
