@@ -52,7 +52,7 @@ const ExplorePage = () => {
     setSearchQuery(query);
   };
 
-   const handleAddToCart = (bag) => {
+  const handleAddToCart = (bag) => {
     console.log("Adding to cart:", bag);
     // TODO: Implement actual add-to-cart logic here
   };
@@ -107,11 +107,11 @@ const ExplorePage = () => {
           ) : filteredBags.length > 0 ? (
             filteredBags.map((bag) => (
               <ProductCard
-              key={bag.id}
-              bag={bag}
-              onAddToCart={handleAddToCart}
-              onBuyNow={handleBuyNow}
-            />
+                key={bag.id}
+                bag={bag}
+                onAddToCart={handleAddToCart}
+                onBuyNow={handleBuyNow}
+              />
             ))
           ) : (
             <p>No bags found.</p>

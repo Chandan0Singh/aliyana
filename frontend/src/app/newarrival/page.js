@@ -12,7 +12,7 @@ const NewArrivalPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('/api/products/new');
+        const res = await axios.get("/api/products/new");
         setProducts(res.data);
         setFilteredProducts(res.data);
       } catch (err) {
@@ -25,16 +25,17 @@ const NewArrivalPage = () => {
 
   const handleSearch = (query) => {
     if (!query) {
-      setFilteredProducts(products)
+      setFilteredProducts(products);
     } else {
       const search = query.toLowerCase();
-      const filtered = products.filter((item) => item.name.toLowerCase().includes(search));
+      const filtered = products.filter((item) =>
+        item.name.toLowerCase().includes(search)
+      );
       setFilteredProducts(filtered);
     }
-  }
+  };
 
-
-   const handleAddToCart = (bag) => {
+  const handleAddToCart = (bag) => {
     console.log("Adding to cart:", bag);
     // TODO: Implement actual add-to-cart logic here
   };
@@ -43,7 +44,6 @@ const NewArrivalPage = () => {
     console.log("Buying now:", bag);
     // TODO: Redirect to checkout or open modal
   };
-
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 py-10 sm:py-12">
