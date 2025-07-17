@@ -29,8 +29,7 @@ const ProductCard = ({ bag, onAddToCart, onBuyNow }) => {
           Add to Cart
         </button>
         <button
-          // onClick={() => onBuyNow?.(bag)}
-          onClick={() => onBuyNow}
+          onClick={() => onBuyNow?.(bag)}
           className="w-1/2 bg-indigo-600 text-white py-2 text-sm rounded-xl hover:bg-indigo-500 transition"
         >
           View Know
