@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { isNewArrival } from "../../utils/isNewArrival";
 import SearchBar from "../Components/Searchbar";
 import ProductCard from "../Components/ProductCard";
+import { useAuth } from "../../context/AuthContext";
 
 const NewArrivalPage = () => {
+  const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -35,9 +36,27 @@ const NewArrivalPage = () => {
     }
   };
 
-  const handleAddToCart = (bag) => {
-    console.log("Adding to cart:", bag);
-    // TODO: Implement actual add-to-cart logic here
+  const handleAddToCart = async (bag) => {
+
+    if (!user) {
+      alert("Please log in to add items to cart.");
+      return;
+    }
+
+    try {
+      console.log("Sending request to: http://localhost:5000/api/cart/add");
+      const res = await axios.post("/api/cart/add", {
+        userId: user.user.id,
+        productId: bag._id,
+        quantity: 1,
+      });
+
+      console.log("Cart updated:", res.data);
+      alert("✅ Added to cart");
+    } catch (err) {
+      console.error("Add to cart failed:", err);
+      alert("❌ Failed to add to cart");
+    }
   };
 
   const handleBuyNow = (bag) => {

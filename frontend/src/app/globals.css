@@ -51,3 +51,12 @@ button:hover{
   background-color: #4C1D95;
   color: white;
 }
+
+/* Add this to styles/globals.css */
+.zoom-img {
+  cursor: zoom-in;
+  transition: transform 0.2s ease-in-out;
+}
+.zoom-img:hover {
+  transform: scale(1.05);
+}

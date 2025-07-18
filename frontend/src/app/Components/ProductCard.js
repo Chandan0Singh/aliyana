@@ -1,8 +1,15 @@
 // components/ProductCard.js
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const ProductCard = ({ bag, onAddToCart, onBuyNow }) => {
+  const router = useRouter();
+
+  const handleView = () => {
+    router.push(`/product/${bag._id}`);
+  };
+
   return (
     <div
       key={bag.id}
@@ -29,7 +36,7 @@ const ProductCard = ({ bag, onAddToCart, onBuyNow }) => {
           Add to Cart
         </button>
         <button
-          onClick={() => onBuyNow?.(bag)}
+          onClick={handleView}
           className="w-1/2 bg-indigo-600 text-white py-2 text-sm rounded-xl hover:bg-indigo-500 transition"
         >
           View Know

@@ -4,8 +4,10 @@ import axios from "axios";
 import PriceFilter from "./PriceFilter";
 import SearchBar from "./Searchbar";
 import ProductCard from "./ProductCard";
+import { useAuth } from "../../context/AuthContext";
 
 const GenderPreference = ({ gender }) => {
+  const { user } = useAuth();
   const [products, setProducts] = useState([]); // all products
   const [filteredProducts, setFilteredProducts] = useState([]); // after search
   const [selectedRange, setSelectedRange] = useState(null);
@@ -64,15 +66,33 @@ const GenderPreference = ({ gender }) => {
     setFilteredProducts(updated);
   };
 
-  const handleAddToCart = (bag) => {
-  console.log("Adding to cart:", bag);
-  // TODO: Implement actual add-to-cart logic here
-};
+  const handleAddToCart = async (bag) => {
 
-const handleBuyNow = (bag) => {
-  console.log("Buying now:", bag);
-  // TODO: Redirect to checkout or open modal
-};
+    if (!user) {
+      alert("Please log in to add items to cart.");
+      return;
+    }
+
+    try {
+      console.log("Sending request to: http://localhost:5000/api/cart/add");
+      const res = await axios.post("/api/cart/add", {
+        userId: user.user.id,
+        productId: bag._id,
+        quantity: 1,
+      });
+
+      console.log("Cart updated:", res.data);
+      alert("✅ Added to cart");
+    } catch (err) {
+      console.error("Add to cart failed:", err);
+      alert("❌ Failed to add to cart");
+    }
+  };
+
+  const handleBuyNow = (bag) => {
+    console.log("Buying now:", bag);
+    // TODO: Redirect to checkout or open modal
+  };
 
 
 

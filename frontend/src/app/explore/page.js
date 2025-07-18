@@ -1,11 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SearchBar from "../Components/Searchbar";
 import ProductCard from "../Components/ProductCard";
+import { useAuth } from "../../context/AuthContext";
 
 const availableTags = ["classic", "premium", "trending", "popular", "all"];
 
 const ExplorePage = () => {
+  const { user } = useAuth();
   const [selectedTag, setSelectedTag] = useState("classic");
   const [bagsData, setBagsData] = useState({});
   const [filteredBags, setFilteredBags] = useState([]);
@@ -52,9 +55,27 @@ const ExplorePage = () => {
     setSearchQuery(query);
   };
 
-  const handleAddToCart = (bag) => {
-    console.log("Adding to cart:", bag);
-    // TODO: Implement actual add-to-cart logic here
+  const handleAddToCart = async (bag) => {
+
+    if (!user) {
+      alert("Please log in to add items to cart.");
+      return;
+    }
+
+    try {
+      console.log("Sending request to: http://localhost:5000/api/cart/add");
+      const res = await axios.post("/api/cart/add", {
+        userId: user.user.id,
+        productId: bag._id,
+        quantity: 1,
+      });
+
+      console.log("Cart updated:", res.data);
+      alert("✅ Added to cart");
+    } catch (err) {
+      console.error("Add to cart failed:", err);
+      alert("❌ Failed to add to cart");
+    }
   };
 
   const handleBuyNow = (bag) => {
@@ -82,11 +103,10 @@ const ExplorePage = () => {
             {availableTags.map((tag) => (
               <label
                 key={tag}
-                className={`flex items-center gap-3 cursor-pointer text-sm sm:text-base ${
-                  selectedTag === tag
+                className={`flex items-center gap-3 cursor-pointer text-sm sm:text-base ${selectedTag === tag
                     ? "text-[#4C1D95] font-medium"
                     : "text-[#4B5563] hover:text-[#1E1B4B]"
-                }`}
+                  }`}
               >
                 <input
                   type="checkbox"

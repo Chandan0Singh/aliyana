@@ -54,7 +54,7 @@ const ShopPage = () => {
     try {
       console.log("Sending request to: http://localhost:5000/api/cart/add");
       const res = await axios.post("/api/cart/add", {
-        userId: user.id,
+        userId: user.user.id,
         productId: bag._id,
         quantity: 1,
       });
