@@ -91,6 +91,39 @@ const getProductById = async (req, res) => {
 };
 
 
+const createProduct = async (req, res) => {
+  try {
+    const newProduct = new Product(req.body);
+    const saved = await newProduct.save();
+    res.status(201).json(saved);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to add product", error });
+  }
+};
+
+// ✅ Update Product
+const updateProduct = async (req, res) => {
+  try {
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ message: "Product not found" });
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update product", error });
+  }
+};
+
+// ✅ Delete Product
+const deleteProduct = async (req, res) => {
+  try {
+    const deleted = await Product.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Product not found" });
+    res.json({ message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete product", error });
+  }
+};
+
+
 
 module.exports = {
   getAllProducts,
@@ -99,4 +132,8 @@ module.exports = {
   getExploreData,
   getNewArrivals, 
   getProductById,
+
+  createProduct,
+  updateProduct,
+  deleteProduct
 };

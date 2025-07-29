@@ -8,6 +8,9 @@ const {
   getExploreData,
   getNewArrivals,
   getProductById,
+  createProduct,       // ✅ new
+  updateProduct,       // ✅ new
+  deleteProduct  
 } = require("../controllers/productController");
 
 router.get("/", getAllProducts); // /api/products
@@ -16,6 +19,10 @@ router.get("/sale", getSaleProducts);
 router.get("/explore", getExploreData); 
 router.get("/new", getNewArrivals);
 router.get("/:id", getProductById);
+
+router.post("/add", createProduct);
+router.put("/:id", updateProduct);
+router.delete("/:id", deleteProduct);
 
 
 module.exports = router;
