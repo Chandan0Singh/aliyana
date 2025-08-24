@@ -116,7 +116,6 @@ const GenderPreference = ({ gender }) => {
           />
         </div>
 
-        {/* Product Grid */}
         <div className="w-full">
           {filteredProducts.length === 0 ? (
             <p className="text-center text-gray-500">No bags in this range.</p>
@@ -126,7 +125,7 @@ const GenderPreference = ({ gender }) => {
 
 
                 <ProductCard
-                  key={bag.id}
+                  key={bag._id}
                   bag={bag}
                   onAddToCart={handleAddToCart}
                   onBuyNow={handleBuyNow}

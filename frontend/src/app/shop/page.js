@@ -22,6 +22,7 @@ const ShopPage = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get("/api/products");
+        console.log("Products :", res.data ) 
         setProducts(res.data);
         setFilteredProducts(res.data);
       } catch (err) {
@@ -93,7 +94,7 @@ const ShopPage = () => {
 
           return (
             <ProductCard
-              key={bag.id}
+              key={bag._id}
               bag={bag}
               onAddToCart={handleAddToCart}
               onBuyNow={handleBuyNow}
