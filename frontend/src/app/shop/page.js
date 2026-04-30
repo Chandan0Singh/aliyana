@@ -12,8 +12,6 @@ const calculateDiscountedPrice = (price, sale) => {
   return Math.floor(discounted);
 };
 
-//checking git issue
-
 const ShopPage = () => {
   const { user } = useAuth();
 
