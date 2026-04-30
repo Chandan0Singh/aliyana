@@ -32,7 +32,7 @@ const addToCart = async (req, res) => {
     } else {
       // Check if product already in cart
       const itemIndex = cart.items.findIndex(
-        (item) => item.productId.toString() === productId
+        (item) => item.productId.toString() === productId,
       );
 
       if (itemIndex > -1) {
@@ -57,11 +57,40 @@ const addToCart = async (req, res) => {
   }
 };
 
+const removeFromCart = async (req, res) => {
+  const { cartItemId, userId } = req.body;
+
+  try {
+    if (!cartItemId || !userId) {
+      return res.status(400).json({ message: "Missing inputs" });
+    }
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+    cart.items = cart.items.filter((item) => item._id.toString() !== cartItemId);
+
+    await cart.save();
+
+    console.log("DAFas", cart);
+
+    res.status(200).json({
+      message: "Item removed successfully",
+      cart,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // 🧾 Get Cart for User
 const getUserCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId }).populate(
-      "items.productId"
+      "items.productId",
     );
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
@@ -71,4 +100,4 @@ const getUserCart = async (req, res) => {
   }
 };
 
-module.exports = { addToCart, getUserCart };
+module.exports = { addToCart, removeFromCart, getUserCart };

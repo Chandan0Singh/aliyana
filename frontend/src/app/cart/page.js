@@ -28,18 +28,34 @@ const Cart = () => {
       }
     };
 
-
     fetchCart();
   }, [user]);
 
   useEffect(() => {
-    console.log("cart :", cart)
-  }, [cart])
+    console.log("cart :", cart);
+  }, [cart]);
 
-  if (!user) return <p className="p-4 text-red-600">Please log in to view your cart.</p>;
+  if (!user)
+    return <p className="p-4 text-red-600">Please log in to view your cart.</p>;
   if (loading) return <p className="p-4">Loading cart...</p>;
   if (!cart || cart.items.length === 0)
-    return <p className="p-4 min-h-[51vh] text-gray-700">🛒 Your cart is empty.</p>;
+    return (
+      <p className="p-4 min-h-[51vh] text-gray-700">🛒 Your cart is empty.</p>
+    );
+
+  const handleRemove = async(itemId) => {
+    try {
+      const deleteItem =  await axios.delete(`/api/cart/remove`, {
+        data : {
+          userId: user.user.id,
+          cartItemId :  itemId
+        }
+      })
+      console.log("lassan : ", deleteItem)
+    } catch (err) {
+      console.log("cart item delete err: ", err);
+    }
+  };
 
   const calculateItemTotal = (item) => {
     const price = item.productId?.price;
@@ -48,7 +64,7 @@ const Cart = () => {
 
   const totalPrice = cart.items.reduce(
     (acc, item) => acc + calculateItemTotal(item),
-    0
+    0,
   );
 
   return (
@@ -75,14 +91,18 @@ const Cart = () => {
                 Subtotal: ₹{calculateItemTotal(item)}
               </p>
             </div>
+            <div className="flex gap-2 flex-col">
+              
+              <button className="px-[18px]" onClick={()=>handleRemove(item._id)}>
+                remove
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
       <div className="mt-10 text-right">
-        <h2 className="text-xl font-bold">
-          Total: ₹{totalPrice}
-        </h2>
+        <h2 className="text-xl font-bold">Total: ₹{totalPrice}</h2>
       </div>
     </div>
   );

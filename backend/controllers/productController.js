@@ -6,7 +6,8 @@ const getAllProducts = async (req, res) => {
     const products = await Product.find({});
     res.json(products);
   } catch (err) {
-    res.status(500).json({ message: "Server Error", error: err.message });
+    console.log("all product :", err);
+    res.status(500).json({ message: "Server Error", error: err });
   }
 };
 
@@ -19,16 +20,16 @@ const getProductsByGender = async (req, res) => {
   }
 };
 
-const getSaleProducts = async (req, res) =>{
-    try{
-        const products = await Product.find({
-            sale: { $exists: true, $ne: null },
-        });
-        res.json(products);
-    } catch (err) {
+const getSaleProducts = async (req, res) => {
+  try {
+    const products = await Product.find({
+      sale: { $exists: true, $ne: null },
+    });
+    res.json(products);
+  } catch (err) {
     res.status(500).json({ message: "Server Error", error: err.message });
   }
-}
+};
 
 const getExploreData = async (req, res) => {
   try {
@@ -86,10 +87,11 @@ const getProductById = async (req, res) => {
 
     res.json(product);
   } catch (err) {
-    res.status(500).json({ message: "Error fetching product", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching product", error: err.message });
   }
 };
-
 
 const createProduct = async (req, res) => {
   try {
@@ -104,7 +106,9 @@ const createProduct = async (req, res) => {
 // ✅ Update Product
 const updateProduct = async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updated) return res.status(404).json({ message: "Product not found" });
     res.json(updated);
   } catch (error) {
@@ -123,17 +127,15 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
   getAllProducts,
   getProductsByGender,
   getSaleProducts,
   getExploreData,
-  getNewArrivals, 
+  getNewArrivals,
   getProductById,
 
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };
