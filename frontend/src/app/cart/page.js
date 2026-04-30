@@ -67,6 +67,30 @@ const Cart = () => {
     0,
   );
 
+  const updateQty = (itemId, value) => {
+  if (value < 1) return;
+
+  const updatedItems = cart.items.map((item) =>
+    item._id === itemId ? { ...item, quantity: value } : item
+  );
+
+  setCart({ ...cart, items: updatedItems });
+
+  // 👉 backend sync (optional but recommended)
+  // axios.put('/api/cart/update', {
+  //   userId: user.user.id,
+  //   cartItemId: itemId,
+  //   quantity: value
+  // });
+};
+
+const handleInputChange = (e, itemId) => {
+  const value = parseInt(e.target.value);
+  if (!isNaN(value)) {
+    updateQty(itemId, value);
+  }
+};
+
   return (
     <div className="min-h-screen px-4 py-10 bg-white text-[#1E1B4B]">
       <h1 className="text-3xl font-bold mb-6">🛒 Your Cart</h1>
@@ -92,7 +116,33 @@ const Cart = () => {
               </p>
             </div>
             <div className="flex gap-2 flex-col">
-              
+              <div className="flex items-center gap-2 border p-2 rounded-lg w-fit">
+  
+  {/* Decrease */}
+  <button
+    onClick={() => updateQty(item._id, item.quantity - 1)}
+    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+  >
+    -
+  </button>
+
+  {/* Input */}
+  <input
+    type="number"
+    value={item.quantity}
+    onChange={(e) => handleInputChange(e, item._id)}
+    className="w-12 text-center border rounded"
+    min="1"
+  />
+
+  {/* Increase */}
+  <button
+    onClick={() => updateQty(item._id, item.quantity + 1)}
+    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+  >
+    +
+  </button>
+</div>
               <button className="px-[18px]" onClick={()=>handleRemove(item._id)}>
                 remove
               </button>
