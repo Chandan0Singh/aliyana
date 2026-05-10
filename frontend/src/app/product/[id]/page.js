@@ -1,14 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../../context/AuthContext';
 import { useParams } from 'next/navigation';
 import ReactImageMagnify from "react-image-magnify";
 import BuyNowModal from '../../Components/BuyNow'
+import CartBtn from '@/app/Components/cartBtn';
 
 const ProductPage = () => {
   const { id } = useParams(); // ✅ Fix for params
-  const { user } = useAuth();
 
   const [bag, setBag] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,24 +29,6 @@ const ProductPage = () => {
     if (id) fetchProduct();
   }, [id]);
 
-  const handleAddToCart = async () => {
-    if (!user) {
-      alert("Please log in to add items to cart.");
-      return;
-    }
-
-    try {
-      const res = await axios.post("/api/cart/add", {
-        userId: user.user.id,
-        productId: bag._id,
-        quantity: 1,
-      });
-      alert("✅ Added to cart");
-    } catch (err) {
-      console.error("Add to cart failed:", err);
-      alert("❌ Failed to add to cart");
-    }
-  };
 
   if (loading) return <div className="p-10">Loading...</div>;
   if (!bag) return <div className="p-10">Product not found.</div>;
@@ -108,12 +89,8 @@ const ProductPage = () => {
               >
                 Buy Now
               </button>
-              <button
-                onClick={handleAddToCart}
-                className="bg-yellow-400 text-white px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition"
-              >
-                Add to Cart
-              </button>
+
+              <CartBtn bag={bag} />
 
             </div>
           </div>

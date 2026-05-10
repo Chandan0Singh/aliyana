@@ -14,7 +14,6 @@ export default function LoginPage() {
   const { login } = useAuth();
 
   const handleLogin = async (e) => {
-
     e.preventDefault();
     setError(null);
     try {
@@ -36,12 +35,12 @@ export default function LoginPage() {
       // Save token, redirect to home
       localStorage.setItem("token", data.token);
       login(data);
+      console.log("user data : ", data);
       router.push("/");
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FDF4FF] px-4 py-12">
@@ -100,7 +99,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-sm text-gray-600 text-center mt-6">
-          Don’t have an account?{' '}
+          Don’t have an account?{" "}
           <Link href="/signup" className="text-[#4C1D95] hover:underline">
             Sign up
           </Link>
