@@ -75,11 +75,11 @@ const CartBtn = ({ bag }) => {
   }
 
   return (
-    <div>
+    <>
       {isInCart ? (
         <button
           onClick={() => router.push("/cart")}
-          className="w-1/2 bg-gray-900 text-white py-2 text-sm rounded-xl hover:bg-gray-700 transition"
+          className="w-1/2 bg-indigo-600 text-white py-2 text-sm rounded-xl hover:bg-indigo-500 transition"
         >
           View in Cart
         </button>
@@ -91,7 +91,7 @@ const CartBtn = ({ bag }) => {
           Add to Cart
         </button>
       )}
-    </div>
+    </>
   );
 };
 
