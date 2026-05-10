@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "../Components/Searchbar";
 import ProductCard from "../Components/ProductCard";
-import { useAuth } from "../../context/AuthContext";
 
 const calculateDiscountedPrice = (price, sale) => {
   if (!sale) return price;
@@ -13,8 +12,6 @@ const calculateDiscountedPrice = (price, sale) => {
 };
 
 const ShopPage = () => {
-  const { user } = useAuth();
-
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -45,39 +42,6 @@ const ShopPage = () => {
     }
   };
 
-  const handleAddToCart = async (bag) => {
-
-    if (!user) {
-      alert("Please log in to add items to cart.");
-      return;
-    }
-
-    try {
-      console.log("Sending request to: http://localhost:5000/api/cart/add");
-      const res = await axios.post("/api/cart/add", {
-        userId: user.user.id,
-        productId: bag._id,
-        quantity: 1,
-      });
-
-      console.log("Cart updated:", res.data);
-      alert("✅ Added to cart");
-    } catch (err) {
-      console.error("Add to cart failed:", err);
-      alert("❌ Failed to add to cart");
-    }
-  };
-
-  const handleBuyNow = (bag) => {
-    if (!user) {
-      alert("Please log in to buy now.");
-      return;
-    }
-
-    // Navigate to checkout or do whatever is needed
-    console.log("Buying now:", bag);
-  };
-
   return (
     <div className="min-h-screen px-4 sm:px-6 py-10 bg-[#FDF4FF] text-[#1E1B4B]">
       <h1 className="text-3xl sm:text-4xl font-serif font-bold text-center mb-10 sm:mb-12">
@@ -96,8 +60,6 @@ const ShopPage = () => {
             <ProductCard
               key={bag._id}
               bag={bag}
-              onAddToCart={handleAddToCart}
-              onBuyNow={handleBuyNow}
             />
           );
         })}

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../Components/Searchbar";
 import axios from "axios";
 import ProductCard from "../Components/ProductCard";
-import { useAuth } from "../../context/AuthContext";
 
 // 🧠 Utility to calculate discount
 const calculateDiscountedPrice = (price, sale) => {
@@ -14,7 +13,6 @@ const calculateDiscountedPrice = (price, sale) => {
 };
 
 const ShopPage = () => {
-  const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -44,33 +42,6 @@ const ShopPage = () => {
     }
   };
 
-  const handleAddToCart = async (bag) => {
-
-    if (!user) {
-      alert("Please log in to add items to cart.");
-      return;
-    }
-
-    try {
-      console.log("Sending request to: http://localhost:5000/api/cart/add");
-      const res = await axios.post("/api/cart/add", {
-        userId: user.user.id,
-        productId: bag._id,
-        quantity: 1,
-      });
-
-      console.log("Cart updated:", res.data);
-      alert("✅ Added to cart");
-    } catch (err) {
-      console.error("Add to cart failed:", err);
-      alert("❌ Failed to add to cart");
-    }
-  };
-
-  const handleBuyNow = (bag) => {
-    console.log("Buying now:", bag);
-    // TODO: Redirect to checkout or open modal
-  };
 
   return (
     <div className="min-h-screen px-4 sm:px-6 py-10 bg-[#FDF4FF] text-[#1E1B4B]">
@@ -90,8 +61,6 @@ const ShopPage = () => {
             <ProductCard
               key={bag.id}
               bag={bag}
-              onAddToCart={handleAddToCart}
-              onBuyNow={handleBuyNow}
             />
           );
         })}

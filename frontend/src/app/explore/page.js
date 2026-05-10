@@ -1,14 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import SearchBar from "../Components/Searchbar";
 import ProductCard from "../Components/ProductCard";
-import { useAuth } from "../../context/AuthContext";
 
 const availableTags = ["classic", "premium", "trending", "popular", "all"];
 
 const ExplorePage = () => {
-  const { user } = useAuth();
   const [selectedTag, setSelectedTag] = useState("classic");
   const [bagsData, setBagsData] = useState({});
   const [filteredBags, setFilteredBags] = useState([]);
@@ -53,34 +50,6 @@ const ExplorePage = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-  };
-
-  const handleAddToCart = async (bag) => {
-
-    if (!user) {
-      alert("Please log in to add items to cart.");
-      return;
-    }
-
-    try {
-      console.log("Sending request to: http://localhost:5000/api/cart/add");
-      const res = await axios.post("/api/cart/add", {
-        userId: user.user.id,
-        productId: bag._id,
-        quantity: 1,
-      });
-
-      console.log("Cart updated:", res.data);
-      alert("✅ Added to cart");
-    } catch (err) {
-      console.error("Add to cart failed:", err);
-      alert("❌ Failed to add to cart");
-    }
-  };
-
-  const handleBuyNow = (bag) => {
-    console.log("Buying now:", bag);
-    // TODO: Redirect to checkout or open modal
   };
 
   return (
@@ -129,8 +98,6 @@ const ExplorePage = () => {
               <ProductCard
                 key={bag.id}
                 bag={bag}
-                onAddToCart={handleAddToCart}
-                onBuyNow={handleBuyNow}
               />
             ))
           ) : (

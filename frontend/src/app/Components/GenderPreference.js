@@ -4,10 +4,8 @@ import axios from "axios";
 import PriceFilter from "./PriceFilter";
 import SearchBar from "./Searchbar";
 import ProductCard from "./ProductCard";
-import { useAuth } from "../../context/AuthContext";
 
 const GenderPreference = ({ gender }) => {
-  const { user } = useAuth();
   const [products, setProducts] = useState([]); // all products
   const [filteredProducts, setFilteredProducts] = useState([]); // after search
   const [selectedRange, setSelectedRange] = useState(null);
@@ -66,36 +64,6 @@ const GenderPreference = ({ gender }) => {
     setFilteredProducts(updated);
   };
 
-  const handleAddToCart = async (bag) => {
-
-    if (!user) {
-      alert("Please log in to add items to cart.");
-      return;
-    }
-
-    try {
-      console.log("Sending request to: http://localhost:5000/api/cart/add");
-      const res = await axios.post("/api/cart/add", {
-        userId: user.user.id,
-        productId: bag._id,
-        quantity: 1,
-      });
-
-      console.log("Cart updated:", res.data);
-      alert("✅ Added to cart");
-    } catch (err) {
-      console.error("Add to cart failed:", err);
-      alert("❌ Failed to add to cart");
-    }
-  };
-
-  const handleBuyNow = (bag) => {
-    console.log("Buying now:", bag);
-    // TODO: Redirect to checkout or open modal
-  };
-
-
-
   return (
     <div className="min-h-screen bg-[#FDF4FF] px-4 pt-12 pb-12">
       <h1 className="text-3xl sm:text-4xl font-serif font-bold text-center mb-10">
@@ -127,8 +95,6 @@ const GenderPreference = ({ gender }) => {
                 <ProductCard
                   key={bag._id}
                   bag={bag}
-                  onAddToCart={handleAddToCart}
-                  onBuyNow={handleBuyNow}
                 />
               ))}
             </div>
