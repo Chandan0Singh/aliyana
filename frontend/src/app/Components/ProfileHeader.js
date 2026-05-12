@@ -1,8 +1,8 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { FaHistory, FaUndo, FaHeadset, FaUser } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 const tabs = {
   PROFILE: "Profile",
@@ -22,10 +22,10 @@ const ProfileSidebarLayout = () => {
   });
 
   useEffect(() => {
-  if (!user) {
-    router.push("/");
-  }
-}, [user]);
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
 
   // useEffect(()=>{
   //   console.log(user.user.name)
@@ -61,6 +61,25 @@ const ProfileSidebarLayout = () => {
             />
           ))}
         </nav>
+        {(user?.user?.role === "superadmin" ||
+          user?.user?.role === "admin") && (
+          <div
+            className="flex items-center space-x-3 p-2 rounded-lg cursor-pointer transition hover:bg-gray-100"
+            onClick={() =>
+              router.push(
+                user?.user?.role === "superadmin"
+                  ? "/superadmin/dashboard"
+                  : "/admin/dashboard",
+              )
+            }
+          >
+            <span className="text-xl">
+              <FaUser />
+            </span>
+
+            <span className="text-sm font-semibold">Admin Dashboard</span>
+          </div>
+        )}
       </aside>
 
       {/* Main Content Area */}
@@ -84,8 +103,13 @@ const ProfileSidebarLayout = () => {
         {activeTab === tabs.SUPPORT && (
           <div className="text-gray-700 space-y-3">
             <p>Need help?</p>
-            <p>Email us at <span className="text-blue-600">support@example.com</span></p>
-            <p>Call us at <span className="text-blue-600">+91 860968260</span></p>
+            <p>
+              Email us at{" "}
+              <span className="text-blue-600">support@example.com</span>
+            </p>
+            <p>
+              Call us at <span className="text-blue-600">+91 860968260</span>
+            </p>
           </div>
         )}
 
@@ -93,7 +117,9 @@ const ProfileSidebarLayout = () => {
           <div className="space-y-4">
             {/* Editable Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
               {editField === "name" ? (
                 <input
                   name="name"
@@ -115,7 +141,9 @@ const ProfileSidebarLayout = () => {
 
             {/* Editable Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
               {editField === "email" ? (
                 <input
                   name="email"
