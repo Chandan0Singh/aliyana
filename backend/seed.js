@@ -5,7 +5,7 @@ const Product = require('./models/Product');
 const bagsData = [
   {
     id: 'kids-pink',
-    name: 'Kids Pink Mini Bag',
+    title: 'Kids Pink Mini Bag',
     image: 'https://rukminim2.flixcart.com/image/750/900/xif0q/sling-bag/f/n/v/-original-imagz49ehhb5azrp.jpeg?q=20&crop=false',
     price: 999,
     gender: 'female',
@@ -16,7 +16,7 @@ const bagsData = [
   },
   {
     id: 'kids-blue',
-    name: 'Kids Blue Cartoon Bag',
+    title: 'Kids Blue Cartoon Bag',
     image: 'https://m.media-amazon.com/images/I/71akHUAdSEL._AC_UY1100_.jpg',
     price: 899,
     gender: 'male',
@@ -26,7 +26,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-black',
-    name: 'Teen Boy Black Sling',
+    title: 'Teen Boy Black Sling',
     image: 'https://m.media-amazon.com/images/I/61UBT3Gn+oL._SX679_.jpg',
     price: 1299,
     gender: 'male',
@@ -37,7 +37,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-floral',
-    name: 'Teen Girl Floral Backpack',
+    title: 'Teen Girl Floral Backpack',
     image: 'https://m.media-amazon.com/images/I/81z5vl5YrDL._AC_UY1100_.jpg',
     price: 1399,
     gender: 'female',
@@ -47,7 +47,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-tote',
-    name: 'Adult Woman Tote',
+    title: 'Adult Woman Tote',
     image: 'https://m.media-amazon.com/images/I/61x5q+zB0qL._AC_UY1100_.jpg',
     price: 2499,
     gender: 'female',
@@ -56,7 +56,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-laptop',
-    name: 'Adult Man Laptop Bag',
+    title: 'Adult Man Laptop Bag',
     image: 'https://m.media-amazon.com/images/I/91ogt8ED2EL._AC_UY1100_.jpg',
     price: 2799,
     gender: 'male',
@@ -65,7 +65,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-leather',
-    name: 'Elder Man Leather Bag',
+    title: 'Elder Man Leather Bag',
     image: 'https://s.alicdn.com/@sc04/kf/Hc944b3a6d9b244ae964e5eb829394b10X.png_300x300.jpg',
     price: 3499,
     gender: 'male',
@@ -74,7 +74,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-handbag',
-    name: 'Elder Woman Classic Handbag',
+    title: 'Elder Woman Classic Handbag',
     image: 'https://m.media-amazon.com/images/I/71jQgFDHfdL._AC_UY1100_.jpg',
     price: 1999,
     gender: 'female',
@@ -83,7 +83,7 @@ const bagsData = [
   },
   {
     id: 'unisex-duffel-gym',
-    name: 'Unisex Duffel Gym Bag',
+    title: 'Unisex Duffel Gym Bag',
     image: 'https://m.media-amazon.com/images/I/71LGukjcZeL._AC_UY1100_.jpg',
     price: 1599,
     gender: 'unisex',
@@ -93,7 +93,7 @@ const bagsData = [
   },
   {
     id: 'kids-unicorn',
-    name: 'Kids Unicorn Backpack',
+    title: 'Kids Unicorn Backpack',
     image: 'https://m.media-amazon.com/images/I/61vPyGqS0uL._AC_UY1100_.jpg',
     price: 999,
     gender: 'female',
@@ -103,7 +103,7 @@ const bagsData = [
   },
   {
     id: 'travel-backpack-men',
-    name: 'Men’s Travel Backpack',
+    title: 'Men’s Travel Backpack',
     image: 'https://m.media-amazon.com/images/I/81l3rZK4lnL._AC_UY1100_.jpg',
     price: 2199,
     gender: 'male',
@@ -113,7 +113,7 @@ const bagsData = [
   },
   {
     id: 'luxury-leather-women',
-    name: 'Luxury Leather Tote - Women',
+    title: 'Luxury Leather Tote - Women',
     image: 'https://m.media-amazon.com/images/I/61JDYw+5P6L._AC_UY1100_.jpg',
     price: 4599,
     gender: 'female',
@@ -122,7 +122,7 @@ const bagsData = [
   },
   {
     id: 'college-bag-unisex',
-    name: 'College Backpack - Unisex',
+    title: 'College Backpack - Unisex',
     image: 'https://m.media-amazon.com/images/I/71tFOp+E8qL._AC_UY1100_.jpg',
     price: 1099,
     gender: 'unisex',
@@ -132,7 +132,7 @@ const bagsData = [
   },
   {
     id: 'office-bag-laptop',
-    name: 'Formal Laptop Office Bag',
+    title: 'Formal Laptop Office Bag',
     image: 'https://m.media-amazon.com/images/I/71yE+nDnUnL._AC_UY1100_.jpg',
     price: 1999,
     gender: 'unisex',
@@ -141,7 +141,7 @@ const bagsData = [
   },
   {
     id: 'fashion-bag-glitter',
-    name: 'Glitter Party Clutch',
+    title: 'Glitter Party Clutch',
     image: 'https://m.media-amazon.com/images/I/71GknhNhgCL._AC_UY1100_.jpg',
     price: 899,
     gender: 'female',
@@ -151,7 +151,7 @@ const bagsData = [
   },
   {
     id: 'kids-dino-bag',
-    name: 'Kids Dino Fun Bag',
+    title: 'Kids Dino Fun Bag',
     image: 'https://m.media-amazon.com/images/I/718dA6eDoWL._AC_UY1100_.jpg',
     price: 849,
     gender: 'male',
@@ -161,7 +161,7 @@ const bagsData = [
   },
   {
     id: 'woman-sling-bag-red',
-    name: 'Red Sling Bag for Women',
+    title: 'Red Sling Bag for Women',
     image: 'https://m.media-amazon.com/images/I/61mPrCYoR7L._AC_UY1100_.jpg',
     price: 1199,
     gender: 'female',
@@ -171,7 +171,7 @@ const bagsData = [
   },
   {
     id: 'man-messenger-bag',
-    name: 'Mens Brown Messenger Bag',
+    title: 'Mens Brown Messenger Bag',
     image: 'https://m.media-amazon.com/images/I/61+Z5b8kYrL._AC_UY1100_.jpg',
     price: 1899,
     gender: 'male',
@@ -180,7 +180,7 @@ const bagsData = [
   },
   {
     id: 'kids-space-backpack',
-    name: 'Kids Space Adventure Backpack',
+    title: 'Kids Space Adventure Backpack',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 950,
     gender: 'male',
@@ -190,7 +190,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-pink-sling',
-    name: 'Teen Girl Pink Sling Bag',
+    title: 'Teen Girl Pink Sling Bag',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1299,
     gender: 'female',
@@ -200,7 +200,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-duffel',
-    name: 'Adult Man Sports Duffel',
+    title: 'Adult Man Sports Duffel',
     image: 'https://m.media-amazon.com/images/I/71kLmNp2ZqL._AC_UY1100_.jpg',
     price: 1799,
     gender: 'male',
@@ -209,7 +209,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-floral',
-    name: 'Elder Woman Floral Handbag',
+    title: 'Elder Woman Floral Handbag',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2299,
     gender: 'female',
@@ -218,7 +218,7 @@ const bagsData = [
   },
   {
     id: 'kids-superhero-bag',
-    name: 'Kids Superhero Backpack',
+    title: 'Kids Superhero Backpack',
     image: 'https://m.media-amazon.com/images/I/61zXy7qP9uL._AC_UY1100_.jpg',
     price: 899,
     gender: 'male',
@@ -228,7 +228,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-blue',
-    name: 'Teen Boy Blue Backpack',
+    title: 'Teen Boy Blue Backpack',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1499,
     gender: 'male',
@@ -238,7 +238,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-clutch',
-    name: 'Adult Woman Evening Clutch',
+    title: 'Adult Woman Evening Clutch',
     image: 'https://m.media-amazon.com/images/I/61vRt6qY8xL._AC_UY1100_.jpg',
     price: 999,
     gender: 'female',
@@ -248,7 +248,7 @@ const bagsData = [
   },
   {
     id: 'unisex-travel-duffel',
-    name: 'Unisex Travel Duffel Bag',
+    title: 'Unisex Travel Duffel Bag',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'unisex',
@@ -258,7 +258,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-briefcase',
-    name: 'Elder Man Classic Briefcase',
+    title: 'Elder Man Classic Briefcase',
     image: 'https://m.media-amazon.com/images/I/61xUz8qZ0vL._AC_UY1100_.jpg',
     price: 3999,
     gender: 'male',
@@ -267,7 +267,7 @@ const bagsData = [
   },
   {
     id: 'kids-princess-bag',
-    name: 'Kids Princess Sparkle Bag',
+    title: 'Kids Princess Sparkle Bag',
     image: 'https://images.pexels.com/photos/934069/pexels-photo-934069.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 799,
     gender: 'female',
@@ -277,7 +277,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-casual',
-    name: 'Unisex Teen Casual Backpack',
+    title: 'Unisex Teen Casual Backpack',
     image: 'https://m.media-amazon.com/images/I/61yVz0qA2wL._AC_UY1100_.jpg',
     price: 1199,
     gender: 'unisex',
@@ -287,7 +287,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-backpack',
-    name: 'Adult Woman Stylish Backpack',
+    title: 'Adult Woman Stylish Backpack',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2399,
     gender: 'female',
@@ -296,7 +296,7 @@ const bagsData = [
   },
   {
     id: 'kids-animal-bag',
-    name: 'Kids Animal Print Bag',
+    title: 'Kids Animal Print Bag',
     image: 'https://m.media-amazon.com/images/I/61tUz7qC4vL._AC_UY1100_.jpg',
     price: 850,
     gender: 'unisex',
@@ -306,7 +306,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-tote',
-    name: 'Teen Girl Trendy Tote',
+    title: 'Teen Girl Trendy Tote',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1399,
     gender: 'female',
@@ -316,7 +316,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-sling',
-    name: 'Adult Man Urban Sling',
+    title: 'Adult Man Urban Sling',
     image: 'https://m.media-amazon.com/images/I/61xXy9qE6yL._AC_UY1100_.jpg',
     price: 1699,
     gender: 'male',
@@ -325,7 +325,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-tote',
-    name: 'Elder Woman Elegant Tote',
+    title: 'Elder Woman Elegant Tote',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2599,
     gender: 'female',
@@ -334,7 +334,7 @@ const bagsData = [
   },
   {
     id: 'kids-robot-bag',
-    name: 'Kids Robot Adventure Bag',
+    title: 'Kids Robot Adventure Bag',
     image: 'https://m.media-amazon.com/images/I/61zVz1qG8uL._AC_UY1100_.jpg',
     price: 899,
     gender: 'male',
@@ -344,7 +344,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-sports',
-    name: 'Teen Boy Sports Backpack',
+    title: 'Teen Boy Sports Backpack',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1599,
     gender: 'male',
@@ -354,7 +354,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-satchel',
-    name: 'Adult Woman Satchel Bag',
+    title: 'Adult Woman Satchel Bag',
     image: 'https://m.media-amazon.com/images/I/61tXy3qJ0wL._AC_UY1100_.jpg',
     price: 2799,
     gender: 'female',
@@ -363,7 +363,7 @@ const bagsData = [
   },
   {
     id: 'unisex-laptop-backpack',
-    name: 'Unisex Laptop Backpack',
+    title: 'Unisex Laptop Backpack',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'unisex',
@@ -373,7 +373,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-sling',
-    name: 'Elder Man Compact Sling',
+    title: 'Elder Man Compact Sling',
     image: 'https://m.media-amazon.com/images/I/61xWz5qM2yL._AC_UY1100_.jpg',
     price: 1999,
     gender: 'male',
@@ -382,7 +382,7 @@ const bagsData = [
   },
   {
     id: 'kids-fairy-bag',
-    name: 'Kids Fairy Magic Bag',
+    title: 'Kids Fairy Magic Bag',
     image: 'https://images.pexels.com/photos/934069/pexels-photo-934069.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 799,
     gender: 'female',
@@ -392,7 +392,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-glitter',
-    name: 'Teen Girl Glitter Sling',
+    title: 'Teen Girl Glitter Sling',
     image: 'https://m.media-amazon.com/images/I/61tUz8qP4vL._AC_UY1100_.jpg',
     price: 1099,
     gender: 'female',
@@ -402,7 +402,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-backpack',
-    name: 'Adult Man Tactical Backpack',
+    title: 'Adult Man Tactical Backpack',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2299,
     gender: 'male',
@@ -411,7 +411,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-clutch',
-    name: 'Elder Woman Velvet Clutch',
+    title: 'Elder Woman Velvet Clutch',
     image: 'https://m.media-amazon.com/images/I/61vWz0qT6yL._AC_UY1100_.jpg',
     price: 1799,
     gender: 'female',
@@ -420,7 +420,7 @@ const bagsData = [
   },
   {
     id: 'kids-car-bag',
-    name: 'Kids Racing Car Bag',
+    title: 'Kids Racing Car Bag',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 849,
     gender: 'male',
@@ -430,7 +430,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-sling',
-    name: 'Unisex Teen Urban Sling',
+    title: 'Unisex Teen Urban Sling',
     image: 'https://m.media-amazon.com/images/I/61xXy0qW9vL._AC_UY1100_.jpg',
     price: 1299,
     gender: 'unisex',
@@ -440,7 +440,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-hobo',
-    name: 'Adult Woman Hobo Bag',
+    title: 'Adult Woman Hobo Bag',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2699,
     gender: 'female',
@@ -449,7 +449,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-messenger',
-    name: 'Elder Man Messenger Bag',
+    title: 'Elder Man Messenger Bag',
     image: 'https://m.media-amazon.com/images/I/61yWz4qZ1xL._AC_UY1100_.jpg',
     price: 2999,
     gender: 'male',
@@ -458,7 +458,7 @@ const bagsData = [
   },
   {
     id: 'kids-mermaid-bag',
-    name: 'Kids Mermaid Sparkle Bag',
+    title: 'Kids Mermaid Sparkle Bag',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 899,
     gender: 'female',
@@ -468,7 +468,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-laptop',
-    name: 'Teen Boy Laptop Backpack',
+    title: 'Teen Boy Laptop Backpack',
     image: 'https://m.media-amazon.com/images/I/61vUz5qC3zL._AC_UY1100_.jpg',
     price: 1699,
     gender: 'male',
@@ -478,7 +478,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-mini',
-    name: 'Adult Woman Mini Crossbody',
+    title: 'Adult Woman Mini Crossbody',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1499,
     gender: 'female',
@@ -488,7 +488,7 @@ const bagsData = [
   },
   {
     id: 'unisex-gym-backpack',
-    name: 'Unisex Gym Backpack',
+    title: 'Unisex Gym Backpack',
     image: 'https://m.media-amazon.com/images/I/61xWz6qI5xL._AC_UY1100_.jpg',
     price: 1799,
     gender: 'unisex',
@@ -497,7 +497,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-sling',
-    name: 'Elder Woman Sling Bag',
+    title: 'Elder Woman Sling Bag',
     image: 'https://images.pexels.com/photos/934069/pexels-photo-934069.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1899,
     gender: 'female',
@@ -506,7 +506,7 @@ const bagsData = [
   },
   {
     id: 'kids-rocket-bag',
-    name: 'Kids Rocket Ship Bag',
+    title: 'Kids Rocket Ship Bag',
     image: 'https://m.media-amazon.com/images/I/61tUz9qM7vL._AC_UY1100_.jpg',
     price: 799,
     gender: 'male',
@@ -516,7 +516,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-backpack',
-    name: 'Teen Girl Stylish Backpack',
+    title: 'Teen Girl Stylish Backpack',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1399,
     gender: 'female',
@@ -526,7 +526,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-briefcase',
-    name: 'Adult Man Formal Briefcase',
+    title: 'Adult Man Formal Briefcase',
     image: 'https://m.media-amazon.com/images/I/61vWz1qR9xL._AC_UY1100_.jpg',
     price: 3499,
     gender: 'male',
@@ -535,7 +535,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-backpack',
-    name: 'Elder Woman Lightweight Backpack',
+    title: 'Elder Woman Lightweight Backpack',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 2199,
     gender: 'female',
@@ -544,7 +544,7 @@ const bagsData = [
   },
   {
     id: 'kids-butterfly-bag',
-    name: 'Kids Butterfly Print Bag',
+    title: 'Kids Butterfly Print Bag',
     image: 'https://m.media-amazon.com/images/I/61xXy4qV1zL._AC_UY1100_.jpg',
     price: 849,
     gender: 'female',
@@ -554,7 +554,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-duffel',
-    name: 'Unisex Teen Duffel Bag',
+    title: 'Unisex Teen Duffel Bag',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1499,
     gender: 'unisex',
@@ -564,7 +564,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-leather',
-    name: 'Adult Woman Leather Satchel',
+    title: 'Adult Woman Leather Satchel',
     image: 'https://m.media-amazon.com/images/I/61yWz8qA3vL._AC_UY1100_.jpg',
     price: 3999,
     gender: 'female',
@@ -574,7 +574,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-backpack',
-    name: 'Elder Man Casual Backpack',
+    title: 'Elder Man Casual Backpack',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 2499,
     gender: 'male',
@@ -583,7 +583,7 @@ const bagsData = [
   },
   {
     id: 'kids-star-backpack',
-    name: 'Kids Starry Night Backpack',
+    title: 'Kids Starry Night Backpack',
     image: 'https://www.freepik.com/free-photo/child-backpack_12345678.jpg#uuid=12345678-1234-5678-1234-567812345678',
     price: 899,
     gender: 'unisex',
@@ -593,7 +593,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-grey-sling',
-    name: 'Teen Boy Grey Sling Bag',
+    title: 'Teen Boy Grey Sling Bag',
     image: 'https://m.media-amazon.com/images/I/71aBcXy5KjL._AC_UY1100_.jpg',
     price: 1199,
     gender: 'male',
@@ -603,7 +603,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-quilted',
-    name: 'Adult Woman Quilted Tote',
+    title: 'Adult Woman Quilted Tote',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2899,
     gender: 'female',
@@ -612,7 +612,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-duffel',
-    name: 'Elder Man Travel Duffel',
+    title: 'Elder Man Travel Duffel',
     image: 'https://m.media-amazon.com/images/I/61bCdXy6LmL._AC_UY1100_.jpg',
     price: 2699,
     gender: 'male',
@@ -621,7 +621,7 @@ const bagsData = [
   },
   {
     id: 'kids-panda-bag',
-    name: 'Kids Panda Print Bag',
+    title: 'Kids Panda Print Bag',
     image: 'https://www.pexels.com/photo/adorable-panda-backpack-934071/',
     price: 799,
     gender: 'unisex',
@@ -631,7 +631,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-purple',
-    name: 'Teen Girl Purple Backpack',
+    title: 'Teen Girl Purple Backpack',
     image: 'https://m.media-amazon.com/images/I/71cDeYz7MnL._AC_UY1100_.jpg',
     price: 1499,
     gender: 'female',
@@ -641,7 +641,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-casual',
-    name: 'Adult Man Casual Messenger',
+    title: 'Adult Man Casual Messenger',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'male',
@@ -651,7 +651,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-mini',
-    name: 'Elder Woman Mini Handbag',
+    title: 'Elder Woman Mini Handbag',
     image: 'https://www.freepik.com/free-photo/elegant-handbag_12345679.jpg#uuid=12345679-1234-5678-1234-567812345679',
     price: 1799,
     gender: 'female',
@@ -660,7 +660,7 @@ const bagsData = [
   },
   {
     id: 'kids-truck-bag',
-    name: 'Kids Monster Truck Bag',
+    title: 'Kids Monster Truck Bag',
     image: 'https://m.media-amazon.com/images/I/61dEfUz8NpL._AC_UY1100_.jpg',
     price: 849,
     gender: 'male',
@@ -670,7 +670,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-blue',
-    name: 'Unisex Teen Blue Duffel',
+    title: 'Unisex Teen Blue Duffel',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1599,
     gender: 'unisex',
@@ -680,7 +680,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-velvet',
-    name: 'Adult Woman Velvet Tote',
+    title: 'Adult Woman Velvet Tote',
     image: 'https://m.media-amazon.com/images/I/71eFgVz9PqL._AC_UY1100_.jpg',
     price: 2599,
     gender: 'female',
@@ -689,7 +689,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-laptop',
-    name: 'Elder Man Laptop Briefcase',
+    title: 'Elder Man Laptop Briefcase',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 3299,
     gender: 'male',
@@ -698,7 +698,7 @@ const bagsData = [
   },
   {
     id: 'kids-flower-bag',
-    name: 'Kids Flower Power Bag',
+    title: 'Kids Flower Power Bag',
     image: 'https://www.pexels.com/photo/floral-backpack-934072/',
     price: 799,
     gender: 'female',
@@ -708,7 +708,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-green',
-    name: 'Teen Boy Green Backpack',
+    title: 'Teen Boy Green Backpack',
     image: 'https://m.media-amazon.com/images/I/61fGhWz0RrL._AC_UY1100_.jpg',
     price: 1399,
     gender: 'male',
@@ -718,7 +718,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-crossbody',
-    name: 'Adult Woman Crossbody Bag',
+    title: 'Adult Woman Crossbody Bag',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1699,
     gender: 'female',
@@ -728,7 +728,7 @@ const bagsData = [
   },
   {
     id: 'unisex-adventure-bag',
-    name: 'Unisex Adventure Backpack',
+    title: 'Unisex Adventure Backpack',
     image: 'https://m.media-amazon.com/images/I/71hIjXy1StL._AC_UY1100_.jpg',
     price: 2099,
     gender: 'unisex',
@@ -737,7 +737,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-satchel',
-    name: 'Elder Woman Satchel Bag',
+    title: 'Elder Woman Satchel Bag',
     image: 'https://www.freepik.com/free-photo/satchel-bag_12345680.jpg#uuid=12345680-1234-5678-1234-567812345680',
     price: 2399,
     gender: 'female',
@@ -746,7 +746,7 @@ const bagsData = [
   },
   {
     id: 'kids-space-ship-bag',
-    name: 'Kids Spaceship Backpack',
+    title: 'Kids Spaceship Backpack',
     image: 'https://m.media-amazon.com/images/I/61jKlYz2TuL._AC_UY1100_.jpg',
     price: 899,
     gender: 'male',
@@ -756,7 +756,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-velvet',
-    name: 'Teen Girl Velvet Sling',
+    title: 'Teen Girl Velvet Sling',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1199,
     gender: 'female',
@@ -766,7 +766,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-travel',
-    name: 'Adult Man Travel Sling',
+    title: 'Adult Man Travel Sling',
     image: 'https://m.media-amazon.com/images/I/71kLmXy3UvL._AC_UY1100_.jpg',
     price: 1799,
     gender: 'male',
@@ -775,7 +775,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-tote',
-    name: 'Elder Man Canvas Tote',
+    title: 'Elder Man Canvas Tote',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2599,
     gender: 'male',
@@ -784,7 +784,7 @@ const bagsData = [
   },
   {
     id: 'kids-rainbow-bag',
-    name: 'Kids Rainbow Backpack',
+    title: 'Kids Rainbow Backpack',
     image: 'https://www.pexels.com/photo/rainbow-backpack-934073/',
     price: 849,
     gender: 'unisex',
@@ -794,7 +794,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-laptop',
-    name: 'Unisex Teen Laptop Bag',
+    title: 'Unisex Teen Laptop Bag',
     image: 'https://m.media-amazon.com/images/I/61mNpYz4VwL._AC_UY1100_.jpg',
     price: 1599,
     gender: 'unisex',
@@ -804,7 +804,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-floral',
-    name: 'Adult Woman Floral Tote',
+    title: 'Adult Woman Floral Tote',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2799,
     gender: 'female',
@@ -813,7 +813,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-crossbody',
-    name: 'Elder Woman Crossbody Bag',
+    title: 'Elder Woman Crossbody Bag',
     image: 'https://m.media-amazon.com/images/I/71pQrYz5WxL._AC_UY1100_.jpg',
     price: 1999,
     gender: 'female',
@@ -822,7 +822,7 @@ const bagsData = [
   },
   {
     id: 'kids-dinosaur-bag',
-    name: 'Kids Dinosaur Adventure Bag',
+    title: 'Kids Dinosaur Adventure Bag',
     image: 'https://www.freepik.com/free-photo/dinosaur-backpack_12345681.jpg#uuid=12345681-1234-5678-1234-567812345681',
     price: 799,
     gender: 'male',
@@ -832,7 +832,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-duffel',
-    name: 'Teen Boy Sports Duffel',
+    title: 'Teen Boy Sports Duffel',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1499,
     gender: 'male',
@@ -842,7 +842,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-clutch-gold',
-    name: 'Adult Woman Gold Clutch',
+    title: 'Adult Woman Gold Clutch',
     image: 'https://m.media-amazon.com/images/I/61rStYz6XyL._AC_UY1100_.jpg',
     price: 1099,
     gender: 'female',
@@ -852,7 +852,7 @@ const bagsData = [
   },
   {
     id: 'unisex-casual-backpack',
-    name: 'Unisex Casual Backpack',
+    title: 'Unisex Casual Backpack',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'unisex',
@@ -861,7 +861,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-travel',
-    name: 'Elder Man Travel Backpack',
+    title: 'Elder Man Travel Backpack',
     image: 'https://m.media-amazon.com/images/I/71tUvYz7ZzL._AC_UY1100_.jpg',
     price: 2399,
     gender: 'male',
@@ -870,7 +870,7 @@ const bagsData = [
   },
   {
     id: 'kids-owl-bag',
-    name: 'Kids Owl Print Bag',
+    title: 'Kids Owl Print Bag',
     image: 'https://www.pexels.com/photo/owl-backpack-934074/',
     price: 849,
     gender: 'unisex',
@@ -880,7 +880,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-blue-sling',
-    name: 'Teen Girl Blue Sling Bag',
+    title: 'Teen Girl Blue Sling Bag',
     image: 'https://m.media-amazon.com/images/I/61vWxYz8AaL._AC_UY1100_.jpg',
     price: 1199,
     gender: 'female',
@@ -890,7 +890,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-work-bag',
-    name: 'Adult Man Work Briefcase',
+    title: 'Adult Man Work Briefcase',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2999,
     gender: 'male',
@@ -899,7 +899,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-velvet-tote',
-    name: 'Elder Woman Velvet Tote',
+    title: 'Elder Woman Velvet Tote',
     image: 'https://www.freepik.com/free-photo/velvet-tote_12345682.jpg#uuid=12345682-1234-5678-1234-567812345682',
     price: 2599,
     gender: 'female',
@@ -908,7 +908,7 @@ const bagsData = [
   },
   {
     id: 'kids-pirate-bag',
-    name: 'Kids Pirate Adventure Bag',
+    title: 'Kids Pirate Adventure Bag',
     image: 'https://m.media-amazon.com/images/I/71yXzYz9BbL._AC_UY1100_.jpg',
     price: 799,
     gender: 'male',
@@ -918,7 +918,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-grey',
-    name: 'Unisex Teen Grey Backpack',
+    title: 'Unisex Teen Grey Backpack',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1399,
     gender: 'unisex',
@@ -928,7 +928,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-mini-tote',
-    name: 'Adult Woman Mini Tote',
+    title: 'Adult Woman Mini Tote',
     image: 'https://m.media-amazon.com/images/I/61zYyAz0CcL._AC_UY1100_.jpg',
     price: 1699,
     gender: 'female',
@@ -938,7 +938,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-sling-grey',
-    name: 'Elder Man Grey Sling',
+    title: 'Elder Man Grey Sling',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'male',
@@ -947,7 +947,7 @@ const bagsData = [
   },
   {
     id: 'kids-rocket-backpack',
-    name: 'Kids Rocket Backpack',
+    title: 'Kids Rocket Backpack',
     image: 'https://www.pexels.com/photo/rocket-backpack-934075/',
     price: 899,
     gender: 'unisex',
@@ -957,7 +957,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-black-backpack',
-    name: 'Teen Boy Black Backpack',
+    title: 'Teen Boy Black Backpack',
     image: 'https://m.media-amazon.com/images/I/71aBcXy5KjL._AC_UY1100_.jpg',
     price: 1499,
     gender: 'male',
@@ -967,7 +967,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-eco-bag',
-    name: 'Adult Woman Eco Canvas Bag',
+    title: 'Adult Woman Eco Canvas Bag',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'female',
@@ -977,7 +977,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-floral-sling',
-    name: 'Elder Woman Floral Sling',
+    title: 'Elder Woman Floral Sling',
     image: 'https://www.freepik.com/free-photo/floral-sling-bag_12345683.jpg#uuid=12345683-1234-5678-1234-567812345683',
     price: 1799,
     gender: 'female',
@@ -986,7 +986,7 @@ const bagsData = [
   },
   {
     id: 'kids-lion-bag',
-    name: 'Kids Lion Print Bag',
+    title: 'Kids Lion Print Bag',
     image: 'https://m.media-amazon.com/images/I/61cDeYz7MnL._AC_UY1100_.jpg',
     price: 799,
     gender: 'male',
@@ -996,7 +996,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-pink-backpack',
-    name: 'Teen Girl Pink Backpack',
+    title: 'Teen Girl Pink Backpack',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1399,
     gender: 'female',
@@ -1006,7 +1006,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-eco-duffel',
-    name: 'Adult Man Eco Duffel Bag',
+    title: 'Adult Man Eco Duffel Bag',
     image: 'https://m.media-amazon.com/images/I/71eFgVz9PqL._AC_UY1100_.jpg',
     price: 2099,
     gender: 'male',
@@ -1015,7 +1015,7 @@ const bagsData = [
   },
   {
     id: 'unisex-travel-sling',
-    name: 'Unisex Travel Sling Bag',
+    title: 'Unisex Travel Sling Bag',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1599,
     gender: 'unisex',
@@ -1025,7 +1025,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-briefcase-black',
-    name: 'Elder Man Black Briefcase',
+    title: 'Elder Man Black Briefcase',
     image: 'https://www.freepik.com/free-photo/black-briefcase_12345684.jpg#uuid=12345684-1234-5678-1234-567812345684',
     price: 3499,
     gender: 'male',
@@ -1034,7 +1034,7 @@ const bagsData = [
   },
   {
     id: 'kids-unicorn-sling',
-    name: 'Kids Unicorn Sling Bag',
+    title: 'Kids Unicorn Sling Bag',
     image: 'https://m.media-amazon.com/images/I/61fGhWz0RrL._AC_UY1100_.jpg',
     price: 849,
     gender: 'female',
@@ -1044,7 +1044,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-green',
-    name: 'Unisex Teen Green Sling',
+    title: 'Unisex Teen Green Sling',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1299,
     gender: 'unisex',
@@ -1054,7 +1054,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-party-clutch',
-    name: 'Adult Woman Party Clutch',
+    title: 'Adult Woman Party Clutch',
     image: 'https://m.media-amazon.com/images/I/71hIjXy1StL._AC_UY1100_.jpg',
     price: 999,
     gender: 'female',
@@ -1064,7 +1064,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-canvas-tote',
-    name: 'Elder Woman Canvas Tote',
+    title: 'Elder Woman Canvas Tote',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2299,
     gender: 'female',
@@ -1073,7 +1073,7 @@ const bagsData = [
   },
   {
     id: 'kids-space-alien-bag',
-    name: 'Kids Space Alien Bag',
+    title: 'Kids Space Alien Bag',
     image: 'https://www.pexels.com/photo/alien-backpack-934076/',
     price: 799,
     gender: 'male',
@@ -1083,7 +1083,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-blue-duffel',
-    name: 'Teen Boy Blue Duffel Bag',
+    title: 'Teen Boy Blue Duffel Bag',
     image: 'https://m.media-amazon.com/images/I/61jKlYz2TuL._AC_UY1100_.jpg',
     price: 1599,
     gender: 'male',
@@ -1093,7 +1093,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-canvas-backpack',
-    name: 'Adult Man Canvas Backpack',
+    title: 'Adult Man Canvas Backpack',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2199,
     gender: 'male',
@@ -1102,7 +1102,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-mini-sling',
-    name: 'Elder Woman Mini Sling',
+    title: 'Elder Woman Mini Sling',
     image: 'https://www.freepik.com/free-photo/mini-sling-bag_12345685.jpg#uuid=12345685-1234-5678-1234-567812345685',
     price: 1799,
     gender: 'female',
@@ -1111,7 +1111,7 @@ const bagsData = [
   },
   {
     id: 'kids-tiger-bag',
-    name: 'Kids Tiger Print Bag',
+    title: 'Kids Tiger Print Bag',
     image: 'https://m.media-amazon.com/images/I/71kLmXy3UvL._AC_UY1100_.jpg',
     price: 849,
     gender: 'unisex',
@@ -1121,7 +1121,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-floral-sling',
-    name: 'Teen Girl Floral Sling Bag',
+    title: 'Teen Girl Floral Sling Bag',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1199,
     gender: 'female',
@@ -1131,7 +1131,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-luxury-tote',
-    name: 'Adult Woman Luxury Tote',
+    title: 'Adult Woman Luxury Tote',
     image: 'https://m.media-amazon.com/images/I/61mNpYz4VwL._AC_UY1100_.jpg',
     price: 3999,
     gender: 'female',
@@ -1141,7 +1141,7 @@ const bagsData = [
   },
   {
     id: 'unisex-work-backpack',
-    name: 'Unisex Work Backpack',
+    title: 'Unisex Work Backpack',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'unisex',
@@ -1151,7 +1151,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-canvas-sling',
-    name: 'Elder Man Canvas Sling',
+    title: 'Elder Man Canvas Sling',
     image: 'https://www.pexels.com/photo/canvas-sling-934077/',
     price: 1899,
     gender: 'male',
@@ -1160,7 +1160,7 @@ const bagsData = [
   },
   {
     id: 'kids-galaxy-backpack',
-    name: 'Kids Galaxy Print Backpack',
+    title: 'Kids Galaxy Print Backpack',
     image: 'https://www.freepik.com/free-photo/galaxy-backpack_12345686.jpg#uuid=12345686-1234-5678-1234-567812345686',
     price: 899,
     gender: 'unisex',
@@ -1170,7 +1170,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-red-sling',
-    name: 'Teen Boy Red Sling Bag',
+    title: 'Teen Boy Red Sling Bag',
     image: 'https://m.media-amazon.com/images/I/71aCdXy6LmL._AC_UY1100_.jpg',
     price: 1199,
     gender: 'male',
@@ -1180,7 +1180,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-suede-tote',
-    name: 'Adult Woman Suede Tote',
+    title: 'Adult Woman Suede Tote',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2999,
     gender: 'female',
@@ -1189,7 +1189,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-leather-sling',
-    name: 'Elder Man Leather Sling',
+    title: 'Elder Man Leather Sling',
     image: 'https://m.media-amazon.com/images/I/61bEfYz7NpL._AC_UY1100_.jpg',
     price: 2699,
     gender: 'male',
@@ -1198,7 +1198,7 @@ const bagsData = [
   },
   {
     id: 'kids-bear-bag',
-    name: 'Kids Bear Print Bag',
+    title: 'Kids Bear Print Bag',
     image: 'https://www.pexels.com/photo/bear-backpack-934078/',
     price: 799,
     gender: 'unisex',
@@ -1208,7 +1208,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-yellow-backpack',
-    name: 'Teen Girl Yellow Backpack',
+    title: 'Teen Girl Yellow Backpack',
     image: 'https://m.media-amazon.com/images/I/71cFgVz8PqL._AC_UY1100_.jpg',
     price: 1499,
     gender: 'female',
@@ -1218,7 +1218,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-sport-backpack',
-    name: 'Adult Man Sport Backpack',
+    title: 'Adult Man Sport Backpack',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'male',
@@ -1228,7 +1228,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-quilted-handbag',
-    name: 'Elder Woman Quilted Handbag',
+    title: 'Elder Woman Quilted Handbag',
     image: 'https://www.freepik.com/free-photo/quilted-handbag_12345687.jpg#uuid=12345687-1234-5678-1234-567812345687',
     price: 2299,
     gender: 'female',
@@ -1237,7 +1237,7 @@ const bagsData = [
   },
   {
     id: 'kids-plane-bag',
-    name: 'Kids Airplane Adventure Bag',
+    title: 'Kids Airplane Adventure Bag',
     image: 'https://m.media-amazon.com/images/I/61dGhUz9RrL._AC_UY1100_.jpg',
     price: 849,
     gender: 'male',
@@ -1247,7 +1247,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-red-duffel',
-    name: 'Unisex Teen Red Duffel',
+    title: 'Unisex Teen Red Duffel',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1599,
     gender: 'unisex',
@@ -1257,7 +1257,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-sequin-clutch',
-    name: 'Adult Woman Sequin Clutch',
+    title: 'Adult Woman Sequin Clutch',
     image: 'https://m.media-amazon.com/images/I/71eIjXy2StL._AC_UY1100_.jpg',
     price: 1099,
     gender: 'female',
@@ -1267,7 +1267,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-work-briefcase',
-    name: 'Elder Man Work Briefcase',
+    title: 'Elder Man Work Briefcase',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 3499,
     gender: 'male',
@@ -1276,7 +1276,7 @@ const bagsData = [
   },
   {
     id: 'kids-zebra-bag',
-    name: 'Kids Zebra Print Bag',
+    title: 'Kids Zebra Print Bag',
     image: 'https://www.pexels.com/photo/zebra-backpack-934079/',
     price: 799,
     gender: 'unisex',
@@ -1286,7 +1286,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-orange-backpack',
-    name: 'Teen Boy Orange Backpack',
+    title: 'Teen Boy Orange Backpack',
     image: 'https://m.media-amazon.com/images/I/61fJhWz1SrL._AC_UY1100_.jpg',
     price: 1399,
     gender: 'male',
@@ -1296,7 +1296,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-canvas-tote',
-    name: 'Adult Woman Canvas Tote',
+    title: 'Adult Woman Canvas Tote',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'female',
@@ -1306,7 +1306,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-leather-handbag',
-    name: 'Elder Woman Leather Handbag',
+    title: 'Elder Woman Leather Handbag',
     image: 'https://www.freepik.com/free-photo/leather-handbag_12345688.jpg#uuid=12345688-1234-5678-1234-567812345688',
     price: 2799,
     gender: 'female',
@@ -1315,7 +1315,7 @@ const bagsData = [
   },
   {
     id: 'kids-robot-backpack',
-    name: 'Kids Robot Print Backpack',
+    title: 'Kids Robot Print Backpack',
     image: 'https://m.media-amazon.com/images/I/71yYzXz0CcL._AC_UY1100_.jpg',
     price: 849,
     gender: 'male',
@@ -1325,7 +1325,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-green-sling',
-    name: 'Teen Girl Green Sling Bag',
+    title: 'Teen Girl Green Sling Bag',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1199,
     gender: 'female',
@@ -1335,7 +1335,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-leather-backpack',
-    name: 'Adult Man Leather Backpack',
+    title: 'Adult Man Leather Backpack',
     image: 'https://m.media-amazon.com/images/I/61aCdXy6LmL._AC_UY1100_.jpg',
     price: 2999,
     gender: 'male',
@@ -1344,7 +1344,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-mini-tote',
-    name: 'Elder Woman Mini Tote',
+    title: 'Elder Woman Mini Tote',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'female',
@@ -1353,7 +1353,7 @@ const bagsData = [
   },
   {
     id: 'kids-elephant-bag',
-    name: 'Kids Elephant Print Bag',
+    title: 'Kids Elephant Print Bag',
     image: 'https://www.pexels.com/photo/elephant-backpack-934080/',
     price: 799,
     gender: 'unisex',
@@ -1363,7 +1363,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-orange-sling',
-    name: 'Unisex Teen Orange Sling',
+    title: 'Unisex Teen Orange Sling',
     image: 'https://m.media-amazon.com/images/I/71cFgVz8PqL._AC_UY1100_.jpg',
     price: 1299,
     gender: 'unisex',
@@ -1373,7 +1373,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-patterned-tote',
-    name: 'Adult Woman Patterned Tote',
+    title: 'Adult Woman Patterned Tote',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2299,
     gender: 'female',
@@ -1383,7 +1383,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-sport-duffel',
-    name: 'Elder Man Sport Duffel',
+    title: 'Elder Man Sport Duffel',
     image: 'https://www.freepik.com/free-photo/sport-duffel_12345689.jpg#uuid=12345689-1234-5678-1234-567812345689',
     price: 2599,
     gender: 'male',
@@ -1392,7 +1392,7 @@ const bagsData = [
   },
   {
     id: 'kids-giraffe-bag',
-    name: 'Kids Giraffe Print Bag',
+    title: 'Kids Giraffe Print Bag',
     image: 'https://m.media-amazon.com/images/I/61dGhUz9RrL._AC_UY1100_.jpg',
     price: 849,
     gender: 'unisex',
@@ -1402,7 +1402,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-green-duffel',
-    name: 'Teen Boy Green Duffel Bag',
+    title: 'Teen Boy Green Duffel Bag',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1599,
     gender: 'male',
@@ -1412,7 +1412,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-silk-clutch',
-    name: 'Adult Woman Silk Clutch',
+    title: 'Adult Woman Silk Clutch',
     image: 'https://m.media-amazon.com/images/I/71eIjXy2StL._AC_UY1100_.jpg',
     price: 1099,
     gender: 'female',
@@ -1422,7 +1422,7 @@ const bagsData = [
   },
   {
     id: 'unisex-urban-backpack',
-    name: 'Unisex Urban Backpack',
+    title: 'Unisex Urban Backpack',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'unisex',
@@ -1431,7 +1431,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-leather-briefcase',
-    name: 'Elder Man Leather Briefcase',
+    title: 'Elder Man Leather Briefcase',
     image: 'https://www.freepik.com/free-photo/leather-briefcase_12345690.jpg#uuid=12345690-1234-5678-1234-567812345690',
     price: 3499,
     gender: 'male',
@@ -1440,7 +1440,7 @@ const bagsData = [
   },
   {
     id: 'kids-flamingo-bag',
-    name: 'Kids Flamingo Print Bag',
+    title: 'Kids Flamingo Print Bag',
     image: 'https://m.media-amazon.com/images/I/61fJhWz1SrL._AC_UY1100_.jpg',
     price: 799,
     gender: 'female',
@@ -1450,7 +1450,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-red-sling',
-    name: 'Teen Girl Red Sling Bag',
+    title: 'Teen Girl Red Sling Bag',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1199,
     gender: 'female',
@@ -1460,7 +1460,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-travel-duffel',
-    name: 'Adult Man Travel Duffel',
+    title: 'Adult Man Travel Duffel',
     image: 'https://m.media-amazon.com/images/I/71yYzXz0CcL._AC_UY1100_.jpg',
     price: 2299,
     gender: 'male',
@@ -1470,7 +1470,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-suede-handbag',
-    name: 'Elder Woman Suede Handbag',
+    title: 'Elder Woman Suede Handbag',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2699,
     gender: 'female',
@@ -1479,7 +1479,7 @@ const bagsData = [
   },
   {
     id: 'kids-astronaut-bag',
-    name: 'Kids Astronaut Backpack',
+    title: 'Kids Astronaut Backpack',
     image: 'https://www.pexels.com/photo/astronaut-backpack-934081/',
     price: 849,
     gender: 'male',
@@ -1489,7 +1489,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-yellow-sling',
-    name: 'Unisex Teen Yellow Sling',
+    title: 'Unisex Teen Yellow Sling',
     image: 'https://m.media-amazon.com/images/I/61aCdXy6LmL._AC_UY1100_.jpg',
     price: 1299,
     gender: 'unisex',
@@ -1499,7 +1499,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-eco-tote',
-    name: 'Adult Woman Eco Tote',
+    title: 'Adult Woman Eco Tote',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'female',
@@ -1509,7 +1509,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-canvas-backpack',
-    name: 'Elder Man Canvas Backpack',
+    title: 'Elder Man Canvas Backpack',
     image: 'https://www.freepik.com/free-photo/canvas-backpack_12345691.jpg#uuid=12345691-1234-5678-1234-567812345691',
     price: 2399,
     gender: 'male',
@@ -1518,7 +1518,7 @@ const bagsData = [
   },
   {
     id: 'kids-penguin-bag',
-    name: 'Kids Penguin Print Bag',
+    title: 'Kids Penguin Print Bag',
     image: 'https://m.media-amazon.com/images/I/71cFgVz8PqL._AC_UY1100_.jpg',
     price: 799,
     gender: 'unisex',
@@ -1528,7 +1528,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-yellow-backpack',
-    name: 'Teen Boy Yellow Backpack',
+    title: 'Teen Boy Yellow Backpack',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1399,
     gender: 'male',
@@ -1538,7 +1538,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-leather-clutch',
-    name: 'Adult Woman Leather Clutch',
+    title: 'Adult Woman Leather Clutch',
     image: 'https://m.media-amazon.com/images/I/61eIjXy2StL._AC_UY1100_.jpg',
     price: 1099,
     gender: 'female',
@@ -1548,7 +1548,7 @@ const bagsData = [
   },
   {
     id: 'unisex-sport-backpack',
-    name: 'Unisex Sport Backpack',
+    title: 'Unisex Sport Backpack',
     image: 'https://images.unsplash.com/photo-1594224457816-29f4c435ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1999,
     gender: 'unisex',
@@ -1557,7 +1557,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-patterned-handbag',
-    name: 'Elder Woman Patterned Handbag',
+    title: 'Elder Woman Patterned Handbag',
     image: 'https://www.freepik.com/free-photo/patterned-handbag_12345692.jpg#uuid=12345692-1234-5678-1234-567812345692',
     price: 2599,
     gender: 'female',
@@ -1566,7 +1566,7 @@ const bagsData = [
   },
   {
     id: 'kids-rocket-sling',
-    name: 'Kids Rocket Sling Bag',
+    title: 'Kids Rocket Sling Bag',
     image: 'https://m.media-amazon.com/images/I/61fJhWz1SrL._AC_UY1100_.jpg',
     price: 799,
     gender: 'male',
@@ -1576,7 +1576,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-orange-sling',
-    name: 'Teen Girl Orange Sling Bag',
+    title: 'Teen Girl Orange Sling Bag',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1199,
     gender: 'female',
@@ -1586,7 +1586,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-urban-duffel',
-    name: 'Adult Man Urban Duffel',
+    title: 'Adult Man Urban Duffel',
     image: 'https://m.media-amazon.com/images/I/71yYzXz0CcL._AC_UY1100_.jpg',
     price: 2299,
     gender: 'male',
@@ -1596,7 +1596,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-canvas-sling',
-    name: 'Elder Woman Canvas Sling',
+    title: 'Elder Woman Canvas Sling',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 1899,
     gender: 'female',
@@ -1605,7 +1605,7 @@ const bagsData = [
   },
   {
     id: 'kids-dolphin-bag',
-    name: 'Kids Dolphin Print Bag',
+    title: 'Kids Dolphin Print Bag',
     image: 'https://www.pexels.com/photo/dolphin-backpack-934082/',
     price: 799,
     gender: 'unisex',
@@ -1615,7 +1615,7 @@ const bagsData = [
   },
   {
     id: 'teen-unisex-blue-backpack',
-    name: 'Unisex Teen Blue Backpack',
+    title: 'Unisex Teen Blue Backpack',
     image: 'https://m.media-amazon.com/images/I/61aCdXy6LmL._AC_UY1100_.jpg',
     price: 1499,
     gender: 'unisex',
@@ -1625,7 +1625,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-velvet-handbag',
-    name: 'Adult Woman Velvet Handbag',
+    title: 'Adult Woman Velvet Handbag',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2599,
     gender: 'female',
@@ -1634,7 +1634,7 @@ const bagsData = [
   },
   {
     id: 'elder-man-urban-backpack',
-    name: 'Elder Man Urban Backpack',
+    title: 'Elder Man Urban Backpack',
     image: 'https://www.freepik.com/free-photo/urban-backpack_12345693.jpg#uuid=12345693-1234-5678-1234-567812345693',
     price: 2399,
     gender: 'male',
@@ -1643,7 +1643,7 @@ const bagsData = [
   },
   {
     id: 'kids-unicorn-backpack',
-    name: 'Kids Unicorn Print Backpack',
+    title: 'Kids Unicorn Print Backpack',
     image: 'https://m.media-amazon.com/images/I/71cFgVz8PqL._AC_UY1100_.jpg',
     price: 849,
     gender: 'female',
@@ -1653,7 +1653,7 @@ const bagsData = [
   },
   {
     id: 'teen-boy-red-backpack',
-    name: 'Teen Boy Red Backpack',
+    title: 'Teen Boy Red Backpack',
     image: 'https://images.pexels.com/photos/2900997/pexels-photo-2900997.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1399,
     gender: 'male',
@@ -1663,7 +1663,7 @@ const bagsData = [
   },
   {
     id: 'adult-woman-suede-backpack',
-    name: 'Adult Woman Suede Backpack',
+    title: 'Adult Woman Suede Backpack',
     image: 'https://m.media-amazon.com/images/I/61eIjXy2StL._AC_UY1100_.jpg',
     price: 2799,
     gender: 'female',
@@ -1672,7 +1672,7 @@ const bagsData = [
   },
   {
     id: 'elder-woman-leather-sling',
-    name: 'Elder Woman Leather Sling',
+    title: 'Elder Woman Leather Sling',
     image: 'https://www.freepik.com/free-photo/leather-sling_12345694.jpg#uuid=12345694-1234-5678-1234-567812345694',
     price: 1999,
     gender: 'female',
@@ -1681,7 +1681,7 @@ const bagsData = [
   },
   {
     id: 'kids-shark-bag',
-    name: 'Kids Shark Print Bag',
+    title: 'Kids Shark Print Bag',
     image: 'https://m.media-amazon.com/images/I/71yYzXz0CcL._AC_UY1100_.jpg',
     price: 799,
     gender: 'male',
@@ -1691,7 +1691,7 @@ const bagsData = [
   },
   {
     id: 'teen-girl-blue-backpack',
-    name: 'Teen Girl Blue Backpack',
+    title: 'Teen Girl Blue Backpack',
     image: 'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: 1399,
     gender: 'female',
@@ -1701,7 +1701,7 @@ const bagsData = [
   },
   {
     id: 'adult-man-eco-backpack',
-    name: 'Adult Man Eco Backpack',
+    title: 'Adult Man Eco Backpack',
     image: 'https://images.unsplash.com/photo-1598532163257-0bf54057d37a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
     price: 2099,
     gender: 'male',

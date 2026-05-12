@@ -14,7 +14,7 @@ const ExplorePage = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products/explore");
+      const res = await fetch("http://localhost:5000/api/prodseucts/explore");
       const data = await res.json();
       setBagsData(data);
       setLoading(false);
@@ -31,9 +31,9 @@ const ExplorePage = () => {
     const selectedData = bagsData[selectedTag] || [];
 
     const searched = selectedData.filter((bag) => {
-      const query = searchQuery.toLowerCase();
+      const query = searchQuery?.toLowerCase();
 
-      const nameMatch = bag.name.toLowerCase().includes(query);
+      const nameMatch = bag?.title?.toLowerCase().includes(query);
       const tagMatch = bag.tags?.some((tag) =>
         tag.toLowerCase().includes(query)
       );

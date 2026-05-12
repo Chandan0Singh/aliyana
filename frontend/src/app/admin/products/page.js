@@ -8,29 +8,47 @@ import { Search, Plus, Pencil, Trash2, Package } from "lucide-react";
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  // Fetch Products
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/products");
-      setProducts(data);
+      setLoading(true);
+
+      const { data } = await axios.get(
+        "http://localhost:5000/api/products"
+      );
+
+      // If backend sends { products: [] }
+      setProducts(data.products || data || []);
     } catch (error) {
-      console.log(error);
+      console.log("Fetch Products Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  console.log("cadsca", products)
+
+  // Delete Product
   const handleDelete = async (id) => {
-    const confirmDelete = confirm(
-      "Are you sure you want to delete this product?",
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
     );
 
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(
+        `http://localhost:5000/api/products/${id}`
+      );
 
-      fetchProducts();
+      // Remove deleted product instantly
+      setProducts((prev) =>
+        prev.filter((product) => product._id !== id)
+      );
     } catch (error) {
-      console.log(error);
+      console.log("Delete Error:", error);
     }
   };
 
@@ -38,9 +56,14 @@ export default function AdminDashboard() {
     fetchProducts();
   }, []);
 
+  // Search Filter
   const filteredProducts = products.filter((product) =>
-    product?.name?.toLowerCase()?.includes(search.toLowerCase()),
+    product?.title
+      ?.toLowerCase()
+      ?.includes(search.toLowerCase())
   );
+
+  console.log("adsva : ", filteredProducts)
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -50,6 +73,7 @@ export default function AdminDashboard() {
           <h1 className="text-4xl font-bold text-gray-800">
             Products Dashboard
           </h1>
+
           <p className="text-gray-500 mt-2">
             Manage all your products from one place.
           </p>
@@ -68,7 +92,10 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-3xl p-6 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-500 text-sm">Total Products</p>
+              <p className="text-gray-500 text-sm">
+                Total Products
+              </p>
+
               <h2 className="text-4xl font-bold mt-2 text-gray-800">
                 {products.length}
               </h2>
@@ -81,19 +108,27 @@ export default function AdminDashboard() {
         </div>
 
         <div className="bg-white rounded-3xl p-6 shadow-sm border">
-          <p className="text-gray-500 text-sm">Active Products</p>
+          <p className="text-gray-500 text-sm">
+            Active Products
+          </p>
+
           <h2 className="text-4xl font-bold mt-2 text-gray-800">
             {products.length}
           </h2>
         </div>
 
         <div className="bg-white rounded-3xl p-6 shadow-sm border">
-          <p className="text-gray-500 text-sm">Today's Added</p>
-          <h2 className="text-4xl font-bold mt-2 text-gray-800">5</h2>
+          <p className="text-gray-500 text-sm">
+            Today's Added
+          </p>
+
+          <h2 className="text-4xl font-bold mt-2 text-gray-800">
+            5
+          </h2>
         </div>
       </div>
 
-      {/* Search Bar */}
+      {/* Search */}
       <div className="bg-white rounded-3xl p-5 shadow-sm border mb-6 flex items-center gap-3">
         <Search className="text-gray-400" size={20} />
 
@@ -135,68 +170,96 @@ export default function AdminDashboard() {
             </thead>
 
             <tbody>
-              {filteredProducts.map((p) => (
-                <tr
-                  key={p._id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="p-5">
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={p.image}
-                        alt={p.name}
-                        className="w-16 h-16 rounded-2xl object-cover border"
-                      />
-
-                      <div>
-                        <h3 className="font-semibold text-gray-800">
-                          {p.title}
-                        </h3>
-
-                        <p className="text-sm text-gray-500">
-                          Product ID: {p._id.slice(0, 8)}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td className="p-5 font-semibold text-gray-700">
-                    ₹{p.price}
-                  </td>
-
-                  <td className="p-5 text-gray-600">{p.gender}</td>
-
-                  <td className="p-5 text-gray-600">{p.age}</td>
-
-                  <td className="p-5">
-                    <div className="flex items-center gap-3">
-                      <Link href={`/admin/edit-product/${p._id}`}>
-                        <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition">
-                          <Pencil size={16} />
-                          Edit
-                        </button>
-                      </Link>
-
-                      <button
-                        onClick={() => handleDelete(p._id)}
-                        className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition"
-                      >
-                        <Trash2 size={16} />
-                        Delete
-                      </button>
-                    </div>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="text-center py-10 text-gray-500"
+                  >
+                    Loading products...
                   </td>
                 </tr>
-              ))}
+              ) : filteredProducts.length > 0 ? (
+                filteredProducts.map((p) => (
+                  <tr
+                    key={p._id}
+                    className="border-b hover:bg-gray-50 transition"
+                  >
+                    {/* Product */}
+                    <td className="p-5">
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={p.image}
+                          alt={p.title}
+                          className="w-16 h-16 rounded-2xl object-cover border"
+                        />
+
+                        <div>
+                          <h3 className="font-semibold text-gray-800">
+                            {p.title}
+                          </h3>
+
+                          <p className="text-sm text-gray-500">
+                            Product ID:{" "}
+                            {p._id?.slice(0, 8)}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Price */}
+                    <td className="p-5 font-semibold text-gray-700">
+                      ₹{p.price}
+                    </td>
+
+                    {/* Gender */}
+                    <td className="p-5 text-gray-600">
+                      {p.gender}
+                    </td>
+
+                    {/* Age */}
+                    <td className="p-5 text-gray-600">
+                      {p.age}
+                    </td>
+
+                    {/* Actions */}
+                    <td className="p-5">
+                      <div className="flex items-center gap-3">
+                        <Link
+                          href={`/admin/edit-product/${p._id}`}
+                        >
+                          <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition">
+                            <Pencil size={16} />
+                            Edit
+                          </button>
+                        </Link>
+
+                        <button
+                          onClick={() =>
+                            handleDelete(p._id)
+                          }
+                          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition"
+                        >
+                          <Trash2 size={16} />
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="text-center py-16 text-gray-500"
+                  >
+                    No products found.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-
-        {filteredProducts.length === 0 && (
-          <div className="text-center py-16 text-gray-500">
-            No products found.
-          </div>
-        )}
       </div>
     </div>
   );

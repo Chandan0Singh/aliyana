@@ -36,7 +36,7 @@ const ShopPage = () => {
     } else {
       const search = query.toLowerCase();
       const filtered = products.filter((item) =>
-        item.name.toLowerCase().includes(search)
+        item?.title?.toLowerCase().includes(search)
       );
       setFilteredProducts(filtered);
     }
