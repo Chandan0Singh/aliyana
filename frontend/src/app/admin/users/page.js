@@ -1,39 +1,98 @@
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 export default function UserDashboard() {
-  const users = [
-    {
-      id: 1,
-      name: "Chandan Singh",
-      email: "chandan@gmail.com",
-      role: "User",
-      status: "Active",
-      joined: "12 May 2026",
-    },
-    {
-      id: 2,
-      name: "Rahul Kumar",
-      email: "rahul@gmail.com",
-      role: "Admin",
-      status: "Blocked",
-      joined: "05 May 2026",
-    },
-    {
-      id: 3,
-      name: "Anjali Sharma",
-      email: "anjali@gmail.com",
-      role: "User",
-      status: "Active",
-      joined: "01 May 2026",
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:5000/api/user/users",
+        );
+
+        setUsers(data.users);
+      } catch (error) {
+        console.log("error : ", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleUserStatus = async (id, currentStatus) => {
+    const newStatus = currentStatus === "active" ? "blocked" : "active";
+
+    try {
+      const { data } = await axios.put("http://localhost:5000/api/user/block", {
+        userId: id,
+        status: newStatus,
+      });
+
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === id ? { ...user, status: newStatus } : user,
+        ),
+      );
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
+  const handleChangeRole = async (id, currentRole) => {
+    try {
+      const { data } = await axios.put("http://localhost:5000/api/user/role", {
+        userId: id,
+        role: currentRole,
+      });
+
+      console.log("role response :", data);
+
+      // update UI instantly
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === id ? { ...user, role: currentRole } : user,
+        ),
+      );
+    } catch (error) {
+      console.log("error :", error);
+    }
+  };
+
+  const handleDeleteUser = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?",
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      const { data } = await axios.delete(
+        "http://localhost:5000/api/user/delete",
+        {
+          data: {
+            userId: id,
+          },
+        },
+      );
+
+      setUsers((prev) => prev.filter((user) => user._id !== id));
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
+  console.log("userList : ", users);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-gray-800">
-            Users Dashboard
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-800">Users Dashboard</h1>
 
           <p className="text-gray-500 mt-2">
             Manage all users, roles, permissions and account status.
@@ -121,9 +180,9 @@ export default function UserDashboard() {
             </thead>
 
             <tbody>
-              {users.map((user) => (
+              {users?.map((user) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="p-5">
@@ -137,9 +196,7 @@ export default function UserDashboard() {
                           {user.name}
                         </h3>
 
-                        <p className="text-gray-500 text-sm">
-                          {user.email}
-                        </p>
+                        <p className="text-gray-500 text-sm">{user.email}</p>
                       </div>
                     </div>
                   </td>
@@ -162,29 +219,62 @@ export default function UserDashboard() {
                     </span>
                   </td>
 
-                  <td className="p-5 text-gray-600">{user.joined}</td>
+                  <td className="p-5 text-gray-600">
+                    {new Date(user.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </td>
 
                   <td className="p-5">
                     <div className="flex flex-wrap gap-3">
                       <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition">
                         Edit
                       </button>
+                      <select
+                        value={user.role}
+                        onChange={(e) =>
+                          handleChangeRole(user._id, e.target.value)
+                        }
+                        className="bg-[#C084FC] hover:bg-[#4C1D95user] text-white px-4 py-2 rounded-xl transition outline-none cursor-pointer"
+                      >
+                        <option value="user" className="text-black">
+                          User
+                        </option>
 
-                      <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition">
-                        Change Role
-                      </button>
+                        <option value="admin" className="text-black">
+                          Admin
+                        </option>
 
+                        <option value="superadmin" className="text-black">
+                          Super Admin
+                        </option>
+                      </select>
                       {user.status === "Active" ? (
-                        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition">
+                        <button
+                          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition"
+                          onClick={() =>
+                            handleUserStatus(user._id, user.status)
+                          }
+                        >
                           Block
                         </button>
                       ) : (
-                        <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition">
+                        <button
+                          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition"
+                          onClick={() =>
+                            handleUserStatus(user._id, user.status)
+                          }
+                        >
                           Unblock
                         </button>
                       )}
 
-                      <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition">
+                      <button
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition"
+                        onClick={() => handleDeleteUser(user._id)}
+                      >
                         Delete
                       </button>
                     </div>
@@ -198,9 +288,7 @@ export default function UserDashboard() {
 
       {/* Pagination */}
       <div className="flex items-center justify-between mt-6">
-        <p className="text-gray-500 text-sm">
-          Showing 1 to 10 of 177 users
-        </p>
+        <p className="text-gray-500 text-sm">Showing 1 to 10 of 177 users</p>
 
         <div className="flex gap-3">
           <button className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition">

@@ -25,6 +25,20 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin", "superadmin"],
       default: "user",
     },
+    status:{
+      type: String,
+      enum: ["active", "blocked"],
+      default: "active",
+    },
+    profileImage: {
+      type: String,
+      default: "",
+    },
+
+    phone: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true },
 );

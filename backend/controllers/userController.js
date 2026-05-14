@@ -11,6 +11,8 @@ const getAllUsers = async (req, res) => {
       users,
     });
   } catch (error) {
+
+    console.log("error :", error)
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -111,6 +113,7 @@ const deleteAccount = async (req, res) => {
       message: "User deleted successfully",
     });
   } catch (error) {
+    console.log("error", error)
     return res.status(500).json({
       success: false,
       message: error.message,

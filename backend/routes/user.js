@@ -15,21 +15,21 @@ const {
 router.get("/users", getAllUsers);
 
 /* ---------------- GET USER BY ID ---------------- */
-router.get("/users/:userId", getUserById);
+router.get("/:userId", getUserById);
 
 /* ---------------- UPDATE USER ---------------- */
-router.put("/users/update", updateUser);
+router.put("/update", updateUser);
 
 /* ---------------- CHANGE USER ROLE ---------------- */
-router.put("/users/role", changeUserRole);
+router.put("/role", changeUserRole);
 
 /* ---------------- BLOCK / UNBLOCK USER ---------------- */
-router.put("/users/block", blockUser);
+router.put("/block", blockUser);
 
 /* ---------------- DELETE USER ---------------- */
-router.delete("/users/delete", deleteAccount);
+router.delete("/delete", deleteAccount);
 
 /* ---------------- SEARCH USERS ---------------- */
-router.get("/users/search", searchUsers);
+router.get("/search", searchUsers);
 
 module.exports = router;
