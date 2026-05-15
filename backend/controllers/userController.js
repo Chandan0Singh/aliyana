@@ -165,7 +165,9 @@ const updateUser = async (req, res) => {
 /* ---------------- BLOCK / UNBLOCK USER ---------------- */
 const blockUser = async (req, res) => {
   try {
-    const { userId, isBlocked = true } = req.body;
+    const { userId, status } = req.body;
+
+    console.log("acdsc00", status)
 
     if (!userId) {
       return res.status(400).json({
@@ -176,7 +178,7 @@ const blockUser = async (req, res) => {
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { isBlocked },
+      { status },
       { new: true },
     );
 
@@ -189,10 +191,11 @@ const blockUser = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: isBlocked ? "User blocked" : "User unblocked",
+      message: status === "blocked" ? "User blocked" : "User unblocked",
       user,
     });
   } catch (error) {
+    console.log("erroe :", error)
     return res.status(500).json({
       success: false,
       message: error.message,

@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 
 export default function UserDashboard() {
   const [users, setUsers] = useState([]);
+  // STATES
+  const [editPopup, setEditPopup] = useState(false);
+
+  const [editData, setEditData] = useState({
+    userId: "",
+    name: "",
+    email: "",
+  });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -85,6 +93,56 @@ export default function UserDashboard() {
     }
   };
 
+  // OPEN POPUP FUNCTION
+  const handleOpenEdit = (user) => {
+    setEditData({
+      userId: user._id,
+      name: user.name,
+      email: user.email,
+    });
+
+    setEditPopup(true);
+  };
+
+  // UPDATE USER FUNCTION
+  const handleEditUser = async () => {
+    try {
+      const { data } = await axios.put(
+        "http://localhost:5000/api/user/update",
+        {
+          userId: editData.userId,
+          name: editData.name,
+          email: editData.email,
+        },
+      );
+
+      console.log(data);
+
+      // UPDATE UI
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === editData.userId
+            ? {
+                ...user,
+                name: editData.name,
+                email: editData.email,
+              }
+            : user,
+        ),
+      );
+
+      setEditPopup(false);
+    } catch (error) {
+      console.log("error :", error);
+    }
+  };
+
+  const activeUserCount = users.filter(
+    (user) => user.status === "active",
+  ).length;
+  const blockUSerCount = users.filter((user) => user.status === "blocked").length;
+  const adminCount = users.filter((user) => user.role === "admin").length;
+
   console.log("userList : ", users);
 
   return (
@@ -108,22 +166,22 @@ export default function UserDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div className="bg-white p-6 rounded-3xl shadow-sm border">
           <p className="text-gray-500 text-sm">Total Users</p>
-          <h2 className="text-4xl font-bold mt-2">177</h2>
+          <h2 className="text-4xl font-bold mt-2">{users.length}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl shadow-sm border">
           <p className="text-gray-500 text-sm">Active Users</p>
-          <h2 className="text-4xl font-bold mt-2">162</h2>
+          <h2 className="text-4xl font-bold mt-2">{activeUserCount}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl shadow-sm border">
           <p className="text-gray-500 text-sm">Blocked Users</p>
-          <h2 className="text-4xl font-bold mt-2">15</h2>
+          <h2 className="text-4xl font-bold mt-2">{blockUSerCount}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl shadow-sm border">
           <p className="text-gray-500 text-sm">Admins</p>
-          <h2 className="text-4xl font-bold mt-2">3</h2>
+          <h2 className="text-4xl font-bold mt-2">{adminCount}</h2>
         </div>
       </div>
 
@@ -210,7 +268,7 @@ export default function UserDashboard() {
                   <td className="p-5">
                     <span
                       className={`px-4 py-2 rounded-full text-sm font-medium ${
-                        user.status === "Active"
+                        user.status === "active"
                           ? "bg-green-100 text-green-700"
                           : "bg-red-100 text-red-700"
                       }`}
@@ -229,7 +287,10 @@ export default function UserDashboard() {
 
                   <td className="p-5">
                     <div className="flex flex-wrap gap-3">
-                      <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition">
+                      <button
+                        onClick={() => handleOpenEdit(user)}
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition"
+                      >
                         Edit
                       </button>
                       <select
@@ -251,7 +312,7 @@ export default function UserDashboard() {
                           Super Admin
                         </option>
                       </select>
-                      {user.status === "Active" ? (
+                      {user.status === "active" ? (
                         <button
                           className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition"
                           onClick={() =>
@@ -308,6 +369,66 @@ export default function UserDashboard() {
           </button>
         </div>
       </div>
+
+      {/* EDIT POPUP */}
+      {editPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-md rounded-3xl p-6 shadow-xl">
+            <h2 className="text-2xl font-bold mb-5">Edit User</h2>
+
+            {/* NAME */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Name</label>
+
+              <input
+                type="text"
+                value={editData.name}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    name: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+
+            {/* EMAIL */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium mb-2">Email</label>
+
+              <input
+                type="email"
+                value={editData.email}
+                onChange={(e) =>
+                  setEditData({
+                    ...editData,
+                    email: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+
+            {/* BUTTONS */}
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setEditPopup(false)}
+                className="border px-5 py-2 rounded-xl"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleEditUser}
+                className="bg-black text-white px-5 py-2 rounded-xl"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
