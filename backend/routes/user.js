@@ -12,6 +12,7 @@ const {
   getFilteredUsers,
 } = require("../controllers/userController");
 
+
 /* ---------------- GET ALL USERS ---------------- */
 router.get("/users", getAllUsers);
 

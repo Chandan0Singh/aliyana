@@ -7,8 +7,18 @@ export default function UserDashboard() {
   const [searchInput, setSearchInput] = useState("");
   const [selectedRole, setSelectedRole] = useState("All Roles");
   const [selectedStatus, setSelectedStatus] = useState("All Status");
-  // STATES
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [editPopup, setEditPopup] = useState(false);
+  const [addPopup, setAddPopup] = useState(false);
+
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "user",
+  });
 
   const [editData, setEditData] = useState({
     userId: "",
@@ -16,14 +26,45 @@ export default function UserDashboard() {
     email: "",
   });
 
+  const handleAddUser = async () => {
+  try {
+    const { data } = await axios.post(
+      "http://localhost:5000/api/auth/signup",
+      newUser
+    );
+
+    setUsers((prev) => [data.user, ...prev]);
+
+    setNewUser({
+      name: "",
+      email: "",
+      password: "",
+      role: "user",
+    });
+
+    setAddPopup(false);
+
+  } catch (error) {
+    console.log("error :", error.response?.data || error.message);
+  }
+};
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(
           "http://localhost:5000/api/user/users",
+          {
+            params: {
+              page: currentPage,
+              limit: 10,
+            },
+          },
         );
 
         setUsers(data.users);
+        setTotalPages(data.totalPages);
+        setTotalUsers(data.totalUsers);
       } catch (error) {
         console.log("error : ", error);
       }
@@ -41,11 +82,15 @@ export default function UserDashboard() {
             search: searchInput,
             role: selectedRole,
             status: selectedStatus,
+            page: currentPage,
+            limit: 10,
           },
         },
       );
 
       setUsers(data.users);
+      setTotalPages(data.totalPages);
+      setTotalUsers(data.totalUsers);
     } catch (error) {
       console.log("error : ", error);
     }
@@ -53,7 +98,7 @@ export default function UserDashboard() {
 
   useEffect(() => {
     fetchSearchUSer();
-  }, [searchInput, selectedRole, selectedStatus]);
+  }, [searchInput, selectedRole, selectedStatus, currentPage]);
 
   const handleUserStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "active" ? "blocked" : "active";
@@ -185,7 +230,10 @@ export default function UserDashboard() {
           </p>
         </div>
 
-        <button className="bg-black text-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition">
+        <button
+          onClick={() => setAddPopup(true)}
+          className="bg-black text-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition"
+        >
           + Add New User
         </button>
       </div>
@@ -219,7 +267,7 @@ export default function UserDashboard() {
           type="text"
           placeholder="Search users..."
           onChange={(e) => {
-            (setSearchInput(e.target.value), console.log(searchInput));
+            (setSearchInput(e.target.value), setCurrentPage(1));
           }}
           className="border rounded-xl px-4 py-3 w-full lg:w-1/3 outline-none"
         />
@@ -228,7 +276,9 @@ export default function UserDashboard() {
           <select
             className="border rounded-xl px-4 py-3 outline-none"
             value={selectedRole}
-            onChange={(e) => setSelectedRole(e.target.value)}
+            onChange={(e) => {
+              (setSelectedRole(e.target.value), setCurrentPage(1));
+            }}
           >
             <option>All Roles</option>
             <option>User</option>
@@ -239,7 +289,9 @@ export default function UserDashboard() {
           <select
             className="border rounded-xl px-4 py-3 outline-none"
             value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
+            onChange={(e) => {
+              (setSelectedStatus(e.target.value), setCurrentPage(1));
+            }}
           >
             <option>All Status</option>
             <option>Active</option>
@@ -396,22 +448,38 @@ export default function UserDashboard() {
 
       {/* Pagination */}
       <div className="flex items-center justify-between mt-6">
-        <p className="text-gray-500 text-sm">Showing 1 to 10 of 177 users</p>
+        <p className="text-gray-500 text-sm">
+          Showing page {currentPage} of {totalPages}
+        </p>
 
-        <div className="flex gap-3">
-          <button className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition">
+        <div className="flex gap-3 flex-wrap">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition disabled:opacity-50"
+          >
             Previous
           </button>
 
-          <button className="border px-4 py-2 rounded-xl bg-black text-white">
-            1
-          </button>
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(index + 1)}
+              className={`border px-4 py-2 rounded-xl transition ${
+                currentPage === index + 1
+                  ? "bg-black text-white"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
 
-          <button className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition">
-            2
-          </button>
-
-          <button className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition">
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition disabled:opacity-50"
+          >
             Next
           </button>
         </div>
@@ -471,6 +539,102 @@ export default function UserDashboard() {
                 className="bg-black text-white px-5 py-2 rounded-xl"
               >
                 Update
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {addPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-md rounded-3xl p-6 shadow-xl">
+            <h2 className="text-2xl font-bold mb-5">Add New User</h2>
+
+            {/* NAME */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Name</label>
+
+              <input
+                type="text"
+                value={newUser.name}
+                onChange={(e) =>
+                  setNewUser({
+                    ...newUser,
+                    name: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+
+            {/* EMAIL */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Email</label>
+
+              <input
+                type="email"
+                value={newUser.email}
+                onChange={(e) =>
+                  setNewUser({
+                    ...newUser,
+                    email: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+
+            {/* PASSWORD */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Password</label>
+
+              <input
+                type="password"
+                value={newUser.password}
+                onChange={(e) =>
+                  setNewUser({
+                    ...newUser,
+                    password: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+
+            {/* ROLE */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium mb-2">Role</label>
+
+              <select
+                value={newUser.role}
+                onChange={(e) =>
+                  setNewUser({
+                    ...newUser,
+                    role: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none"
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+                <option value="superadmin">Super Admin</option>
+              </select>
+            </div>
+
+            {/* BUTTONS */}
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setAddPopup(false)}
+                className="border px-5 py-2 rounded-xl"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleAddUser}
+                className="bg-black text-white px-5 py-2 rounded-xl"
+              >
+                Create User
               </button>
             </div>
           </div>

@@ -1,14 +1,180 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // CHECK USER
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+
+    // CHECK PASSWORD
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
+    }
+
+    // CHECK BLOCKED USER
+    if (user.status === "blocked") {
+      return res.status(403).json({
+        message: "Your account has been blocked",
+      });
+    }
+
+    // GENERATE TOKEN
+    const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Login success",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        status: user.status,
+      },
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      message: "Login failed",
+      error: err.message,
+    });
+  }
+};
+
+const signupUser = async (req, res) => {
+  const { name, email, password, role = "user" } = req.body;
+
+  // NAME VALIDATION
+  if (!name || name.length < 2) {
+    return res.status(400).json({
+      message: "Name must be at least 2 characters long",
+    });
+  }
+
+  if (!/^[A-Za-z\s]+$/.test(name)) {
+    return res.status(400).json({
+      message: "Name can only contain letters and spaces",
+    });
+  }
+
+  // EMAIL VALIDATION
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    return res.status(400).json({
+      message: "Invalid email address",
+    });
+  }
+
+  // PASSWORD VALIDATION
+  if (!password || password.length < 6) {
+    return res.status(400).json({
+      message: "Password must be at least 6 characters long",
+    });
+  }
+
+  try {
+    // CHECK EXISTING USER
+    const exist = await User.findOne({ email });
+
+    if (exist) {
+      return res.status(400).json({
+        message: "Email already exists",
+      });
+    }
+
+    // HASH PASSWORD
+    const hashed = await bcrypt.hash(password, 10);
+
+    // CREATE USER
+    const newUser = new User({
+      name,
+      email,
+      password: hashed,
+      role,
+      status: "active",
+    });
+
+    await newUser.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      user: {
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        status: newUser.status,
+      },
+    });
+
+  } catch (err) {
+    console.log("SIGNUP ERROR:", err);
+
+    if (err.name === "ValidationError") {
+      const errors = Object.values(err.errors).map((e) => e.message);
+
+      return res.status(400).json({
+        message: errors.join(", "),
+      });
+    }
+
+    if (err.code === 11000) {
+      return res.status(400).json({
+        message: "Email already exists",
+      });
+    }
+
+    return res.status(500).json({
+      message: "Signup failed",
+      error: err.message,
+    });
+  }
+};
 
 /* ---------------- GET ALL USERS ---------------- */
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    const { page = 1, limit = 10 } = req.query;
+
+    const skip = (page - 1) * limit;
+
+    const users = await User.find()
+      .select("-password")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(Number(limit));
+
+    const totalUsers = await User.countDocuments();
 
     return res.status(200).json({
       success: true,
-      count: users.length,
       users,
+      totalUsers,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalUsers / limit),
     });
   } catch (error) {
     console.log("error :", error);
@@ -237,8 +403,6 @@ const getFilteredUsers = async (req, res) => {
   try {
     const { search, role, status, page = 1, limit = 10 } = req.query;
 
-    console.log("fdv : ", search, role, status);
-
     let query = {};
 
     // SEARCH
@@ -289,6 +453,7 @@ const getFilteredUsers = async (req, res) => {
 
 /* ---------------- EXPORTS ---------------- */
 module.exports = {
+  signupUser,
   getAllUsers,
   getUserById,
   changeUserRole,
@@ -296,5 +461,6 @@ module.exports = {
   updateUser,
   blockUser,
   // searchUsers,
+  loginUser,
   getFilteredUsers,
 };
