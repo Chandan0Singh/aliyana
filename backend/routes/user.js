@@ -32,4 +32,5 @@ router.delete("/delete", deleteAccount);
 /* ---------------- SEARCH USERS ---------------- */
 router.get("/search", searchUsers);
 
+
 module.exports = router;

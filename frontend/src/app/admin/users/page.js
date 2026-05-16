@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 
 export default function UserDashboard() {
   const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const [searchInput, setSearchInput] = useState([]);
+  const [selectedRole, setSelectedRole] = useState("All Roles");
+  const [selectedStatus, setSelectedStatus] = useState("All Status");
   // STATES
   const [editPopup, setEditPopup] = useState(false);
 
@@ -140,7 +144,9 @@ export default function UserDashboard() {
   const activeUserCount = users.filter(
     (user) => user.status === "active",
   ).length;
-  const blockUSerCount = users.filter((user) => user.status === "blocked").length;
+  const blockUSerCount = users.filter(
+    (user) => user.status === "blocked",
+  ).length;
   const adminCount = users.filter((user) => user.role === "admin").length;
 
   console.log("userList : ", users);
@@ -190,18 +196,28 @@ export default function UserDashboard() {
         <input
           type="text"
           placeholder="Search users..."
+          
+          onChange={(e)=>{setSearchInput(e.target.value), console.log(searchInput)}}
           className="border rounded-xl px-4 py-3 w-full lg:w-1/3 outline-none"
         />
 
         <div className="flex flex-wrap gap-3">
-          <select className="border rounded-xl px-4 py-3 outline-none">
+          <select
+            className="border rounded-xl px-4 py-3 outline-none"
+            value={selectedRole}
+            onChange={(e) => setSelectedRole(e.target.value)}
+          >
             <option>All Roles</option>
             <option>User</option>
             <option>Admin</option>
             <option>Super Admin</option>
           </select>
 
-          <select className="border rounded-xl px-4 py-3 outline-none">
+          <select
+            className="border rounded-xl px-4 py-3 outline-none"
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+          >
             <option>All Status</option>
             <option>Active</option>
             <option>Blocked</option>
