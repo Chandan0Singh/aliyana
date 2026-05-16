@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function UserDashboard() {
   const [users, setUsers] = useState([]);
-  const [userData, setUserData] = useState([]);
-  const [searchInput, setSearchInput] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [selectedRole, setSelectedRole] = useState("All Roles");
   const [selectedStatus, setSelectedStatus] = useState("All Status");
   // STATES
@@ -32,6 +31,29 @@ export default function UserDashboard() {
 
     fetchUser();
   }, []);
+
+  const fetchSearchUSer = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:5000/api/user/search",
+        {
+          params: {
+            search: searchInput,
+            role: selectedRole,
+            status: selectedStatus,
+          },
+        },
+      );
+
+      setUsers(data.users);
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSearchUSer();
+  }, [searchInput, selectedRole, selectedStatus]);
 
   const handleUserStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "active" ? "blocked" : "active";
@@ -196,8 +218,9 @@ export default function UserDashboard() {
         <input
           type="text"
           placeholder="Search users..."
-          
-          onChange={(e)=>{setSearchInput(e.target.value), console.log(searchInput)}}
+          onChange={(e) => {
+            (setSearchInput(e.target.value), console.log(searchInput));
+          }}
           className="border rounded-xl px-4 py-3 w-full lg:w-1/3 outline-none"
         />
 
@@ -254,110 +277,118 @@ export default function UserDashboard() {
             </thead>
 
             <tbody>
-              {users?.map((user) => (
-                <tr
-                  key={user._id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="p-5">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold">
-                        {user.name.charAt(0)}
+              {users?.length > 0 ? (
+                users?.map((user) => (
+                  <tr
+                    key={user._id}
+                    className="border-b hover:bg-gray-50 transition"
+                  >
+                    <td className="p-5">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold">
+                          {user.name.charAt(0)}
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold text-gray-800 text-lg">
+                            {user.name}
+                          </h3>
+
+                          <p className="text-gray-500 text-sm">{user.email}</p>
+                        </div>
                       </div>
+                    </td>
 
-                      <div>
-                        <h3 className="font-semibold text-gray-800 text-lg">
-                          {user.name}
-                        </h3>
+                    <td className="p-5">
+                      <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+                        {user.role}
+                      </span>
+                    </td>
 
-                        <p className="text-gray-500 text-sm">{user.email}</p>
+                    <td className="p-5">
+                      <span
+                        className={`px-4 py-2 rounded-full text-sm font-medium ${
+                          user.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {user.status}
+                      </span>
+                    </td>
+
+                    <td className="p-5 text-gray-600">
+                      {new Date(user.createdAt).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </td>
+
+                    <td className="p-5">
+                      <div className="flex flex-wrap gap-3">
+                        <button
+                          onClick={() => handleOpenEdit(user)}
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition"
+                        >
+                          Edit
+                        </button>
+                        <select
+                          value={user.role}
+                          onChange={(e) =>
+                            handleChangeRole(user._id, e.target.value)
+                          }
+                          className="bg-[#C084FC] hover:bg-[#4C1D95user] text-white px-4 py-2 rounded-xl transition outline-none cursor-pointer"
+                        >
+                          <option value="user" className="text-black">
+                            User
+                          </option>
+
+                          <option value="admin" className="text-black">
+                            Admin
+                          </option>
+
+                          <option value="superadmin" className="text-black">
+                            Super Admin
+                          </option>
+                        </select>
+                        {user.status === "active" ? (
+                          <button
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition"
+                            onClick={() =>
+                              handleUserStatus(user._id, user.status)
+                            }
+                          >
+                            Block
+                          </button>
+                        ) : (
+                          <button
+                            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition"
+                            onClick={() =>
+                              handleUserStatus(user._id, user.status)
+                            }
+                          >
+                            Unblock
+                          </button>
+                        )}
+
+                        <button
+                          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition"
+                          onClick={() => handleDeleteUser(user._id)}
+                        >
+                          Delete
+                        </button>
                       </div>
-                    </div>
-                  </td>
-
-                  <td className="p-5">
-                    <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
-                      {user.role}
-                    </span>
-                  </td>
-
-                  <td className="p-5">
-                    <span
-                      className={`px-4 py-2 rounded-full text-sm font-medium ${
-                        user.status === "active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
-                  </td>
-
-                  <td className="p-5 text-gray-600">
-                    {new Date(user.createdAt).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </td>
-
-                  <td className="p-5">
-                    <div className="flex flex-wrap gap-3">
-                      <button
-                        onClick={() => handleOpenEdit(user)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition"
-                      >
-                        Edit
-                      </button>
-                      <select
-                        value={user.role}
-                        onChange={(e) =>
-                          handleChangeRole(user._id, e.target.value)
-                        }
-                        className="bg-[#C084FC] hover:bg-[#4C1D95user] text-white px-4 py-2 rounded-xl transition outline-none cursor-pointer"
-                      >
-                        <option value="user" className="text-black">
-                          User
-                        </option>
-
-                        <option value="admin" className="text-black">
-                          Admin
-                        </option>
-
-                        <option value="superadmin" className="text-black">
-                          Super Admin
-                        </option>
-                      </select>
-                      {user.status === "active" ? (
-                        <button
-                          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition"
-                          onClick={() =>
-                            handleUserStatus(user._id, user.status)
-                          }
-                        >
-                          Block
-                        </button>
-                      ) : (
-                        <button
-                          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition"
-                          onClick={() =>
-                            handleUserStatus(user._id, user.status)
-                          }
-                        >
-                          Unblock
-                        </button>
-                      )}
-
-                      <button
-                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition"
-                        onClick={() => handleDeleteUser(user._id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center py-10 text-gray-500">
+                    No User Found
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

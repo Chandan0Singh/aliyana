@@ -11,8 +11,7 @@ const getAllUsers = async (req, res) => {
       users,
     });
   } catch (error) {
-
-    console.log("error :", error)
+    console.log("error :", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -113,7 +112,7 @@ const deleteAccount = async (req, res) => {
       message: "User deleted successfully",
     });
   } catch (error) {
-    console.log("error", error)
+    console.log("error", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -167,7 +166,7 @@ const blockUser = async (req, res) => {
   try {
     const { userId, status } = req.body;
 
-    console.log("acdsc00", status)
+    console.log("acdsc00", status);
 
     if (!userId) {
       return res.status(400).json({
@@ -195,7 +194,7 @@ const blockUser = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log("erroe :", error)
+    console.log("erroe :", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -204,32 +203,86 @@ const blockUser = async (req, res) => {
 };
 
 /* ---------------- SEARCH USERS ---------------- */
-const searchUsers = async (req, res) => {
-  try {
-    const { query } = req.query;
+// const searchUsers = async (req, res) => {
+//   try {
+//     const { query } = req.query;
 
-    if (!query) {
-      return res.status(400).json({
-        success: false,
-        message: "query is required",
-      });
+//     if (!query) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "query is required",
+//       });
+//     }
+
+//     const users = await User.find({
+//       $or: [
+//         { name: { $regex: query, $options: "i" } },
+//         { email: { $regex: query, $options: "i" } },
+//       ],
+//     }).select("-password");
+
+//     return res.status(200).json({
+//       success: true,
+//       users,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
+const getFilteredUsers = async (req, res) => {
+  try {
+    const { search, role, status, page = 1, limit = 10 } = req.query;
+
+    console.log("fdv : ", search, role, status);
+
+    let query = {};
+
+    // SEARCH
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
     }
 
-    const users = await User.find({
-      $or: [
-        { name: { $regex: query, $options: "i" } },
-        { email: { $regex: query, $options: "i" } },
-      ],
-    }).select("-password");
+    // ROLE FILTER
+    if (role && role !== "All Roles") {
+      query.role = role.toLowerCase().replace(" ", "");
+    }
+
+    // STATUS FILTER
+    if (status && status !== "All Status") {
+      query.status = status.toLowerCase();
+    }
+
+    // PAGINATION
+    const skip = (page - 1) * limit;
+
+    const users = await User.find(query)
+      .select("-password")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(Number(limit));
+
+    const totalUsers = await User.countDocuments(query);
 
     return res.status(200).json({
       success: true,
       users,
+      totalUsers,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalUsers / limit),
     });
   } catch (error) {
+    console.log(error);
+
     return res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Server Error",
     });
   }
 };
@@ -242,5 +295,6 @@ module.exports = {
   deleteAccount,
   updateUser,
   blockUser,
-  searchUsers,
+  // searchUsers,
+  getFilteredUsers,
 };

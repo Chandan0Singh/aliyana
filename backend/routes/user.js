@@ -8,14 +8,12 @@ const {
   deleteAccount,
   updateUser,
   blockUser,
-  searchUsers,
+  // searchUsers,
+  getFilteredUsers,
 } = require("../controllers/userController");
 
 /* ---------------- GET ALL USERS ---------------- */
 router.get("/users", getAllUsers);
-
-/* ---------------- GET USER BY ID ---------------- */
-router.get("/:userId", getUserById);
 
 /* ---------------- UPDATE USER ---------------- */
 router.put("/update", updateUser);
@@ -30,7 +28,10 @@ router.put("/block", blockUser);
 router.delete("/delete", deleteAccount);
 
 /* ---------------- SEARCH USERS ---------------- */
-router.get("/search", searchUsers);
+router.get("/search", getFilteredUsers);
+
+/* ---------------- GET USER BY ID ---------------- */
+router.get("/:userId", getUserById);
 
 
 module.exports = router;
