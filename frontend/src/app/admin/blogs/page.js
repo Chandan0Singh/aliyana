@@ -1,5 +1,12 @@
+"use client";
+import axios from "axios";
+import { useState } from "react";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+
 export default function BlogsDashboard() {
-  const blogs = [
+  const [blogs] = useState([
     {
       id: 1,
       title: "Top 10 Luxury Bags in 2026",
@@ -27,7 +34,60 @@ export default function BlogsDashboard() {
       views: 890,
       date: "08 May 2026",
     },
-  ];
+  ]);
+
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [featuredImage, setFeaturedImage] = useState(null);
+
+  const editor = useEditor({
+    extensions: [StarterKit, Image],
+    content: `
+      <h1>Start Writing Your Blog...</h1>
+      <p>Add headings, paragraphs, images and lists.</p>
+    `,
+  });
+
+  if (!editor) {
+    return null;
+  }
+
+  const addImage = () => {
+    const url = prompt("Paste Image URL");
+
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
+    }
+  };
+
+  const publishBlog = async () => {
+  try {
+    const blogContent = editor.getHTML();
+
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("content", blogContent);
+    formData.append("status", "Published");
+
+    if (featuredImage) {
+      formData.append("featuredImage", featuredImage);
+    }
+
+    const { data } = await axios.post(
+      "http://localhost:5000/api/blog/create",
+      formData
+    );
+
+    console.log(data);
+
+    alert("Blog Published Successfully");
+  } catch (error) {
+    console.log(error);
+    alert("Something went wrong");
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -48,7 +108,7 @@ export default function BlogsDashboard() {
         </button>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Total Blogs</p>
@@ -95,7 +155,7 @@ export default function BlogsDashboard() {
         </div>
       </div>
 
-      {/* Blogs Table */}
+      {/* Table */}
       <div className="bg-white rounded-3xl shadow-sm border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1200px]">
@@ -138,16 +198,12 @@ export default function BlogsDashboard() {
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="p-5">
-                    <div>
-                      <h3 className="font-semibold text-lg text-gray-800">
-                        {blog.title}
-                      </h3>
-                    </div>
+                    <h3 className="font-semibold text-lg text-gray-800">
+                      {blog.title}
+                    </h3>
                   </td>
 
-                  <td className="p-5 text-gray-700">
-                    {blog.author}
-                  </td>
+                  <td className="p-5 text-gray-700">{blog.author}</td>
 
                   <td className="p-5">
                     <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
@@ -205,25 +261,93 @@ export default function BlogsDashboard() {
           <input
             type="text"
             placeholder="Blog Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="border rounded-xl px-4 py-3 outline-none"
           />
 
-          <select className="border rounded-xl px-4 py-3 outline-none">
-            <option>Select Category</option>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="border rounded-xl px-4 py-3 outline-none"
+          >
+            <option value="">Select Category</option>
             <option>Fashion</option>
             <option>Style</option>
             <option>Travel</option>
           </select>
         </div>
 
-        <textarea
-          rows="8"
-          placeholder="Write your blog content here..."
-          className="w-full border rounded-2xl px-4 py-4 outline-none resize-none mb-5"
-        ></textarea>
+        {/* Featured Image */}
+        <div className="mb-6">
+          <label className="block text-gray-700 font-medium mb-2">
+            Featured Image
+          </label>
 
-        <div className="flex flex-wrap gap-4">
-          <button className="bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFeaturedImage(e.target.files[0])}
+            className="w-full border rounded-xl px-4 py-3 bg-white outline-none"
+          />
+        </div>
+
+        {/* Toolbar */}
+        <div className="flex flex-wrap gap-3 p-4 border rounded-t-2xl bg-gray-50">
+          <button
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            className="bg-black text-white px-4 py-2 rounded-xl"
+          >
+            Bold
+          </button>
+
+          <button
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            className="bg-black text-white px-4 py-2 rounded-xl"
+          >
+            Italic
+          </button>
+
+          <button
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level: 1 }).run()
+            }
+            className="bg-black text-white px-4 py-2 rounded-xl"
+          >
+            H1
+          </button>
+
+          <button
+            onClick={() =>
+              editor.chain().focus().toggleBulletList().run()
+            }
+            className="bg-black text-white px-4 py-2 rounded-xl"
+          >
+            List
+          </button>
+
+          <button
+            onClick={addImage}
+            className="bg-blue-600 text-white px-4 py-2 rounded-xl"
+          >
+            Add Image
+          </button>
+        </div>
+
+        {/* Editor */}
+        <div className="border border-t-0 rounded-b-2xl overflow-hidden">
+          <EditorContent
+            editor={editor}
+            className="prose max-w-none p-6 min-h-[400px] focus:outline-none"
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-4 mt-6">
+          <button
+            onClick={publishBlog}
+            className="bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition"
+          >
             Publish Blog
           </button>
 
