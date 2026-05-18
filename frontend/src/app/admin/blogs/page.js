@@ -1,44 +1,46 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 
 export default function BlogsDashboard() {
-  const [blogs] = useState([
-    {
-      id: 1,
-      title: "Top 10 Luxury Bags in 2026",
-      author: "Chandan Singh",
-      category: "Fashion",
-      status: "Published",
-      views: 1245,
-      date: "13 May 2026",
-    },
-    {
-      id: 2,
-      title: "How to Style Your Handbag",
-      author: "Anjali Sharma",
-      category: "Style",
-      status: "Draft",
-      views: 320,
-      date: "10 May 2026",
-    },
-    {
-      id: 3,
-      title: "Best Travel Bags for Women",
-      author: "Rahul Kumar",
-      category: "Travel",
-      status: "Published",
-      views: 890,
-      date: "08 May 2026",
-    },
-  ]);
+  // const [blogs] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Top 10 Luxury Bags in 2026",
+  //     author: "Chandan Singh",
+  //     category: "Fashion",
+  //     status: "Published",
+  //     views: 1245,
+  //     date: "13 May 2026",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "How to Style Your Handbag",
+  //     author: "Anjali Sharma",
+  //     category: "Style",
+  //     status: "Draft",
+  //     views: 320,
+  //     date: "10 May 2026",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Best Travel Bags for Women",
+  //     author: "Rahul Kumar",
+  //     category: "Travel",
+  //     status: "Published",
+  //     views: 890,
+  //     date: "08 May 2026",
+  //   },
+  // ]);
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [featuredImage, setFeaturedImage] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+  let [blogCount, setBlogCount] =useState("")
 
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -48,9 +50,9 @@ export default function BlogsDashboard() {
     `,
   });
 
-  if (!editor) {
-    return null;
-  }
+  // if (!editor) {
+  //   return null;
+  // }
 
   const addImage = () => {
     const url = prompt("Paste Image URL");
@@ -90,6 +92,33 @@ export default function BlogsDashboard() {
     }
   };
 
+  useEffect(() => {
+    const getAllBlogs = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/blog");
+
+        setBlogs(response.data.data);
+        setBlogCount(response.data.count)
+      } catch (error) {
+        console.log("error while geting blog : ", error);
+      }
+    };
+
+    getAllBlogs();
+  }, []);
+
+  if (!editor) {
+    return null;
+  }
+
+  const draftCount = blogs.filter((blog)=> blog.status === "Draft").length;
+
+  const publishCount = blogs.filter((blog)=> blog.status === "Published").length;
+  console.log("draftcount : ", draftCount);
+  console.log("publishCount : ", publishCount);
+
+  console.log("Casd: ", blogs)
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
@@ -111,17 +140,17 @@ export default function BlogsDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Total Blogs</p>
-          <h2 className="text-4xl font-bold mt-2">84</h2>
+          <h2 className="text-4xl font-bold mt-2">{blogCount}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Published</p>
-          <h2 className="text-4xl font-bold mt-2">63</h2>
+          <h2 className="text-4xl font-bold mt-2">{publishCount}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Drafts</p>
-          <h2 className="text-4xl font-bold mt-2">21</h2>
+          <h2 className="text-4xl font-bold mt-2">{draftCount}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
@@ -193,7 +222,7 @@ export default function BlogsDashboard() {
             <tbody>
               {blogs.map((blog) => (
                 <tr
-                  key={blog.id}
+                  key={blog._id}
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="p-5">
@@ -226,7 +255,7 @@ export default function BlogsDashboard() {
                     </span>
                   </td>
 
-                  <td className="p-5 text-gray-600">{blog.date}</td>
+                  <td className="p-5 text-gray-600">{new Date(blog.updatedAt).toDateString("en-GB")}</td>
 
                   <td className="p-5">
                     <div className="flex flex-wrap gap-3">
