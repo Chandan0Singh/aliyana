@@ -36,6 +36,26 @@ const createBlog = async (req, res) => {
   }
 };
 
+const getAllBlogs = async(req, res) => {
+  try{
+    const blogs = await Blog.find().sort({ createdAt: -1});
+    res.status(200).json({
+      success: true,
+      count: blogs.length,
+      data: blogs
+    })
+
+  } catch(error){
+    res.status(500).josn({
+      success: false,
+      message: error.message
+    })
+  }
+
+}
+
+
 module.exports = {
   createBlog,
+  getAllBlogs
 };

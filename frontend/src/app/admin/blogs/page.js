@@ -60,43 +60,42 @@ export default function BlogsDashboard() {
     }
   };
 
-  const publishBlog = async () => {
-  try {
-    const blogContent = editor.getHTML();
+  const saveBlog = async (blogStatus) => {
+    try {
+      const blogContent = editor.getHTML();
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("title", title);
-    formData.append("category", category);
-    formData.append("content", blogContent);
-    formData.append("status", "Published");
+      formData.append("title", title);
+      formData.append("category", category);
+      formData.append("content", blogContent);
+      formData.append("status", blogStatus);
 
-    if (featuredImage) {
-      formData.append("featuredImage", featuredImage);
+      if (featuredImage) {
+        formData.append("featuredImage", featuredImage);
+      }
+
+      const { data } = await axios.post(
+        "http://localhost:5000/api/blog/create",
+        formData,
+      );
+
+      console.log(data);
+
+      alert(`Blog ${blogStatus} Successfully`);
+    } catch (error) {
+      console.log(error);
+
+      alert("Something went wrong");
     }
-
-    const { data } = await axios.post(
-      "http://localhost:5000/api/blog/create",
-      formData
-    );
-
-    console.log(data);
-
-    alert("Blog Published Successfully");
-  } catch (error) {
-    console.log(error);
-    alert("Something went wrong");
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-gray-800">
-            Blogs Dashboard
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-800">Blogs Dashboard</h1>
 
           <p className="text-gray-500 mt-2">
             Manage blogs, articles, categories and publishing status.
@@ -318,9 +317,7 @@ export default function BlogsDashboard() {
           </button>
 
           <button
-            onClick={() =>
-              editor.chain().focus().toggleBulletList().run()
-            }
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
             className="bg-black text-white px-4 py-2 rounded-xl"
           >
             List
@@ -345,13 +342,16 @@ export default function BlogsDashboard() {
         {/* Buttons */}
         <div className="flex flex-wrap gap-4 mt-6">
           <button
-            onClick={publishBlog}
+            onClick={() => saveBlog("Published")}
             className="bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition"
           >
             Publish Blog
           </button>
 
-          <button className="bg-gray-200 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-300 transition">
+          <button
+            onClick={() => saveBlog("Draft")}
+            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-300 transition"
+          >
             Save Draft
           </button>
         </div>
