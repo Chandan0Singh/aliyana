@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { createBlog, getAllBlogs } = require("../controllers/blogController");
+const { createBlog, getAllBlogs, deleteBlog } = require("../controllers/blogController");
 
 const upload = require("../middleware/upload");
 
@@ -11,5 +11,7 @@ const upload = require("../middleware/upload");
 router.post("/create", upload.single("featuredImage"), createBlog);
 
 router.get("/", getAllBlogs);
+
+router.delete("/delete", deleteBlog);
 
 module.exports = router;

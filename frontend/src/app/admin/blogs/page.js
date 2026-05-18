@@ -107,6 +107,17 @@ export default function BlogsDashboard() {
     getAllBlogs();
   }, []);
 
+  const handleDelete = async(id) =>{
+    console.log("id", id)
+    const response = await axios.delete("http://localhost:5000/api/blog/delete",{
+      data:{
+        blogid: id
+      }
+    })
+    console.log("DFa : ", response.data)
+
+  }
+
   if (!editor) {
     return null;
   }
@@ -267,7 +278,9 @@ export default function BlogsDashboard() {
                         Edit
                       </button>
 
-                      <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition">
+                      <button
+                      onClick={()=> handleDelete(blog._id)}
+                       className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition">
                         Delete
                       </button>
                     </div>
