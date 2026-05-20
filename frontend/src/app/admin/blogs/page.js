@@ -4,43 +4,19 @@ import { useEffect, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
+import { useRouter } from "next/navigation";
 
 export default function BlogsDashboard() {
-  // const [blogs] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Top 10 Luxury Bags in 2026",
-  //     author: "Chandan Singh",
-  //     category: "Fashion",
-  //     status: "Published",
-  //     views: 1245,
-  //     date: "13 May 2026",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "How to Style Your Handbag",
-  //     author: "Anjali Sharma",
-  //     category: "Style",
-  //     status: "Draft",
-  //     views: 320,
-  //     date: "10 May 2026",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Best Travel Bags for Women",
-  //     author: "Rahul Kumar",
-  //     category: "Travel",
-  //     status: "Published",
-  //     views: 890,
-  //     date: "08 May 2026",
-  //   },
-  // ]);
-
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [featuredImage, setFeaturedImage] = useState(null);
   const [blogs, setBlogs] = useState([]);
-  let [blogCount, setBlogCount] =useState("")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchCategory, setSearchCategory] = useState("All Categories");
+  const [searchStatus, setSearchStatus] = useState("All Status");
+  const [blogCount, setBlogCount] = useState("");
+
+  const router = useRouter();
 
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -49,10 +25,6 @@ export default function BlogsDashboard() {
       <p>Add headings, paragraphs, images and lists.</p>
     `,
   });
-
-  // if (!editor) {
-  //   return null;
-  // }
 
   const addImage = () => {
     const url = prompt("Paste Image URL");
@@ -98,7 +70,7 @@ export default function BlogsDashboard() {
         const response = await axios.get("http://localhost:5000/api/blog");
 
         setBlogs(response.data.data);
-        setBlogCount(response.data.count)
+        setBlogCount(response.data.count);
       } catch (error) {
         console.log("error while geting blog : ", error);
       }
@@ -107,28 +79,51 @@ export default function BlogsDashboard() {
     getAllBlogs();
   }, []);
 
-  const handleDelete = async(id) =>{
-    console.log("id", id)
-    const response = await axios.delete("http://localhost:5000/api/blog/delete",{
-      data:{
-        blogid: id
-      }
-    })
-    console.log("DFa : ", response.data)
+  const handleDelete = async (id) => {
+    console.log("id", id);
+    const response = await axios.delete(
+      "http://localhost:5000/api/blog/delete",
+      {
+        data: {
+          blogid: id,
+        },
+      },
+    );
+    console.log("DFa : ", response.data);
+  };
 
-  }
+  const filtersearch = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/blog/search",
+        {
+          params: {
+            search: searchTerm,
+            category: searchCategory,
+            status: searchStatus,
+          },
+        },
+      );
+
+      setBlogs(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    filtersearch();
+  }, [searchTerm, searchCategory, searchStatus]);
+
+  const draftCount = blogs.filter((blog) => blog.status === "Draft").length;
+
+  const publishCount = blogs.filter(
+    (blog) => blog.status === "Published",
+  ).length;
 
   if (!editor) {
     return null;
   }
-
-  const draftCount = blogs.filter((blog)=> blog.status === "Draft").length;
-
-  const publishCount = blogs.filter((blog)=> blog.status === "Published").length;
-  console.log("draftcount : ", draftCount);
-  console.log("publishCount : ", publishCount);
-
-  console.log("Casd: ", blogs)
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -175,18 +170,30 @@ export default function BlogsDashboard() {
         <input
           type="text"
           placeholder="Search blogs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="border rounded-xl px-4 py-3 w-full lg:w-1/3 outline-none"
         />
 
         <div className="flex flex-wrap gap-3">
-          <select className="border rounded-xl px-4 py-3 outline-none">
+          <select
+            value={searchCategory}
+            onChange={(e) => {
+              setSearchCategory(e.target.value);
+            }}
+            className="border rounded-xl px-4 py-3 outline-none"
+          >
             <option>All Categories</option>
             <option>Fashion</option>
             <option>Style</option>
             <option>Travel</option>
           </select>
 
-          <select className="border rounded-xl px-4 py-3 outline-none">
+          <select
+            value={searchStatus}
+            onChange={(e) => setSearchStatus(e.target.value)}
+            className="border rounded-xl px-4 py-3 outline-none"
+          >
             <option>All Status</option>
             <option>Published</option>
             <option>Draft</option>
@@ -266,21 +273,32 @@ export default function BlogsDashboard() {
                     </span>
                   </td>
 
-                  <td className="p-5 text-gray-600">{new Date(blog.updatedAt).toDateString("en-GB")}</td>
+                  <td className="p-5 text-gray-600">
+                    {new Date(blog.updatedAt).toDateString("en-GB")}
+                  </td>
 
                   <td className="p-5">
                     <div className="flex flex-wrap gap-3">
-                      <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition">
+                      <button
+                        onClick={() => router.push(`/blog/${blog._id}`)}
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition"
+                      >
                         View
                       </button>
 
-                      <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition">
+                      <button
+                        onClick={() =>
+                          router.push(`/admin/blogs/edit/${blog._id}`)
+                        }
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition"
+                      >
                         Edit
                       </button>
 
                       <button
-                      onClick={()=> handleDelete(blog._id)}
-                       className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition">
+                        onClick={() => handleDelete(blog._id)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl transition"
+                      >
                         Delete
                       </button>
                     </div>
