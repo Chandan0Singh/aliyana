@@ -89,36 +89,48 @@ const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { title, category, content, status } = req.body;
+    const { title, description, category, content, featuredImage, status } =
+      req.body;
 
-    const blog = await Blog.findById(id);
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "blog id required",
+      });
+    }
 
-    if (!blog) {
+    const existingBlog = await Blog.findById(id);
+
+    if (!existingBlog) {
       return res.status(404).json({
         success: false,
         message: "Blog not found",
       });
     }
 
-    // update fields
-    if (title) blog.title = title;
-    if (category) blog.category = category;
-    if (content) blog.content = content;
-    if (status) blog.status = status;
-
-    // featured image update
-    if (req.file) {
-      blog.featuredImage = req.file.path;
-    }
-
-    await blog.save();
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        featuredImage,
+        content,
+        category,
+        status,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     res.status(200).json({
       success: true,
       message: "Blog updated successfully",
-      data: blog,
+      data: updatedBlog,
     });
   } catch (error) {
+    console.log("CASDca", error)
     res.status(500).json({
       success: false,
       message: error.message,
@@ -205,6 +217,8 @@ const getSingleBlog = async (req, res) => {
     // Find blog by ID
     const blog = await Blog.findById(id);
 
+    console.log("VDSca", blog);
+
     // Check if blog exists
     if (!blog) {
       return res.status(404).json({
@@ -217,13 +231,15 @@ const getSingleBlog = async (req, res) => {
     blog.views += 1;
     await blog.save();
 
+    console.log("Csad", blog);
+
     // Response
     res.status(200).json({
       success: true,
       data: blog,
     });
-
   } catch (error) {
+    console.log("DCAsd", error.message);
     res.status(500).json({
       success: false,
       message: error.message,
@@ -237,5 +253,5 @@ module.exports = {
   deleteBlog,
   updateBlog,
   filterBlogs,
-  getSingleBlog
+  getSingleBlog,
 };

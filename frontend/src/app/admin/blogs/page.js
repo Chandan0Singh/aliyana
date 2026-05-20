@@ -80,7 +80,7 @@ export default function BlogsDashboard() {
   }, []);
 
   const handleDelete = async (id) => {
-    console.log("id", id);
+    
     const response = await axios.delete(
       "http://localhost:5000/api/blog/delete",
       {
@@ -89,7 +89,6 @@ export default function BlogsDashboard() {
         },
       },
     );
-    console.log("DFa : ", response.data);
   };
 
   const filtersearch = async () => {

@@ -8,6 +8,8 @@ export default function EditBlogPage() {
   const { id } = useParams();
   const router = useRouter();
 
+  console.log("Csdac", id)
+
   const [loading, setLoading] = useState(false);
 
   const [blogData, setBlogData] = useState({
