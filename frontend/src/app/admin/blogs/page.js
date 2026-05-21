@@ -167,7 +167,7 @@ export default function BlogsDashboard() {
           </div>
 
           <button
-          onClick={()=>setEditBlog(true)}
+          onClick={()=>setEditBlog(!editBlog)}
            className="bg-black text-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition">
             + Create Blog
           </button>
