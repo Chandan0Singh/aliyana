@@ -1,10 +1,10 @@
 const Blog = require("../models/blogSchema");
-
-/* ---------------- CREATE BLOG ---------------- */
+const fs = require("fs");
+const path = require("path");
 
 const createBlog = async (req, res) => {
   try {
-    const { title, category, content, status } = req.body;
+    const { title, category, content, status, description } = req.body;
 
     let featuredImage = "";
 
@@ -16,6 +16,7 @@ const createBlog = async (req, res) => {
     const blog = await Blog.create({
       title,
       category,
+      description,
       content,
       status,
       featuredImage,
@@ -38,9 +39,13 @@ const createBlog = async (req, res) => {
 const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
+
+    const totalViews = blogs.reduce((sum, blog) => sum + blog.views, 0);
+
     res.status(200).json({
       success: true,
       count: blogs.length,
+      totalViews,
       data: blogs,
     });
   } catch (error) {
@@ -51,33 +56,77 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
+const getPublishedBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find({
+      status: "Published",
+    }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json({
+      success: true,
+      count: blogs.length,
+      data: blogs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const deleteBlog = async (req, res) => {
   try {
     const { blogid } = req.body;
 
-    console.log("blogid : ", blogid);
-
     if (!blogid) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "required blog id",
       });
     }
 
-    const deleteBlog = await Blog.findByIdAndDelete(blogid);
+    // Find blog
+    const blog = await Blog.findById(blogid);
 
-    if (!deleteBlog) {
-      res.status(404).json({
+    if (!blog) {
+      return res.status(404).json({
         success: false,
-        message: "blog doen't found",
+        message: "blog doesn't exist",
       });
     }
 
+    // Delete image
+    if (blog.featuredImage) {
+      // Remove starting slash
+      const imagePath = path.join(
+        __dirname,
+        "..",
+        blog.featuredImage.replace(/^\/+/, ""),
+      );
+
+      console.log("Deleting image:", imagePath);
+
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+        console.log("Image deleted");
+      } else {
+        console.log("Image not found");
+      }
+    }
+
+    // Delete blog
+    await Blog.findByIdAndDelete(blogid);
+
     res.status(200).json({
       success: true,
-      deleteBlog: deleteBlog,
+      message: "Blog deleted successfully",
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
       success: false,
       message: error.message,
@@ -130,7 +179,7 @@ const updateBlog = async (req, res) => {
       data: updatedBlog,
     });
   } catch (error) {
-    console.log("CASDca", error)
+    console.log("CASDca", error);
     res.status(500).json({
       success: false,
       message: error.message,
@@ -217,9 +266,6 @@ const getSingleBlog = async (req, res) => {
     // Find blog by ID
     const blog = await Blog.findById(id);
 
-    console.log("VDSca", blog);
-
-    // Check if blog exists
     if (!blog) {
       return res.status(404).json({
         success: false,
@@ -227,11 +273,8 @@ const getSingleBlog = async (req, res) => {
       });
     }
 
-    // Optional: Increase views automatically
     blog.views += 1;
     await blog.save();
-
-    console.log("Csad", blog);
 
     // Response
     res.status(200).json({
@@ -239,7 +282,6 @@ const getSingleBlog = async (req, res) => {
       data: blog,
     });
   } catch (error) {
-    console.log("DCAsd", error.message);
     res.status(500).json({
       success: false,
       message: error.message,
@@ -254,4 +296,5 @@ module.exports = {
   updateBlog,
   filterBlogs,
   getSingleBlog,
+  getPublishedBlogs,
 };

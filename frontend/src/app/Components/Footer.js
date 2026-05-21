@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { useState } from "react";
+import Link from "next/link";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 export default function Footer() {
   const [openSection, setOpenSection] = useState(null);
@@ -13,7 +13,6 @@ export default function Footer() {
   return (
     <footer className="bg-[#FDF4FF] text-[#1E1B4B] py-10 px-6">
       <div className="max-w-7xl mx-auto space-y-6">
-
         {/* Brand */}
         <div>
           <h2 className="text-3xl font-serif tracking-widest mb-2">Aliyana</h2>
@@ -24,26 +23,25 @@ export default function Footer() {
 
         {/* Collapsible Sections */}
         <div className="space-y-4 md:flex md:space-y-0 md:justify-between">
-
           {/* Shop */}
           <div className="md:w-1/3">
             <div
               role="button"
               tabIndex="0"
-              onClick={() => toggleSection('shop')}
+              onClick={() => toggleSection("shop")}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') toggleSection('shop');
+                if (e.key === "Enter" || e.key === " ") toggleSection("shop");
               }}
               className="flex justify-between items-center cursor-pointer md:cursor-default"
             >
               <h3 className="uppercase text-sm font-semibold">Shop</h3>
               <span className="md:hidden">
-                {openSection === 'shop' ? <FaChevronUp /> : <FaChevronDown />}
+                {openSection === "shop" ? <FaChevronUp /> : <FaChevronDown />}
               </span>
             </div>
             <ul
               className={`mt-2 space-y-2 text-sm ${
-                openSection === 'shop' ? 'block' : 'hidden'
+                openSection === "shop" ? "block" : "hidden"
               } md:block`}
             >
               <li>
@@ -57,7 +55,10 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/newarrival" className="hover:text-[#C084FC] transition">
+                <Link
+                  href="/newarrival"
+                  className="hover:text-[#C084FC] transition"
+                >
                   New Arrivals
                 </Link>
               </li>
@@ -69,39 +70,57 @@ export default function Footer() {
             <div
               role="button"
               tabIndex="0"
-              onClick={() => toggleSection('about')}
+              onClick={() => toggleSection("about")}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') toggleSection('about');
+                if (e.key === "Enter" || e.key === " ") toggleSection("about");
               }}
               className="flex justify-between items-center cursor-pointer md:cursor-default"
             >
               <h3 className="uppercase text-sm font-semibold">About</h3>
               <span className="md:hidden">
-                {openSection === 'about' ? <FaChevronUp /> : <FaChevronDown />}
+                {openSection === "about" ? <FaChevronUp /> : <FaChevronDown />}
               </span>
             </div>
             <ul
               className={`mt-2 space-y-2 text-sm ${
-                openSection === 'about' ? 'block' : 'hidden'
+                openSection === "about" ? "block" : "hidden"
               } md:block`}
             >
               <li>
-                <Link href="/OurStory" className="hover:text-[#C084FC] transition">
+                <Link
+                  href="/OurStory"
+                  className="hover:text-[#C084FC] transition"
+                >
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link href="/Sustainability" className="hover:text-[#C084FC] transition">
+                <Link href="/blog" className="hover:text-[#C084FC] transition">
+                  Blog
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/Sustainability"
+                  className="hover:text-[#C084FC] transition"
+                >
                   Sustainability
                 </Link>
               </li>
               <li>
-                <Link href="/CareGuide" className="hover:text-[#C084FC] transition">
+                <Link
+                  href="/CareGuide"
+                  className="hover:text-[#C084FC] transition"
+                >
                   Care Guide
                 </Link>
               </li>
               <li>
-                <Link href="/Careers" className="hover:text-[#C084FC] transition">
+                <Link
+                  href="/Careers"
+                  className="hover:text-[#C084FC] transition"
+                >
                   Careers
                 </Link>
               </li>
@@ -113,20 +132,27 @@ export default function Footer() {
             <div
               role="button"
               tabIndex="0"
-              onClick={() => toggleSection('newsletter')}
+              onClick={() => toggleSection("newsletter")}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') toggleSection('newsletter');
+                if (e.key === "Enter" || e.key === " ")
+                  toggleSection("newsletter");
               }}
               className="flex justify-between items-center cursor-pointer md:cursor-default"
             >
-              <h3 className="uppercase text-sm font-semibold">Stay Connected</h3>
+              <h3 className="uppercase text-sm font-semibold">
+                Stay Connected
+              </h3>
               <span className="md:hidden">
-                {openSection === 'newsletter' ? <FaChevronUp /> : <FaChevronDown />}
+                {openSection === "newsletter" ? (
+                  <FaChevronUp />
+                ) : (
+                  <FaChevronDown />
+                )}
               </span>
             </div>
             <div
               className={`mt-3 ${
-                openSection === 'newsletter' ? 'block' : 'hidden'
+                openSection === "newsletter" ? "block" : "hidden"
               } md:block`}
             >
               <form className="flex flex-col gap-3 max-w-xs">

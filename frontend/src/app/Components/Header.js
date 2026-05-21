@@ -35,6 +35,7 @@ export default function Header() {
           <Link href="/women" className="hover:text-[#4C1D95] transition">Women</Link>
           <Link href="/sale" className="hover:text-[#4C1D95] transition">Sale</Link>
           <Link href="/explore" className="hover:text-[#4C1D95] transition">Explore</Link>
+          <Link href="/blog" className="hover:text-[#4C1D95] transition">Blog</Link>
         </nav>
 
         {/* Icons */}
@@ -85,6 +86,7 @@ export default function Header() {
               { label: "Women", href: "/women" },
               { label: "Sale", href: "/sale" },
               { label: "Explore", href: "/explore" },
+              { label: "Blog", href: "/blog" },
             ].map((item) => (
               <Link
                 key={item.href}

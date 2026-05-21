@@ -16,9 +16,11 @@ export default function BlogsDashboard() {
   const [searchCategory, setSearchCategory] = useState("All Categories");
   const [searchStatus, setSearchStatus] = useState("All Status");
   const [blogCount, setBlogCount] = useState("");
+  const [views, setViews] = useState("")
   const [showPopup, setShowPopup] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState("");
   const [editBlog, setEditBlog] = useState(false);
+  const [description, setDescription] = useState("");
 
   const router = useRouter();
 
@@ -46,6 +48,7 @@ export default function BlogsDashboard() {
 
       formData.append("title", title);
       formData.append("category", category);
+      formData.append("description", description);
       formData.append("content", blogContent);
       formData.append("status", blogStatus);
 
@@ -76,6 +79,7 @@ export default function BlogsDashboard() {
 
         setBlogs(response.data.data);
         setBlogCount(response.data.count);
+        setViews(response.data.totalViews);
       } catch (error) {
         console.log("error while geting blog : ", error);
       }
@@ -200,6 +204,26 @@ export default function BlogsDashboard() {
               </select>
             </div>
 
+            {/* Description */}
+<div className="mb-6">
+  <label className="block text-gray-700 font-medium mb-2">
+    Blog Description
+  </label>
+
+  <textarea
+    placeholder="Write short blog description..."
+    value={description}
+    onChange={(e) => setDescription(e.target.value)}
+    rows={4}
+    maxLength={300}
+    className="w-full border rounded-2xl px-4 py-3 outline-none resize-none"
+  />
+
+  <p className="text-sm text-gray-500 mt-2">
+    {description.length}/300 characters
+  </p>
+</div>
+
             {/* Featured Image */}
             <div className="mb-6">
               <label className="block text-gray-700 font-medium mb-2">
@@ -300,7 +324,7 @@ export default function BlogsDashboard() {
 
           <div className="bg-white p-6 rounded-3xl border shadow-sm">
             <p className="text-gray-500 text-sm">Total Views</p>
-            <h2 className="text-4xl font-bold mt-2">52K</h2>
+            <h2 className="text-4xl font-bold mt-2">{views}</h2>
           </div>
         </div>
 
