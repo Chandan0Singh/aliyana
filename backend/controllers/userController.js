@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: "7d",
-      }
+      },
     );
 
     return res.status(200).json({
@@ -55,7 +55,6 @@ const loginUser = async (req, res) => {
         status: user.status,
       },
     });
-
   } catch (err) {
     return res.status(500).json({
       message: "Login failed",
@@ -129,7 +128,6 @@ const signupUser = async (req, res) => {
         status: newUser.status,
       },
     });
-
   } catch (err) {
     console.log("SIGNUP ERROR:", err);
 
@@ -291,6 +289,13 @@ const updateUser = async (req, res) => {
   try {
     const { userId, name, email, role, phone, address } = req.body;
 
+    console.log("userId:", userId);
+console.log("name:", name);
+console.log("email:", email);
+console.log("role:", role);
+console.log("phone:", phone);
+console.log("address:", address);
+
     if (!userId) {
       return res.status(400).json({
         success: false,
@@ -299,12 +304,12 @@ const updateUser = async (req, res) => {
     }
 
     const updateData = {};
-    if (name) updateData.name = name;
-    if (email) updateData.email = email;
-    if (role) updateData.role = role;
-    if (phone) updateData.phone = phone;
-    if (address) updateData.address = address;
 
+    if (name?.trim()) updateData.name = name;
+    if (email?.trim()) updateData.email = email;
+    if (role?.trim()) updateData.role = role;
+    if (phone?.trim()) updateData.phone = phone;
+    if (address?.trim()) updateData.address = address;
 
     const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
       new: true,

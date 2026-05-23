@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin", "superadmin"],
       default: "user",
     },
-    status:{
+    status: {
       type: String,
       enum: ["active", "blocked"],
       default: "active",
@@ -36,12 +36,11 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      default: "",
     },
-    address : {
+
+    address: {
       type: String,
-      default: ""
-    }
+    },
   },
   { timestamps: true },
 );

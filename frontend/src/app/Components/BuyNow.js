@@ -12,6 +12,8 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
   const [address, setAddress] = useState(user?.address || "");
   const [loading, setLoading] = useState(false);
 
+  console.log("Asd", user.user.name)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,8 +23,8 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
       const response = await axios.put(
         "http://localhost:5000/api/user/update",
         {
-          userId: user?._id,
-          name: user?.name,
+          userId: user.user.id,
+          name: user?.user.name,
           phone,
           address,
         }
