@@ -108,11 +108,11 @@ const ProductPage = () => {
           </button>
         </div>
       </div>
-      {/* <BuyNowModal
+      <BuyNowModal
         isOpen={isBuyNowOpen}
         onClose={() => setIsBuyNowOpen(false)}
         product={bag}
-      /> */}
+      />
     </>
   );
 };

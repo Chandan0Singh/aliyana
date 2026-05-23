@@ -27,9 +27,6 @@ const ProfileSidebarLayout = () => {
     }
   }, [user]);
 
-  // useEffect(()=>{
-  //   console.log(user.user.name)
-  // })
 
   const handleFieldClick = (field) => setEditField(field);
   const handleChange = (e) =>

@@ -1,12 +1,15 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Dialog } from '@headlessui/react';
+import React, { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
+import { Dialog } from "@headlessui/react";
 
 const BuyNowModal = ({ isOpen, onClose, product }) => {
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const { user } = useAuth();
+
+  const [phone, setPhone] = useState(user?.phone || "");
+  const [address, setAddress] = useState(user?.address || "");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -15,13 +18,24 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
     try {
       setLoading(true);
 
-      // Fake delay for UI demo
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const response = await axios.put(
+        "http://localhost:5000/api/user/update",
+        {
+          userId: user?._id,
+          name: user?.name,
+          phone,
+          address,
+        }
+      );
 
-      alert('Order placed successfully!');
-      onClose();
+      if (response.data.success) {
+        alert("Order placed successfully!");
+        onClose();
+      }
+
     } catch (error) {
       console.log(error);
+      alert("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -37,7 +51,7 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
         <Dialog.Panel className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
 
-          {/* Heading */}
+          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <Dialog.Title className="text-2xl font-bold text-[#1E1B4B]">
               Buy Now
@@ -49,6 +63,17 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
             >
               ×
             </button>
+          </div>
+
+          {/* Logged In User Info */}
+          <div className="bg-gray-50 rounded-xl p-4 mb-6">
+            <p className="font-semibold text-lg">
+              {user?.name}
+            </p>
+
+            <p className="text-sm text-gray-500">
+              {user?.email}
+            </p>
           </div>
 
           {/* Product Preview */}
@@ -77,21 +102,7 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
 
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Full Name
-              </label>
-
-              <input
-                type="text"
-                required
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Enter your full name"
-                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              />
-            </div>
-
+            {/* Phone */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Phone Number
@@ -107,6 +118,7 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
               />
             </div>
 
+            {/* Address */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Address
@@ -146,11 +158,12 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
                 disabled={loading}
                 className="flex-1 bg-yellow-500 text-white py-3 rounded-xl font-semibold hover:bg-yellow-600 transition disabled:opacity-60"
               >
-                {loading ? 'Processing...' : 'Confirm Order'}
+                {loading ? "Processing..." : "Confirm Order"}
               </button>
 
             </div>
           </form>
+
         </Dialog.Panel>
       </div>
     </Dialog>

@@ -8,7 +8,6 @@ const {
   deleteAccount,
   updateUser,
   blockUser,
-  // searchUsers,
   getFilteredUsers,
 } = require("../controllers/userController");
 

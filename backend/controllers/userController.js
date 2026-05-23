@@ -289,7 +289,7 @@ const deleteAccount = async (req, res) => {
 /* ---------------- UPDATE USER ---------------- */
 const updateUser = async (req, res) => {
   try {
-    const { userId, name, email, role } = req.body;
+    const { userId, name, email, role, phone, address } = req.body;
 
     if (!userId) {
       return res.status(400).json({
@@ -302,6 +302,9 @@ const updateUser = async (req, res) => {
     if (name) updateData.name = name;
     if (email) updateData.email = email;
     if (role) updateData.role = role;
+    if (phone) updateData.phone = phone;
+    if (address) updateData.address = address;
+
 
     const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
       new: true,
@@ -368,37 +371,6 @@ const blockUser = async (req, res) => {
   }
 };
 
-/* ---------------- SEARCH USERS ---------------- */
-// const searchUsers = async (req, res) => {
-//   try {
-//     const { query } = req.query;
-
-//     if (!query) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "query is required",
-//       });
-//     }
-
-//     const users = await User.find({
-//       $or: [
-//         { name: { $regex: query, $options: "i" } },
-//         { email: { $regex: query, $options: "i" } },
-//       ],
-//     }).select("-password");
-
-//     return res.status(200).json({
-//       success: true,
-//       users,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
 const getFilteredUsers = async (req, res) => {
   try {
     const { search, role, status, page = 1, limit = 10 } = req.query;
@@ -460,7 +432,6 @@ module.exports = {
   deleteAccount,
   updateUser,
   blockUser,
-  // searchUsers,
   loginUser,
   getFilteredUsers,
 };
