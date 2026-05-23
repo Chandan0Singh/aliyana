@@ -289,12 +289,6 @@ const updateUser = async (req, res) => {
   try {
     const { userId, name, email, role, phone, address } = req.body;
 
-    console.log("userId:", userId);
-console.log("name:", name);
-console.log("email:", email);
-console.log("role:", role);
-console.log("phone:", phone);
-console.log("address:", address);
 
     if (!userId) {
       return res.status(400).json({

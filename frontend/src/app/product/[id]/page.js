@@ -1,24 +1,28 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 import ReactImageMagnify from "react-image-magnify";
-import BuyNowModal from '../../Components/BuyNow'
+import BuyNowModal from '../../Components/BuyNow';
 import CartBtn from '@/app/Components/cartBtn';
 
 const ProductPage = () => {
-  const { id } = useParams(); // ✅ Fix for params
+  const { id } = useParams();
 
   const [bag, setBag] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isBuyNowOpen , setIsBuyNowOpen] = useState(false);
+  const [isBuyNowOpen, setIsBuyNowOpen] = useState(false);
 
-  // ✅ Fetch product data
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const res = await axios.get(
+          `http://localhost:5000/api/products/${id}`
+        );
+
         setBag(res.data);
+
       } catch (err) {
         console.error("Failed to fetch product:", err);
       } finally {
@@ -29,85 +33,220 @@ const ProductPage = () => {
     if (id) fetchProduct();
   }, [id]);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FDF4FF]">
+        <p className="text-xl font-medium text-[#1E1B4B]">
+          Loading Product...
+        </p>
+      </div>
+    );
+  }
 
-  if (loading) return <div className="p-10">Loading...</div>;
-  if (!bag) return <div className="p-10">Product not found.</div>;
+  if (!bag) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FDF4FF]">
+        <p className="text-xl font-medium text-[#1E1B4B]">
+          Product not found.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="min-h-screen bg-white px-6 py-10 text-[#1E1B4B] max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-12">
-          <div className="flex-1 flex justify-center items-start">
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: bag.name,
-                  isFluidWidth: true,
-                  src: bag.image, // 800×533 displayed responsively
-                },
-                largeImage: {
-                  src: bag.image,
-                  width: 1600,  // 2x of original width
-                  height: 1066, // 2x of original height
-                },
-                enlargedImagePosition: "beside", // or 'over' for mobile fallback
-                enlargedImageContainerDimensions: {
-                  width: '200%', // makes zoom box bigger
-                  height: '100%',
-                },
-                enlargedImageContainerStyle: {
-                  zIndex: 50,
-                  border: '1px solid #ddd',
-                  borderRadius: '12px',
-                  boxShadow: '0 0 12px rgba(0,0,0,0.15)',
-                },
-                lensStyle: { backgroundColor: "rgba(0,0,0,0.1)" },
-              }}
-            />
+      <div className="min-h-screen bg-[#FDF4FF] py-12 px-4 md:px-8 text-[#1E1B4B]">
+
+        <div className="max-w-7xl mx-auto">
+
+          {/* Main Product Card */}
+          <div className="bg-[#FFFFFF] rounded-[32px] shadow-xl border border-purple-100 overflow-hidden">
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-6 md:p-10">
+
+              {/* Left Side */}
+              <div>
+
+                {/* Product Badge */}
+                <div className="mb-5">
+                  <span className="bg-[#F3E8FF] text-[#7E22CE] px-4 py-2 rounded-full text-sm font-medium">
+                    Premium Digital Asset
+                  </span>
+                </div>
+
+                {/* Image Container */}
+                <div className="bg-gradient-to-br from-[#FAF5FF] to-[#F3E8FF] rounded-[28px] p-6 border border-[#E9D5FF]">
+
+                  <ReactImageMagnify
+                    {...{
+                      smallImage: {
+                        alt: bag.name,
+                        isFluidWidth: true,
+                        src: bag.image,
+                      },
+
+                      largeImage: {
+                        src: bag.image,
+                        width: 1600,
+                        height: 1066,
+                      },
+
+                      enlargedImagePosition: "beside",
+
+                      enlargedImageContainerDimensions: {
+                        width: '180%',
+                        height: '100%',
+                      },
+
+                      enlargedImageContainerStyle: {
+                        zIndex: 50,
+                        border: '1px solid #E9D5FF',
+                        borderRadius: '24px',
+                        background: '#fff',
+                        boxShadow: '0 20px 40px rgba(192,132,252,0.2)',
+                      },
+
+                      lensStyle: {
+                        backgroundColor: 'rgba(192,132,252,0.2)',
+                      },
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Right Side */}
+              <div className="flex flex-col justify-center">
+
+                {/* Title */}
+                <h1 className="text-4xl md:text-5xl font-serif font-bold leading-relaxed text-[#1E1B4B] mb-5">
+                  {bag.name}
+                </h1>
+
+                {/* Description */}
+                <p className="text-lg leading-relaxed text-[#4B5563] mb-8">
+                  {bag.description}
+                </p>
+
+                {/* File Formats */}
+                <div className="flex flex-wrap gap-3 mb-6">
+
+                  {["EPS", "AI", "PNG", "SVG"].map((item) => (
+                    <span
+                      key={item}
+                      className="bg-[#F3E8FF] text-[#7E22CE] px-4 py-2 rounded-full text-sm font-medium"
+                    >
+                      {item}
+                    </span>
+                  ))}
+
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-3 mb-8">
+
+                  {["Character", "Illustration", "Premium"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="bg-white border border-[#E9D5FF] text-[#6B21A8] px-4 py-2 rounded-full text-sm font-medium"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+
+                </div>
+
+                {/* Price */}
+                <div className="mb-8">
+
+                  <div className="flex items-center gap-4">
+
+                    <h2 className="text-5xl font-serif font-bold text-[#A855F7]">
+                      ₹{bag.price}
+                    </h2>
+
+                    <span className="line-through text-gray-400 text-2xl">
+                      ₹{Number(bag.price) + 999}
+                    </span>
+
+                  </div>
+
+                  <p className="text-sm text-[#7E22CE] mt-2 font-medium">
+                    Save ₹999 on today’s purchase
+                  </p>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex flex-wrap gap-4">
+
+                  <button
+                    onClick={() => setIsBuyNowOpen(true)}
+                    className="flex-1 min-w-[220px] bg-[#C084FC] hover:bg-[#A855F7] text-white py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-xl shadow-purple-200/50 hover:scale-[1.02]"
+                  >
+                    Buy Now
+                  </button>
+
+                  <div className="flex-1 min-w-[220px]">
+                    <CartBtn bag={bag} />
+                  </div>
+
+                </div>
+
+                {/* Features */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
+
+                  <div className="bg-[#FFFFFF] border border-[#E9D5FF] rounded-2xl p-5">
+                    <h3 className="text-xl font-serif font-bold text-[#1E1B4B]">
+                      Instant Access
+                    </h3>
+
+                    <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                      Download your files immediately after purchase.
+                    </p>
+                  </div>
+
+                  <div className="bg-[#FFFFFF] border border-[#E9D5FF] rounded-2xl p-5">
+                    <h3 className="text-xl font-serif font-bold text-[#1E1B4B]">
+                      Commercial License
+                    </h3>
+
+                    <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                      Use assets in commercial and personal projects.
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-4">{bag.name}</h1>
 
-            <div className="flex items-center gap-3 mb-3">
-              <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">EPS</span>
-              <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">AI</span>
-              <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">PNG</span>
-            </div>
+          {/* Bottom CTA */}
+          <div className="mt-14 bg-gradient-to-r from-[#C084FC] to-[#A855F7] rounded-[32px] p-10 text-center shadow-xl">
 
-            <div className="flex gap-2 mb-4">
-              <span className="bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">tag1</span>
-              <span className="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full">tag2</span>
-            </div>
+            <h2 className="text-3xl font-serif font-bold text-white mb-4">
+              Unlock Full Character Library
+            </h2>
 
-            <p className="text-xl font-bold mb-2">₹{bag.price}</p>
-            <p className="text-sm text-gray-600 mb-6">{bag.description}</p>
+            <p className="text-lg text-purple-100 leading-relaxed max-w-2xl mx-auto mb-8">
+              Get up to 65% discount on complete character collections
+              and premium illustration bundles crafted for creators.
+            </p>
 
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={() => setIsBuyNowOpen(true)}
-                className="bg-yellow-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-yellow-600 transition"
-              >
-                Buy Now
+            <div className="flex flex-wrap justify-center gap-4">
+
+              <button className="bg-white text-[#7E22CE] px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition">
+                View Entire Library
               </button>
 
-              <CartBtn bag={bag} />
+              <button className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white/20 transition">
+                Customize Character
+              </button>
 
             </div>
           </div>
         </div>
-
-        <div className="mt-20 bg-gray-50 text-center py-10 rounded-xl">
-          <p className="text-lg font-medium mb-4">
-            Get up to <span className="text-yellow-500 font-bold">65% discount</span> on the purchase of full character set
-          </p>
-          <button className="bg-yellow-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-600 transition">
-            View Entire Library
-          </button>
-          <button className="bg-yellow-300 text-white px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 transition">
-            Customize Character
-          </button>
-        </div>
       </div>
+
+      {/* Buy Now Modal */}
       <BuyNowModal
         isOpen={isBuyNowOpen}
         onClose={() => setIsBuyNowOpen(false)}
