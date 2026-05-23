@@ -1,82 +1,160 @@
-// 'use client';
-// import React, { useState } from 'react';
-// import { Dialog } from '@headlessui/react';
+'use client';
 
-// const BuyNowModal = ({ isOpen, onClose, product }) => {
-//   const [fullName, setFullName] = useState('');
-//   const [phone, setPhone] = useState('');
-//   const [address, setAddress] = useState('');
+import React, { useState } from 'react';
+import { Dialog } from '@headlessui/react';
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // 👉 You can send this data to an API endpoint here
-//     alert('Order Placed!');
-//     onClose(); // Close modal after placing order
-//   };
+const BuyNowModal = ({ isOpen, onClose, product }) => {
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [loading, setLoading] = useState(false);
 
-//   return (
-//     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
-//       <div className="flex items-center justify-center min-h-screen px-4">
-        
-//         {/* Overlay */}
-//         <div className="fixed inset-0 bg-black bg-opacity-30" aria-hidden="true"></div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//         <div className="relative bg-white rounded-xl shadow-lg p-6 w-full max-w-lg z-50">
-//           <Dialog.Title className="text-xl font-bold mb-4">Place Your Order</Dialog.Title>
+    try {
+      setLoading(true);
 
-//           <form onSubmit={handleSubmit} className="space-y-4">
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-//               <input
-//                 type="text"
-//                 required
-//                 value={fullName}
-//                 onChange={(e) => setFullName(e.target.value)}
-//                 className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-//               />
-//             </div>
+      // Fake delay for UI demo
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-//               <input
-//                 type="tel"
-//                 required
-//                 value={phone}
-//                 onChange={(e) => setPhone(e.target.value)}
-//                 className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-//               />
-//             </div>
+      alert('Order placed successfully!');
+      onClose();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-//               <textarea
-//                 required
-//                 value={address}
-//                 onChange={(e) => setAddress(e.target.value)}
-//                 className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-//               ></textarea>
-//             </div>
+  return (
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      className="fixed inset-0 z-50 overflow-y-auto"
+    >
+      <div className="flex min-h-screen items-center justify-center px-4 bg-black/40">
 
-//             <div className="flex justify-end gap-3">
-//               <button
-//                 type="button"
-//                 onClick={onClose}
-//                 className="px-4 py-2 rounded-md border text-gray-600 hover:bg-gray-100"
-//               >
-//                 Cancel
-//               </button>
-//               <button
-//                 type="submit"
-//                 className="px-6 py-2 rounded-md bg-yellow-500 text-white font-semibold hover:bg-yellow-600"
-//               >
-//                 Confirm Order
-//               </button>
-//             </div>
-//           </form>
-//         </div>
-//       </div>
-//     </Dialog>
-//   );
-// };
+        <Dialog.Panel className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
 
-// export default BuyNowModal;
+          {/* Heading */}
+          <div className="flex items-center justify-between mb-6">
+            <Dialog.Title className="text-2xl font-bold text-[#1E1B4B]">
+              Buy Now
+            </Dialog.Title>
+
+            <button
+              onClick={onClose}
+              className="text-2xl text-gray-500 hover:text-black"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Product Preview */}
+          <div className="flex gap-4 bg-gray-50 p-4 rounded-xl mb-6">
+            <img
+              src={product?.image}
+              alt={product?.name}
+              className="w-24 h-24 rounded-lg object-cover border"
+            />
+
+            <div>
+              <h2 className="font-semibold text-lg">
+                {product?.name}
+              </h2>
+
+              <p className="text-sm text-gray-500 mt-1">
+                Digital Product
+              </p>
+
+              <p className="text-xl font-bold text-yellow-600 mt-2">
+                ₹{product?.price}
+              </p>
+            </div>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Full Name
+              </label>
+
+              <input
+                type="text"
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Enter your full name"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Phone Number
+              </label>
+
+              <input
+                type="tel"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter phone number"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Address
+              </label>
+
+              <textarea
+                required
+                rows={4}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Enter delivery address"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+            </div>
+
+            {/* Total */}
+            <div className="bg-gray-50 rounded-xl p-4">
+              <div className="flex justify-between font-semibold text-lg">
+                <span>Total Amount</span>
+                <span>₹{product?.price}</span>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex gap-3 pt-2">
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 border border-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 bg-yellow-500 text-white py-3 rounded-xl font-semibold hover:bg-yellow-600 transition disabled:opacity-60"
+              >
+                {loading ? 'Processing...' : 'Confirm Order'}
+              </button>
+
+            </div>
+          </form>
+        </Dialog.Panel>
+      </div>
+    </Dialog>
+  );
+};
+
+export default BuyNowModal;
