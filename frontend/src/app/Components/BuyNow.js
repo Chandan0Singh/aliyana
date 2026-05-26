@@ -8,7 +8,7 @@ import { Dialog } from "@headlessui/react";
 const BuyNowModal = ({ isOpen, onClose, product }) => {
   const { user } = useAuth();
 
-  console.log("user", user)
+  console.log("user", user);
 
   const [phone, setPhone] = useState(user?.user?.phone || "");
   const [address, setAddress] = useState(user?.user?.address || "");
@@ -27,14 +27,26 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
           name: user?.user?.name,
           phone,
           address,
-        }
+        },
       );
 
+      const orderResponse = await axios.post(
+        "http://localhost:5000/api/order/create",
+        {
+          userId: user?.user?.id,
+          productId: product?._id,
+          amount: product?.price,
+          phone,
+          address,
+          paymentStatus: "Pending",
+          orderStatus: "Placed",
+        },
+      );
+      
       if (response.data.success) {
         alert("Order placed successfully!");
         onClose();
       }
-
     } catch (error) {
       console.log(error);
       alert("Something went wrong");
@@ -54,17 +66,13 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
       {/* Modal Wrapper */}
       <div className="flex min-h-screen items-center justify-center px-4 py-8">
-
         <Dialog.Panel className="relative w-full max-w-2xl overflow-hidden rounded-[32px] bg-[#FFFFFF] shadow-2xl border border-[#E9D5FF]">
-
           {/* Accent Line */}
           <div className="h-2 bg-gradient-to-r from-[#C084FC] to-[#A855F7]" />
 
           <div className="p-6 md:p-8">
-
             {/* Header */}
             <div className="flex items-start justify-between mb-8">
-
               <div>
                 <Dialog.Title className="text-3xl md:text-4xl font-serif font-bold text-[#1E1B4B] leading-relaxed">
                   Complete Your Order
@@ -85,7 +93,6 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
             {/* User Card */}
             <div className="flex items-center gap-4 bg-gradient-to-r from-[#FAF5FF] to-[#F3E8FF] border border-[#E9D5FF] rounded-[24px] p-5 mb-6">
-
               {/* Avatar */}
               <div className="h-16 w-16 rounded-full bg-[#C084FC] text-white flex items-center justify-center text-2xl font-bold uppercase shadow-lg shadow-purple-200">
                 {user?.user?.name?.charAt(0)}
@@ -105,9 +112,7 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
             {/* Product Card */}
             <div className="bg-white border border-[#E9D5FF] rounded-[28px] p-5 shadow-sm mb-8">
-
               <div className="flex flex-col md:flex-row gap-5">
-
                 {/* Product Image */}
                 <div className="bg-[#FAF5FF] rounded-[24px] p-3 border border-[#F3E8FF]">
                   <img
@@ -119,7 +124,6 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
                 {/* Product Details */}
                 <div className="flex-1 flex flex-col justify-between">
-
                   <div>
                     <h3 className="text-2xl font-serif font-bold text-[#1E1B4B]">
                       {product?.name}
@@ -133,7 +137,6 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 mt-5">
-
                     <span className="bg-[#F3E8FF] text-[#7E22CE] text-xs px-4 py-2 rounded-full font-medium">
                       Instant Download
                     </span>
@@ -145,12 +148,10 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
                     <span className="bg-[#FDF2F8] text-[#BE185D] text-xs px-4 py-2 rounded-full font-medium">
                       Premium Quality
                     </span>
-
                   </div>
 
                   {/* Price */}
                   <div className="mt-5 flex items-center gap-4">
-
                     <p className="text-4xl font-serif font-bold text-[#A855F7]">
                       ₹{product?.price}
                     </p>
@@ -165,7 +166,6 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
-
               {/* Phone */}
               <div>
                 <label className="block text-sm font-medium text-[#1E1B4B] mb-2">
@@ -200,11 +200,8 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
               {/* Price Summary */}
               <div className="rounded-[28px] bg-gradient-to-r from-[#FAF5FF] to-[#F3E8FF] border border-[#E9D5FF] p-6">
-
                 <div className="flex items-center justify-between text-lg mb-3">
-                  <span className="text-gray-600">
-                    Product Price
-                  </span>
+                  <span className="text-gray-600">Product Price</span>
 
                   <span className="font-semibold text-[#1E1B4B]">
                     ₹{product?.price}
@@ -212,17 +209,12 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
                 </div>
 
                 <div className="flex items-center justify-between text-lg mb-4">
-                  <span className="text-gray-600">
-                    Platform Fee
-                  </span>
+                  <span className="text-gray-600">Platform Fee</span>
 
-                  <span className="font-semibold text-green-600">
-                    Free
-                  </span>
+                  <span className="font-semibold text-green-600">Free</span>
                 </div>
 
                 <div className="border-t border-[#D8B4FE] pt-4 flex items-center justify-between">
-
                   <span className="text-2xl font-serif font-bold text-[#1E1B4B]">
                     Total
                   </span>
@@ -235,7 +227,6 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
 
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
-
                 <button
                   type="button"
                   onClick={onClose}
@@ -251,7 +242,6 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
                 >
                   {loading ? "Processing..." : "Confirm Order"}
                 </button>
-
               </div>
             </form>
           </div>

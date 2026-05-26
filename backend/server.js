@@ -7,6 +7,8 @@ const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cart');
 const user = require('./routes/user')
 const blog = require("./routes/blogRoutes");
+const order = require("./routes/orderRouter");
+
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +25,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/user', user);
 app.use("/api/blog", blog);
+app.use("/api/orders", order);
 
 app.get('/', (req, res) => {
   res.send('API running...');
