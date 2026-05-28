@@ -1,45 +1,58 @@
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 export default function OrdersDashboard() {
-  const orders = [
-    {
-      id: "#ORD1025",
-      customer: "Chandan Singh",
-      email: "chandan@gmail.com",
-      product: "Luxury Pink Handbag",
-      amount: 2999,
-      payment: "Paid",
-      status: "Delivered",
-      date: "13 May 2026",
-    },
-    {
-      id: "#ORD1026",
-      customer: "Rahul Kumar",
-      email: "rahul@gmail.com",
-      product: "Black Leather Bag",
-      amount: 1899,
-      payment: "Pending",
-      status: "Processing",
-      date: "12 May 2026",
-    },
-    {
-      id: "#ORD1027",
-      customer: "Anjali Sharma",
-      email: "anjali@gmail.com",
-      product: "Mini Travel Bag",
-      amount: 1499,
-      payment: "Paid",
-      status: "Shipped",
-      date: "11 May 2026",
-    },
-  ];
+  const [orders, setOrders] = useState([]);
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [deliveryStatus, setDeliveryStatus] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      const response = await axios.get("http://localhost:5000/api/order/all");
+      console.log("fcasdf", response)
+      setOrders(response.data.data);
+    };
+
+    getBlogs();
+  }, []);
+
+  useEffect(() => {
+    const getFilteredBlogs = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/order/filter",
+          {
+            params: {
+              search: search || "",
+              deliveryStatus:
+                deliveryStatus === "All Status" ? "" : deliveryStatus,
+
+              paymentStatus:
+                paymentStatus === "Payment Status" ? "" : paymentStatus,
+            },
+          },
+        );
+
+        setOrders(response.data.data);
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    };
+
+    getFilteredBlogs();
+  }, [paymentStatus, deliveryStatus, search]);
+
+  const delivered = orders.filter((order)=>order.orderStatus === "Delivered").length
+  const pending = orders.filter((order)=>order.orderStatus === "Placed").length
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-gray-800">
-            Orders Dashboard
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-800">Orders Dashboard</h1>
 
           <p className="text-gray-500 mt-2">
             Manage all customer orders, payments and delivery status.
@@ -55,17 +68,17 @@ export default function OrdersDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Total Orders</p>
-          <h2 className="text-4xl font-bold mt-2">547</h2>
+          <h2 className="text-4xl font-bold mt-2">{orders.length}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Delivered</p>
-          <h2 className="text-4xl font-bold mt-2">420</h2>
+          <h2 className="text-4xl font-bold mt-2">{delivered}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
           <p className="text-gray-500 text-sm">Pending</p>
-          <h2 className="text-4xl font-bold mt-2">72</h2>
+          <h2 className="text-4xl font-bold mt-2">{pending}</h2>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border shadow-sm">
@@ -79,11 +92,17 @@ export default function OrdersDashboard() {
         <input
           type="text"
           placeholder="Search orders..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           className="border rounded-xl px-4 py-3 w-full lg:w-1/3 outline-none"
         />
 
         <div className="flex flex-wrap gap-3">
-          <select className="border rounded-xl px-4 py-3 outline-none">
+          <select
+            value={deliveryStatus}
+            onChange={(e) => setDeliveryStatus(e.target.value)}
+            className="border rounded-xl px-4 py-3 outline-none"
+          >
             <option>All Status</option>
             <option>Delivered</option>
             <option>Processing</option>
@@ -91,7 +110,11 @@ export default function OrdersDashboard() {
             <option>Cancelled</option>
           </select>
 
-          <select className="border rounded-xl px-4 py-3 outline-none">
+          <select
+            value={paymentStatus}
+            onChange={(e) => setPaymentStatus(e.target.value)}
+            className="border rounded-xl px-4 py-3 outline-none"
+          >
             <option>Payment Status</option>
             <option>Paid</option>
             <option>Pending</option>
@@ -147,24 +170,20 @@ export default function OrdersDashboard() {
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="p-5 font-semibold text-gray-800">
-                    {order.id}
+                    {order._id}
                   </td>
 
                   <td className="p-5">
                     <div>
                       <h3 className="font-semibold text-gray-800">
-                        {order.customer}
+                        {order.userId.name}
                       </h3>
 
-                      <p className="text-sm text-gray-500">
-                        {order.email}
-                      </p>
+                      <p className="text-sm text-gray-500">{order.email}</p>
                     </div>
                   </td>
 
-                  <td className="p-5 text-gray-700">
-                    {order.product}
-                  </td>
+                  <td className="p-5 text-gray-700">{order.productId.name}</td>
 
                   <td className="p-5 font-semibold text-gray-800">
                     ₹{order.amount}
@@ -173,30 +192,32 @@ export default function OrdersDashboard() {
                   <td className="p-5">
                     <span
                       className={`px-4 py-2 rounded-full text-sm font-medium ${
-                        order.payment === "Paid"
+                        order.paymentStatus === "Paid"
                           ? "bg-green-100 text-green-700"
                           : "bg-yellow-100 text-yellow-700"
                       }`}
                     >
-                      {order.payment}
+                      {order.paymentStatus}
                     </span>
                   </td>
 
                   <td className="p-5">
                     <span
                       className={`px-4 py-2 rounded-full text-sm font-medium ${
-                        order.status === "Delivered"
+                        order.orderStatus === "Delivered"
                           ? "bg-green-100 text-green-700"
-                          : order.status === "Processing"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-purple-100 text-purple-700"
+                          : order.orderStatus === "Processing"
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-purple-100 text-purple-700"
                       }`}
                     >
-                      {order.status}
+                      {order.orderStatus}
                     </span>
                   </td>
 
-                  <td className="p-5 text-gray-600">{order.date}</td>
+                  <td className="p-5 text-gray-600">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
 
                   <td className="p-5">
                     <div className="flex flex-wrap gap-3">
@@ -222,9 +243,7 @@ export default function OrdersDashboard() {
 
       {/* Pagination */}
       <div className="flex items-center justify-between mt-6">
-        <p className="text-gray-500 text-sm">
-          Showing 1 to 10 of 547 orders
-        </p>
+        <p className="text-gray-500 text-sm">Showing 1 to 10 of 547 orders</p>
 
         <div className="flex gap-3">
           <button className="border px-4 py-2 rounded-xl bg-white hover:bg-gray-100 transition">

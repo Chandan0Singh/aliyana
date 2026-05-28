@@ -1,4 +1,5 @@
 const Order = require("../models/orderSchema");
+const User = require("../models/User")
 
 const getAllOrders = async (req, res) => {
   try {
@@ -20,38 +21,42 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-const filterOrders = async (req, res) => {
+
+
+const filterOrders = async (req, res) => { 
   try {
-    const { product, deliveryStatus, paymentStatus, search } = req.query;
+    const { search, deliveryStatus, paymentStatus } = req.query;
 
     const query = {};
 
-    // Product Filter
-    if (product) {
-      query.productId = product;
+    // SEARCH USER NAME OR EMAIL
+    if (search) {
+      const users = await User.find({
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+        ],
+      }).select("_id");
+
+      query.userId = {
+        $in: users.map((user) => user._id),
+      };
     }
 
-    // Delivery Status Filter
-    if (deliveryStatus) {
+    // DELIVERY STATUS
+    if (deliveryStatus && deliveryStatus !== "All Status") {
       query.orderStatus = deliveryStatus;
     }
 
-    // Payment Status Filter
-    if (paymentStatus) {
+    // PAYMENT STATUS
+    if (paymentStatus && paymentStatus !== "Payment Status") {
       query.paymentStatus = paymentStatus;
     }
 
-    let orders = await Order.find(query)
+    const orders = await Order.find(query)
       .populate("userId", "name email")
       .populate("productId", "name price image")
       .sort({ createdAt: -1 });
-
-    // Search by customer name
-    if (search) {
-      orders = orders.filter((order) =>
-        order?.userId?.name?.toLowerCase().includes(search.toLowerCase()),
-      );
-    }
 
     res.status(200).json({
       success: true,
@@ -65,6 +70,7 @@ const filterOrders = async (req, res) => {
     });
   }
 };
+
 
 const createOrder = async (req, res) => {
   try {
