@@ -11,6 +11,7 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
   console.log("user", user);
 
   const [phone, setPhone] = useState(user?.user?.phone || "");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [address, setAddress] = useState(user?.user?.address || "");
   const [loading, setLoading] = useState(false);
 
@@ -39,10 +40,11 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
           phone,
           address,
           paymentStatus: "Pending",
+          paymentStatus: paymentMethod === "COD" ? "Pending" : "Paid",
           orderStatus: "Placed",
         },
       );
-      
+
       if (response.data.success) {
         alert("Order placed successfully!");
         onClose();
@@ -198,6 +200,47 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
                 />
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-[#1E1B4B] mb-3">
+                  Payment Method
+                </label>
+
+                <div className="space-y-3">
+                  <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="UPI"
+                      checked={paymentMethod === "UPI"}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                    <span>UPI</span>
+                  </label>
+
+                  <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Card"
+                      checked={paymentMethod === "Card"}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                    <span>Debit / Credit Card</span>
+                  </label>
+
+                  <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="COD"
+                      checked={paymentMethod === "COD"}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                    <span>Cash On Delivery</span>
+                  </label>
+                </div>
+              </div>
+
               {/* Price Summary */}
               <div className="rounded-[28px] bg-gradient-to-r from-[#FAF5FF] to-[#F3E8FF] border border-[#E9D5FF] p-6">
                 <div className="flex items-center justify-between text-lg mb-3">
@@ -240,7 +283,11 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
                   disabled={loading}
                   className="flex-1 rounded-2xl bg-[#C084FC] py-4 font-semibold text-white hover:bg-[#A855F7] transition disabled:opacity-60 shadow-xl shadow-purple-200/50"
                 >
-                  {loading ? "Processing..." : "Confirm Order"}
+                  {loading
+                    ? "Processing..."
+                    : paymentMethod === "COD"
+                      ? "Place Order"
+                      : "Pay Now"}
                 </button>
               </div>
             </form>
