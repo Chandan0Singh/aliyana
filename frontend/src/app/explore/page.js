@@ -14,7 +14,7 @@ const ExplorePage = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/prodseucts/explore");
+      const res = await fetch("http://localhost:5000/api/products/explore");
       const data = await res.json();
       setBagsData(data);
       setLoading(false);
