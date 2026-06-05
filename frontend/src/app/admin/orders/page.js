@@ -11,7 +11,6 @@ export default function OrdersDashboard() {
   useEffect(() => {
     const getBlogs = async () => {
       const response = await axios.get("http://localhost:5000/api/order/all");
-      console.log("fcasdf", response)
       setOrders(response.data.data);
     };
 

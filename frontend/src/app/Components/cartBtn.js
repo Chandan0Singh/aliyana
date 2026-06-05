@@ -21,14 +21,11 @@ const CartBtn = ({ bag }) => {
     }
 
     try {
-      console.log("Sending request to: http://localhost:5000/api/cart/add");
       const res = await axios.post("/api/cart/add", {
         userId: user.user.id,
         productId: bag._id,
         quantity: 1,
       });
-
-      console.log("Cart updated:", res.data);
       alert("✅ Added to cart");
     } catch (err) {
       console.error("Add to cart failed:", err);

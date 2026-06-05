@@ -107,11 +107,8 @@ const deleteBlog = async (req, res) => {
         blog.featuredImage.replace(/^\/+/, ""),
       );
 
-      console.log("Deleting image:", imagePath);
-
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
-        console.log("Image deleted");
       } else {
         console.log("Image not found");
       }

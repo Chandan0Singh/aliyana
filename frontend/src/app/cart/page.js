@@ -31,10 +31,6 @@ const Cart = () => {
     fetchCart();
   }, [user]);
 
-  useEffect(() => {
-    console.log("cart :", cart);
-  }, [cart]);
-
   if (!user)
     return <p className="p-4 text-red-600">Please log in to view your cart.</p>;
   if (loading) return <p className="p-4">Loading cart...</p>;
@@ -51,7 +47,6 @@ const Cart = () => {
           cartItemId :  itemId
         }
       })
-      console.log("lassan : ", deleteItem)
     } catch (err) {
       console.log("cart item delete err: ", err);
     }

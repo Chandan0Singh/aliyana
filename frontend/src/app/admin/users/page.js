@@ -126,8 +126,6 @@ export default function UserDashboard() {
         role: currentRole,
       });
 
-      console.log("role response :", data);
-
       // update UI instantly
       setUsers((prev) =>
         prev.map((user) =>
@@ -186,10 +184,6 @@ export default function UserDashboard() {
           email: editData.email,
         },
       );
-
-      console.log(data);
-
-      // UPDATE UI
       setUsers((prev) =>
         prev.map((user) =>
           user._id === editData.userId

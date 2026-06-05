@@ -104,23 +104,10 @@ export default function BlogsDashboard() {
           },
         },
       );
-
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const handleDelete = async (id) => {
-  //   const response = await axios.delete(
-  //     "http://localhost:5000/api/blog/delete",
-  //     {
-  //       data: {
-  //         blogid: id,
-  //       },
-  //     },
-  //   );
-  // };
 
   const filtersearch = async () => {
     try {

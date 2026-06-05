@@ -20,8 +20,6 @@ export default function BlogPage() {
     getAllBlogs();
   }, []);
 
-  console.log(blogs);
-
   return (
     <main className="min-h-screen bg-[#FDF4FF] text-[#1E1B4B] px-6 py-12">
       <div className="max-w-7xl mx-auto">

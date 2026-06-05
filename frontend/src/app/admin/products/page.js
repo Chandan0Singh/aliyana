@@ -28,8 +28,6 @@ export default function AdminDashboard() {
     }
   };
 
-  console.log("cadsca", products)
-
   // Delete Product
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
@@ -62,8 +60,6 @@ export default function AdminDashboard() {
       ?.toLowerCase()
       ?.includes(search.toLowerCase())
   );
-
-  console.log("adsva : ", filteredProducts)
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

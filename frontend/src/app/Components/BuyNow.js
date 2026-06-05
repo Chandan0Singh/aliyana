@@ -8,8 +8,6 @@ import { Dialog } from "@headlessui/react";
 const BuyNowModal = ({ isOpen, onClose, product }) => {
   const { user } = useAuth();
 
-  console.log("user", user);
-
   const [phone, setPhone] = useState(user?.user?.phone || "");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [address, setAddress] = useState(user?.user?.address || "");

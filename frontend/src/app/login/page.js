@@ -35,7 +35,6 @@ export default function LoginPage() {
       // Save token, redirect to home
       localStorage.setItem("token", data.token);
       login(data);
-      console.log("user data : ", data);
       router.push("/");
     } catch (err) {
       setError("Something went wrong. Please try again.");

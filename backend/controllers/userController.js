@@ -335,9 +335,6 @@ const updateUser = async (req, res) => {
 const blockUser = async (req, res) => {
   try {
     const { userId, status } = req.body;
-
-    console.log("acdsc00", status);
-
     if (!userId) {
       return res.status(400).json({
         success: false,

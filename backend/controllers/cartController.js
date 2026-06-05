@@ -6,8 +6,6 @@ const addToCart = async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
 
-    console.log("🛒 Add to cart body:", req.body);
-
     // Validate input
     if (!userId || !productId || !quantity) {
       return res
@@ -73,8 +71,6 @@ const removeFromCart = async (req, res) => {
     cart.items = cart.items.filter((item) => item._id.toString() !== cartItemId);
 
     await cart.save();
-
-    console.log("DAFas", cart);
 
     res.status(200).json({
       message: "Item removed successfully",

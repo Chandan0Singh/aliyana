@@ -29,8 +29,6 @@ export default function EditProduct() {
       try {
         const res = await axios.get(`/api/products/${id}`);
 
-        console.log("Product Data:", res.data);
-
         setForm({
           title: res.data.title || "",
           description: res.data.description || "",
