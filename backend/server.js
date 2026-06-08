@@ -26,6 +26,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/user', user);
 app.use("/api/blog", blog);
 app.use("/api/order", order);
+app.use("/api/payment", require("./routes/paymentRoutes"));
 
 app.get('/', (req, res) => {
   res.send('API running...');

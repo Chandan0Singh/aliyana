@@ -29,23 +29,40 @@ const BuyNowModal = ({ isOpen, onClose, product }) => {
         },
       );
 
-      const orderResponse = await axios.post(
-        "http://localhost:5000/api/order/create",
-        {
-          userId: user?.user?.id,
-          productId: product?._id,
-          amount: product?.price,
-          phone,
-          address,
-          paymentStatus: "Pending",
-          paymentStatus: paymentMethod === "COD" ? "Pending" : "Paid",
-          orderStatus: "Placed",
-        },
-      );
+      if (paymentMethod === "COD") {
+        const orderResponse = await axios.post(
+          "http://localhost:5000/api/order/create",
+          {
+            userId: user?.user?.id,
+            productId: product?._id,
+            amount: product?.price,
+            phone,
+            address,
+            paymentStatus: "Pending",
+            paymentStatus: paymentMethod === "COD" ? "Pending" : "Paid",
+            orderStatus: "Placed",
+          },
+        );
 
-      if (response.data.success) {
-        alert("Order placed successfully!");
-        onClose();
+        if (response.data.success) {
+          alert("Order placed successfully!");
+          onClose();
+        }
+      } else {
+        const response = await fetch("/create-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount,
+            currency: "INR",
+            receipt: "receipt#1",
+            notes: {},
+          }),
+        });
+
+        const order = await response.json();
       }
     } catch (error) {
       console.log(error);
